@@ -11,24 +11,27 @@
 <context>
     <name>MainPage</name>
     <message>
-        <source>Show Page 2</source>
-        <translation type="unfinished">Zur Seite 2</translation>
+        <source>Start by connecting
+to a frontend</source>
+        <translation type="unfinished"></translation>
     </message>
+</context>
+<context>
+    <name>MediaPage</name>
     <message>
-        <source>UI Template</source>
-        <translation type="unfinished">UI-Vorlage</translation>
-    </message>
-    <message>
-        <source>Hello Sailors</source>
-        <translation type="unfinished">Hallo Matrosen</translation>
+        <source>Item</source>
+        <translation type="unfinished">Element</translation>
     </message>
 </context>
 <context>
     <name>NavigationPage</name>
     <message>
-        <source>Nested Page</source>
-        <translation type="unfinished">Unterseite</translation>
+        <source>Item</source>
+        <translation type="unfinished">Element</translation>
     </message>
+</context>
+<context>
+    <name>NumbersPage</name>
     <message>
         <source>Item</source>
         <translation type="unfinished">Element</translation>

@@ -22,24 +22,24 @@ import Sailfish.Silica 1.0
 Page {
     id: page
 
-    property bool bPushMediaPage: true
+    property bool bPushNumbersPage: true
 
     onStatusChanged:
     {
-        if (status == PageStatus.Active && bPushMediaPage)
+        if (status == PageStatus.Active && bPushNumbersPage)
         {
-            console.log("SecondPage: pushAttach of MediaPage!!!");
-            bPushMediaPage = false
-            pageStack.pushAttached(Qt.resolvedUrl("MediaPage.qml"));
+            console.log("SecondPage: pushAttach of NumbersPage!!!");
+            bPushNumbersPage = false
+            pageStack.pushAttached(Qt.resolvedUrl("NumbersPage.qml"));
         }
     }
 
     SilicaListView {
         id: listView
-        model: 2
+        model: 3
         anchors.fill: parent
         header: PageHeader {
-            title: "Navigation"
+            title: "Media"
         }
         delegate: BackgroundItem {
             id: delegate

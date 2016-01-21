@@ -15,24 +15,35 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-#ifdef QT_QML_DEBUG
-#include <QtQuick>
-#endif
-
-#include <sailfishapp.h>
+import QtQuick 2.0
+import Sailfish.Silica 1.0
 
 
-int main(int argc, char *argv[])
-{
-    // SailfishApp::main() will display "qml/template.qml", if you need more
-    // control over initialization, you can use:
-    //
-    //   - SailfishApp::application(int, char *[]) to get the QGuiApplication *
-    //   - SailfishApp::createView() to get a new QQuickView * instance
-    //   - SailfishApp::pathTo(QString) to get a QUrl to a resource file
-    //
-    // To display the view, call "show()" (will show fullscreen on device).
+Page {
+    id: page
+    SilicaListView {
+        id: listView
+        model: 4
+        anchors.fill: parent
+        header: PageHeader {
+            title: "Numbers"
+        }
+        delegate: BackgroundItem {
+            id: delegate
 
-    return SailfishApp::main(argc, argv);
+            Label {
+                x: Theme.paddingLarge
+                text: qsTr("Item") + " " + index
+                anchors.verticalCenter: parent.verticalCenter
+                color: delegate.highlighted ? Theme.highlightColor : Theme.primaryColor
+            }
+            onClicked: console.log("Clicked " + index)
+        }
+        VerticalScrollDecorator {}
+    }
 }
+
+
+
+
 

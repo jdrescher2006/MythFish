@@ -1,15 +1,3 @@
-# NOTICE:
-#
-# Application name defined in TARGET has a corresponding QML filename.
-# If name defined in TARGET is changed, the following needs to be done
-# to match new name:
-#   - corresponding QML filename must be changed
-#   - desktop icon filename must be changed
-#   - desktop filename must be changed
-#   - icon definition filename in desktop file must be changed
-#   - translation filenames have to be changed
-
-# The name of your application
 TARGET = MythSailMote
 
 CONFIG += sailfishapp
@@ -38,5 +26,7 @@ TRANSLATIONS += translations/MythSailMote-de.ts
 
 DISTFILES += \
     qml/pages/MainPage.qml \
-    qml/pages/NavigationPage.qml
+    qml/pages/NavigationPage.qml \
+    qml/pages/NumbersPage.qml \
+    qml/pages/MediaPage.qml
 
