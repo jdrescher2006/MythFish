@@ -1,4 +1,4 @@
-# SailfishMythRemote
+# MythSailMote
 Sailfish remote application for MythTV frontend
 
 License
