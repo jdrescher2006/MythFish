@@ -24,13 +24,6 @@ to a frontend</source>
     </message>
 </context>
 <context>
-    <name>NavigationPage</name>
-    <message>
-        <source>Item</source>
-        <translation type="unfinished"></translation>
-    </message>
-</context>
-<context>
     <name>NumbersPage</name>
     <message>
         <source>Item</source>

@@ -20,7 +20,7 @@ import Sailfish.Silica 1.0
 
 Dialog
 {
-    id: dialog
+    id: id_page_mainpage
     onAccepted:
     {
         pageStack.pushAttached(Qt.resolvedUrl("NavigationPage.qml"));

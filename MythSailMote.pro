@@ -28,5 +28,9 @@ DISTFILES += \
     qml/pages/MainPage.qml \
     qml/pages/NavigationPage.qml \
     qml/pages/NumbersPage.qml \
-    qml/pages/MediaPage.qml
+    qml/pages/MediaPage.qml \
+    qml/icon-m-quiet.png \
+    qml/icon-m-stop.png \
+    qml/icon-m-tv.png \
+    qml/icon-m-rec.png
 
