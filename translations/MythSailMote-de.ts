@@ -16,18 +16,4 @@ to a frontend</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
-<context>
-    <name>MediaPage</name>
-    <message>
-        <source>Item</source>
-        <translation type="unfinished">Element</translation>
-    </message>
-</context>
-<context>
-    <name>NumbersPage</name>
-    <message>
-        <source>Item</source>
-        <translation type="unfinished">Element</translation>
-    </message>
-</context>
 </TS>
