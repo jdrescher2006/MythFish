@@ -23,14 +23,26 @@ Dialog
     id: id_page_mainpage
     onAccepted:
     {
-        pageStack.pushAttached(Qt.resolvedUrl("NavigationPage.qml"));
-        pageStack.navigateForward();
+        idRectangleShowError.visible = false;
+
+        var status = id_CppTools.iConnect(id_TextField_HostName.text, id_TextField_PortNumber.text)
+        if (status == 0)
+        {
+            pageStack.pushAttached(Qt.resolvedUrl("NavigationPage.qml"));
+            pageStack.navigateForward();
+            timMainLoopTimer.start();
+        }
+        else
+        {
+            idRectangleShowError.visible = true;
+            idLabelErrorText.text = "Error while connecting to MythTV: " + status.toString();
+        }
     }
     Timer
     {
         id: timMainLoopTimer
         interval: 1000
-        running: true
+        running: false
         repeat: true
         onTriggered:
         {
@@ -84,6 +96,23 @@ Dialog
                 label: "Port"
                 text: "6546"
                 width: parent.width
+            }
+            Rectangle
+            {
+                id: idRectangleShowError
+                anchors.top: parent.bottom;
+                anchors.left: parent.left;
+                anchors.right: parent.right;
+                height: id_TextField_PortNumber.height;
+                color: Theme.highlightColor;
+                opacity: 0.5
+                visible: false;
+                Label
+                {
+                    id: idLabelErrorText
+                    anchors.centerIn: parent
+                    text: "Error ..."
+                }
             }
         }
     }

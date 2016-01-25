@@ -20,6 +20,7 @@
 #endif
 
 #include <sailfishapp.h>
+#include "../cpptools.h"
 
 
 int main(int argc, char *argv[])
@@ -33,6 +34,7 @@ int main(int argc, char *argv[])
     //
     // To display the view, call "show()" (will show fullscreen on device).
 
+    qmlRegisterType<Cpptools,1>("cpptools", 1, 0, "Cpptools");
     return SailfishApp::main(argc, argv);
 }
 

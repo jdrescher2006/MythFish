@@ -47,8 +47,7 @@ Page
 
                 Button
                 {
-                    width: parent.width/3
-                    height: parent.height/4
+                    width: parent.width/3                    
                     text: "1"
                     onClicked:
                     {
@@ -57,8 +56,7 @@ Page
                 }
                 Button
                 {
-                    width: parent.width/3
-                    height: parent.height/4
+                    width: parent.width/3                    
                     text: "2"
                     onClicked:
                     {
@@ -67,8 +65,7 @@ Page
                 }
                 Button
                 {
-                    width: parent.width/3
-                    height: parent.height/4
+                    width: parent.width/3                    
                     text: "3"
                     onClicked:
                     {
@@ -77,8 +74,7 @@ Page
                 }
                 Button
                 {
-                    width: parent.width/3
-                    height: parent.height/4
+                    width: parent.width/3                    
                     text: "4"
                     onClicked:
                     {
@@ -87,8 +83,7 @@ Page
                 }
                 Button
                 {
-                    width: parent.width/3
-                    height: parent.height/4
+                    width: parent.width/3                    
                     text: "5"
                     onClicked:
                     {
@@ -97,8 +92,7 @@ Page
                 }
                 Button
                 {
-                    width: parent.width/3
-                    height: parent.height/4
+                    width: parent.width/3                    
                     text: "6"
                     onClicked:
                     {
@@ -107,8 +101,7 @@ Page
                 }
                 Button
                 {
-                    width: parent.width/3
-                    height: parent.height/4
+                    width: parent.width/3                    
                     text: "7"
                     onClicked:
                     {
@@ -117,8 +110,7 @@ Page
                 }
                 Button
                 {
-                    width: parent.width/3
-                    height: parent.height/4
+                    width: parent.width/3                    
                     text: "8"
                     onClicked:
                     {
@@ -127,8 +119,7 @@ Page
                 }
                 Button
                 {
-                    width: parent.width/3
-                    height: parent.height/4
+                    width: parent.width/3                    
                     text: "9"
                     onClicked:
                     {
@@ -137,8 +128,7 @@ Page
                 }
                 Button
                 {
-                    width: parent.width/3
-                    height: parent.height/4
+                    width: parent.width/3                    
                     text: "Delete"
                     onClicked:
                     {
@@ -147,8 +137,7 @@ Page
                 }
                 Button
                 {
-                    width: parent.width/3
-                    height: parent.height/4
+                    width: parent.width/3                   
                     text: "0"
                     onClicked:
                     {
@@ -157,8 +146,7 @@ Page
                 }
                 Button
                 {
-                    width: parent.width/3
-                    height: parent.height/4
+                    width: parent.width/3                    
                     text: "Enter"
                     onClicked:
                     {

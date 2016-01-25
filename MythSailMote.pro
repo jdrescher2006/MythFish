@@ -2,7 +2,8 @@ TARGET = MythSailMote
 
 CONFIG += sailfishapp
 
-SOURCES += src/MythSailMote.cpp
+SOURCES += src/MythSailMote.cpp \
+    cpptools.cpp
 
 OTHER_FILES += qml/MythSailMote.qml \
     qml/cover/CoverPage.qml \
@@ -33,4 +34,7 @@ DISTFILES += \
     qml/icon-m-stop.png \
     qml/icon-m-tv.png \
     qml/icon-m-rec.png
+
+HEADERS += \
+    cpptools.h
 

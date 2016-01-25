@@ -18,9 +18,18 @@
 import QtQuick 2.0
 import Sailfish.Silica 1.0
 import "pages"
+import cpptools 1.0
 
 ApplicationWindow
 {
+    property string strVolume: '';
+    property string strLocation: '';
+
+    Cpptools
+    {
+        id: id_CppTools
+    }
+
     initialPage: Component { MainPage { } }
     cover: Qt.resolvedUrl("cover/CoverPage.qml")
     allowedOrientations: Orientation.All

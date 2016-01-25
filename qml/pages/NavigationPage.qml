@@ -58,7 +58,7 @@ Page
                     text: "Home"
                     onClicked:
                     {
-                        remote.send_command("jump mainmenu");
+                        id_CppTools.sSendCommand("jump mainmenu");
                     }
                     Image
                     {
@@ -73,7 +73,7 @@ Page
                     text: "Live TV"
                     onClicked:
                     {
-                        remote.send_command("jump livetv");
+                        id_CppTools.sSendCommand("jump livetv");
                     }
                     Image
                     {
@@ -88,7 +88,7 @@ Page
                     text: "Recordings"
                     onClicked:
                     {
-                        remote.send_command("jump playbackrecordings");
+                        id_CppTools.sSendCommand("jump playbackrecordings");
                     }
                     Image
                     {
@@ -109,7 +109,7 @@ Page
                     text: "Music"
                     onClicked:
                     {
-                        remote.send_command("jump playmusic");
+                        id_CppTools.sSendCommand("jump playmusic");
                     }
                     Image
                     {
@@ -124,7 +124,7 @@ Page
                     text: "Videos"
                     onClicked:
                     {
-                        remote.send_command("jump mythvideo");
+                        id_CppTools.sSendCommand("jump mythvideo");
                     }
                     Image
                     {
@@ -139,7 +139,7 @@ Page
                     text: "Status"
                     onClicked:
                     {
-                        remote.send_command("jump statusbox");
+                        id_CppTools.sSendCommand("jump statusbox");
                     }
                     Image
                     {
@@ -173,7 +173,7 @@ Page
                     text: ""
                     onClicked:
                     {
-                        remote.send_command("key up");
+                        id_CppTools.sSendCommand("key up");
                     }
                     Image
                     {
@@ -187,7 +187,7 @@ Page
                     text: ""
                     onClicked:
                     {
-                        remote.send_command("key left");
+                        id_CppTools.sSendCommand("key left");
                     }
                     Image
                     {
@@ -200,7 +200,7 @@ Page
                     text: "OK"
                     onClicked:
                     {
-                        remote.send_command("key enter");
+                        id_CppTools.sSendCommand("key enter");
                     }
                     Image
                     {
@@ -213,7 +213,7 @@ Page
                     text: ""
                     onClicked:
                     {
-                        remote.send_command("key right");
+                        id_CppTools.sSendCommand("key right");
                     }
                     Image
                     {
@@ -226,7 +226,7 @@ Page
                     text: "Back"
                     onClicked:
                     {
-                        remote.send_command("key escape");
+                        id_CppTools.sSendCommand("key escape");
                     }
                     Image
                     {
@@ -239,7 +239,7 @@ Page
                     text: ""
                     onClicked:
                     {
-                        remote.send_command("key down");
+                        id_CppTools.sSendCommand("key down");
                     }
                     Image
                     {
