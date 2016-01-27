@@ -18,26 +18,11 @@
 import QtQuick 2.0
 import Sailfish.Silica 1.0
 
-Dialog
+Page
 {
     id: id_page_mainpage
-    onAccepted:
-    {
-        idRectangleShowError.visible = false;
+    allowedOrientations: Orientation.All
 
-        var status = id_CppTools.iConnect(id_TextField_HostName.text, id_TextField_PortNumber.text)
-        if (status == 0)
-        {
-            pageStack.pushAttached(Qt.resolvedUrl("NavigationPage.qml"));
-            pageStack.navigateForward();
-            timMainLoopTimer.start();
-        }
-        else
-        {
-            idRectangleShowError.visible = true;
-            idLabelErrorText.text = "Error while connecting to MythTV: " + status.toString();
-        }
-    }
     Timer
     {
         id: timMainLoopTimer
@@ -63,10 +48,7 @@ Dialog
             spacing: Theme.paddingLarge
             width: parent.width
 
-            DialogHeader
-            {
-                title: "MythSailMote"
-            }
+            PageHeader { title: "MythSailMote" }
 
             Label
             {
@@ -96,7 +78,28 @@ Dialog
                 label: "Port"
                 text: "6546"
                 width: parent.width
-            }           
+            }
+            Button
+            {
+                text: "Connect"
+                onClicked:
+                {
+                    idRectangleShowError.visible = false;
+
+                    var status = id_CppTools.iConnect(id_TextField_HostName.text, id_TextField_PortNumber.text)
+                    if (status == 0)
+                    {
+                        pageStack.pushAttached(Qt.resolvedUrl("NavigationPage.qml"));
+                        pageStack.navigateForward();
+                        timMainLoopTimer.start();
+                    }
+                    else
+                    {
+                        idRectangleShowError.visible = true;
+                        idLabelErrorText.text = "Error while connecting to MythTV: " + status.toString();
+                    }
+                }
+            }
         }
         Rectangle
         {
