@@ -20,6 +20,9 @@
 
 #include <QObject>
 #include <QTcpSocket>
+#include <QUdpSocket>
+#include <QRegExp>
+#include <QRegExpValidator>
 
 class Cpptools : public QObject {
     Q_OBJECT
@@ -27,23 +30,31 @@ class Cpptools : public QObject {
     Q_PROPERTY(QString host READ sGetHostname)
     Q_PROPERTY(QString port READ sGetPortnumber)
 public:
+    //Remote
     QString strHostname;
     QString strPortnumber;
     bool bConnected;
     explicit Cpptools(QObject *parent = 0);
-
     Q_INVOKABLE int iConnect(QString strGetHostname, QString strGetPortnumber);
     Q_INVOKABLE QString sSendCommand(QString strGetCommand);
     Q_INVOKABLE int iDisconnect();
-
     Q_INVOKABLE bool bGetConnected();
     Q_INVOKABLE QString sGetHostname();
     Q_INVOKABLE QString sGetPortnumber();
 
-signals:
+    //WOL
+    Q_INVOKABLE QString sGetError();
+    Q_INVOKABLE bool bSendMagicPacket(QString sMacAddress);
+    Q_INVOKABLE bool bIsValidMacAddress(QString sMacAddress);
 
-public slots:
-
+    //Load/save
+    Q_INVOKABLE void vSaveProjectData(const QString &sKey, const QString &sValue);
+    Q_INVOKABLE QString sLoadProjectData(const QString &sKey);
+private:
+    //WOL
+    QUdpSocket *udpSocket;
+    QString sCleanMac(QString sMacAddress);
+    QString sError;
 };
 
 #endif // CPPTOOLS

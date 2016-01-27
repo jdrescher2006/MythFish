@@ -23,8 +23,10 @@ Cpptools::Cpptools(QObject *parent) : QObject(parent)
 {
     this->tcpSocket = new QTcpSocket(this);
     this->bConnected = false;
+    this->udpSocket = new QUdpSocket(this);
 }
 
+//Remote functions
 int Cpptools::iConnect(QString strGetHostname, QString strGetPortnumber)
 {
     this->strHostname = strGetHostname;
@@ -101,4 +103,58 @@ QString Cpptools::sGetHostname()
 QString Cpptools::sGetPortnumber()
 {
     return this->strPortnumber;
+}
+
+//WOL functions
+bool Cpptools::bIsValidMacAddress(QString sMacAddress)
+{
+    QRegExp r("^([0-9a-f]{2}([:-]|$)){6}$", Qt::CaseInsensitive);
+    return r.exactMatch(sMacAddress);
+}
+
+QString Cpptools::sGetError()
+{
+    return this->sError;
+}
+
+bool Cpptools::bSendMagicPacket(QString sMacAddress)
+{
+    QByteArray macDest = this->sCleanMac(sMacAddress).toLocal8Bit();
+
+    QByteArray magicSequence = QByteArray::fromHex("ffffffffffff");
+    for (int i=0; i<16; i++)
+        magicSequence.append(QByteArray::fromHex(macDest));
+
+    qint64 byteCount = this->udpSocket->writeDatagram(magicSequence.data(), magicSequence.size(), QHostAddress::Broadcast, 40000);
+
+    if (byteCount == -1)
+    {
+        qDebug() << "Magisches Paket konnte nicht gesendet werden";
+        this->sError = QObject::tr("Magisches Paket konnte nicht gesendet werden");
+    }
+
+    return (byteCount > -1);
+}
+
+QString Cpptools::sCleanMac(QString sMacAddress)
+{
+    return sMacAddress.replace(QRegExp("[:-]", Qt::CaseInsensitive), "");
+}
+
+//Save/load settings functions
+void Cpptools::vSaveProjectData(const QString &sKey, const QString &sValue)
+{
+    QSettings settings;
+    settings.setValue(sKey, sValue);
+
+    return;
+}
+QString Cpptools::sLoadProjectData(const QString &sKey)
+{
+    QSettings settings;
+    QString sMySetting = settings.value(sKey, "").toString();
+
+    qDebug() << sMySetting;
+
+    return sMySetting;
 }
