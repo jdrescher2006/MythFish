@@ -96,23 +96,23 @@ Dialog
                 label: "Port"
                 text: "6546"
                 width: parent.width
-            }
-            Rectangle
+            }           
+        }
+        Rectangle
+        {
+            id: idRectangleShowError
+            anchors.top: parent.bottom;
+            anchors.left: parent.left;
+            anchors.right: parent.right;
+            height: id_TextField_PortNumber.height;
+            color: Theme.highlightColor;
+            opacity: 0.5
+            visible: false;
+            Label
             {
-                id: idRectangleShowError
-                anchors.top: parent.bottom;
-                anchors.left: parent.left;
-                anchors.right: parent.right;
-                height: id_TextField_PortNumber.height;
-                color: Theme.highlightColor;
-                opacity: 0.5
-                visible: false;
-                Label
-                {
-                    id: idLabelErrorText
-                    anchors.centerIn: parent
-                    text: "Error ..."
-                }
+                id: idLabelErrorText
+                anchors.centerIn: parent
+                text: "Error ..."
             }
         }
     }
