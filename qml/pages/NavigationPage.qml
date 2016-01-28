@@ -149,6 +149,27 @@ Page
                     }
                 }
             }
+            Row
+            {
+                spacing: Theme.paddingSmall
+                width: parent.width
+
+                Button
+                {
+                    width: parent.width/3
+                    text: "Guide"
+                    onClicked:
+                    {
+                        id_CppTools.sSendCommand("jump guidegrid");
+                    }
+                    Image
+                    {
+                        width: 32;
+                        height: 32;
+                        source: "image://theme/icon-m-events"
+                    }
+                }
+            }
         }
 
         Column

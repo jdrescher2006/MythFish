@@ -33,7 +33,9 @@ DISTFILES += \
     qml/icon-m-quiet.png \
     qml/icon-m-stop.png \
     qml/icon-m-tv.png \
-    qml/icon-m-rec.png
+    qml/icon-m-rec.png \
+    qml/pages/AboutPage.qml \
+    qml/MythSailMote.png
 
 HEADERS += \
     cpptools.h

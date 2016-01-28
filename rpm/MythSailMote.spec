@@ -13,10 +13,10 @@ Name:       MythSailMote
 %{!?qtc_make:%define qtc_make make}
 %{?qtc_builddir:%define _builddir %qtc_builddir}
 Summary:    MythSailMote
-Version:    1.0
+Version:    0.5
 Release:    1
 Group:      Qt/Qt
-License:    LICENSE
+License:    GPLv3
 URL:        http://example.org/
 Source0:    %{name}-%{version}.tar.bz2
 Source100:  MythSailMote.yaml

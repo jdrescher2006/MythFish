@@ -18,21 +18,35 @@
 import QtQuick 2.0
 import Sailfish.Silica 1.0
 
-CoverBackground {
-    Label {
+CoverBackground
+{
+    Image
+    {
+       anchors.margins: Theme.paddingMedium
+       anchors.top: parent.top
+       anchors.horizontalCenter: parent.horizontalCenter;
+       width: parent/3
+       fillMode: Image.PreserveAspectFit
+       source: "../MythSailMote.png"
+    }
+    Label
+    {
         id: label
         anchors.centerIn: parent
-        text: qsTr("My Cover")
+        text: "MythFish"
     }
 
-    CoverActionList {
+    CoverActionList
+    {
         id: coverAction
 
-        CoverAction {
+        CoverAction
+        {
             iconSource: "image://theme/icon-cover-next"
         }
 
-        CoverAction {
+        CoverAction
+        {
             iconSource: "image://theme/icon-cover-pause"
         }
     }

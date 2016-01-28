@@ -41,6 +41,15 @@ Page
         anchors.fill: parent
         contentHeight: column.height
 
+        PullDownMenu
+        {
+            MenuItem
+            {
+                text: "About"
+                onClicked: {pageStack.push(Qt.resolvedUrl("AboutPage.qml"))}
+            }
+        }
+
         Column
         {
             id: column
@@ -48,7 +57,7 @@ Page
             spacing: Theme.paddingLarge
             width: parent.width
 
-            PageHeader { title: "MythSailMote" }
+            PageHeader { title: "MythFish" }
 
             Label
             {
