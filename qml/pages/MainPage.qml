@@ -23,6 +23,25 @@ Page
     id: id_page_mainpage
     allowedOrientations: Orientation.All
 
+    property bool bStartMainPage: true
+
+    onStatusChanged:
+    {
+        if (status == PageStatus.Active && bStartMainPage)
+        {
+            bStartMainPage = false
+
+            //Load settings
+            var sHostname = id_CppTools.sLoadProjectData("HostName");
+            var sPortnumber = id_CppTools.sLoadProjectData("PortNumber");
+
+            if (sHostname.length > 0)
+                id_TextField_HostName.text = sHostname;
+            if (sPortnumber.length > 0)
+                id_TextField_PortNumber.text = sPortnumber;
+        }
+    }
+
     Timer
     {
         id: timMainLoopTimer
@@ -34,12 +53,25 @@ Page
             console.log("Timer running in MainPage.qml");
         }
     }
+    Timer
+    {
+        id: timErrorTimer
+        interval: 10000
+        running: false
+        repeat: false
+        onTriggered:
+        {
+            idRectangleShowError.visible = false
+        }
+    }
 
 
     SilicaFlickable
     {
         anchors.fill: parent
-        contentHeight: column.height
+        contentHeight: id_Column_FirstCol.height + idRectangleShowError.height + id_Column_SecondCol.height + Theme.paddingLarge
+
+        VerticalScrollDecorator {}
 
         PullDownMenu
         {
@@ -47,50 +79,14 @@ Page
             {
                 text: "About"
                 onClicked: {pageStack.push(Qt.resolvedUrl("AboutPage.qml"))}
-            }
+            }            
         }
-
-        Column
+        PushUpMenu
         {
-            id: column
-
-            spacing: Theme.paddingLarge
-            width: parent.width
-
-            PageHeader { title: "MythFish" }
-
-            Label
+            MenuItem
             {
-                x: Theme.paddingLarge
-                text: qsTr("Configuration")
-                color: Theme.secondaryHighlightColor
-                font.pixelSize: Theme.fontSizeExtraLarge
-            }
-
-            TextField
-            {
-                anchors.margins: Theme.paddingLarge
-                id: id_TextField_HostName
-                inputMethodHints: Qt.ImhNoAutoUppercase | Qt.ImhNoPredictiveText
-                label: "Enter host name or ip address"
-                placeholderText: "Enter host name or ip"
-                text: "192.168.0.4"
-                width: parent.width
-            }
-
-            TextField
-            {
-                anchors.margins: Theme.paddingLarge
-                id: id_TextField_PortNumber
-                inputMethodHints: Qt.ImhDigitsOnly | Qt.ImhNoPredictiveText
-                placeholderText: "Enter port"
-                label: "Port"
-                text: "6546"
-                width: parent.width
-            }
-            Button
-            {
-                text: "Connect"
+                id: id_menu_connect
+                text: "Connect to MythTV"
                 onClicked:
                 {
                     idRectangleShowError.visible = false;
@@ -98,6 +94,10 @@ Page
                     var status = id_CppTools.iConnect(id_TextField_HostName.text, id_TextField_PortNumber.text)
                     if (status == 0)
                     {
+                        //Save connect settings to project settings
+                        id_CppTools.vSaveProjectData("HostName", id_TextField_HostName.text);
+                        id_CppTools.vSaveProjectData("PortNumber", id_TextField_PortNumber.text);
+
                         pageStack.pushAttached(Qt.resolvedUrl("NavigationPage.qml"));
                         pageStack.navigateForward();
                         timMainLoopTimer.start();
@@ -106,47 +106,147 @@ Page
                     {
                         idRectangleShowError.visible = true;
                         idLabelErrorText.text = "Error while connecting to MythTV: " + status.toString();
+                        timErrorTimer.start();
                     }
                 }
+            }
+            MenuItem
+            {
+                id: id_menu_wol
+                text: "Wakeup TV station"
+                onClicked:
+                {
+                    //Save connect settings to project settings
+
+                    if (id_CppTools.bSendMagicPacket(id_TextField_MacAddress.text) == false)
+                    {
+                        idRectangleShowError.visible = true;
+                        idLabelErrorText.text = "Error while sending wake up packet!"
+                        timErrorTimer.start();
+                    }
+                }
+            }
+        }
+
+        Column
+        {
+            id: id_Column_FirstCol
+
+            spacing: Theme.paddingSmall
+            width: parent.width
+
+            PageHeader { title: "Welcome to MythFish" }
+
+            Rectangle
+            {
+                id: idRectangleShowError
+                width: parent.width
+                height: id_TextField_PortNumber.height
+                color: Theme.highlightColor
+                opacity: 0.5
+                visible: false
+                Label
+                {
+                    id: idLabelErrorText
+                    x: Theme.paddingMedium
+                    font.pixelSize: Theme.fontSizeMedium
+                    anchors.centerIn: parent
+                    color: "red"
+                    text: "Error ..."
+                }
+            }
+            Label
+            {
+                x: Theme.paddingLarge
+                text: "Connection settings"
+                color: Theme.secondaryHighlightColor
+                font.pixelSize: Theme.fontSizeExtraLarge
+            }
+            TextField
+            {
+                anchors.margins: Theme.paddingLarge
+                id: id_TextField_HostName
+                inputMethodHints: Qt.ImhNoAutoUppercase | Qt.ImhNoPredictiveText
+                label: "Enter host name or ip address"
+                validator: RegExpValidator { regExp: /^(([a-zA-Z0-9]|[a-zA-Z0-9][a-zA-Z0-9\-]*[a-zA-Z0-9])\.)*([A-Za-z0-9]|[A-Za-z0-9][A-Za-z0-9\-]*[A-Za-z0-9])$/ }
+                color: errorHighlight? "red" : Theme.primaryColor
+                placeholderText: "Enter host name or ip address"
+                onErrorHighlightChanged: errorHighlight? id_menu_connect.enabled=false : id_menu_connect.enabled=true
+                text: "192.168.0.4"
+                width: parent.width
+            }
+
+            TextField
+            {
+                anchors.margins: Theme.paddingSmall
+                id: id_TextField_PortNumber
+                inputMethodHints: Qt.ImhDigitsOnly | Qt.ImhNoPredictiveText
+                validator: RegExpValidator { regExp: /^(6553[0-5])|(655[0-2]\d)|(65[0-4]\d{2})|(6[0-4]\d{3})|([1-5]\d{4})|([1-9]\d{1,3})|(\d)$/ }
+                color: errorHighlight? "red" : Theme.primaryColor
+                placeholderText: "Enter port number"
+                label: "Enter port number"
+                onErrorHighlightChanged: errorHighlight? id_menu_connect.enabled=false : id_menu_connect.enabled=true
+                text: "6546"
+                width: parent.width
+            }
+            TextSwitch
+            {
+                text: "Auto Connect"
+                description: "Connect on startup of this app."
+                onCheckedChanged: { busy = true; timBusyTimerConnect.start() }
+                Timer
+                {
+                    id: timBusyTimerConnect
+                    interval: 1000
+                    onTriggered: parent.busy = false
+                }
+            }
+        }
+        Item
+        {
+            id: id_Item_Separator
+            anchors.top: id_Column_FirstCol.bottom;
+            width: parent.width
+            height: Theme.paddingLarge
+        }
+        Column
+        {
+            id: id_Column_SecondCol
+            anchors.top: id_Item_Separator.bottom;
+            spacing: Theme.paddingSmall
+            width: parent.width
+
+            Label
+            {
+                x: Theme.paddingLarge
+                text: "Wake on lan settings"
+                color: Theme.secondaryHighlightColor
+                font.pixelSize: Theme.fontSizeExtraLarge
             }
             TextField
             {
                 anchors.margins: Theme.paddingLarge
                 id: id_TextField_MacAddress
-                placeholderText: "XXXXXXXXXXXX"
+                placeholderText: "Enter mac address"
                 validator: RegExpValidator { regExp: /^((([0-9A-Fa-f]{2}[:-]){5})|(([0-9A-Fa-f]{2}){5}))([0-9A-Fa-f]{2})$/ }
                 color: errorHighlight? "red" : Theme.primaryColor
+                label: "Enter mac address"
+                text: "00:87:34:1d:8d:f4"
                 inputMethodHints: Qt.ImhNoPredictiveText | Qt.ImhNoAutoUppercase
+                width: parent.width
+                onErrorHighlightChanged: errorHighlight? id_menu_wol.enabled=false : id_menu_wol.enabled=true
             }
-            Button
+            TextSwitch
             {
-                text: "Wake up TV station"
-                onClicked:
+                text: "Auto Wakeup"
+                description: "Wakeup TV station on startup of this app."
+                onCheckedChanged: { busy = true; timBusyTimerWOL.start() }
+                Timer
                 {
-                    if (id_CppTools.bSendMagicPacket(id_TextField_MacAddress.text) == false)
-                    {
-                        idRectangleShowError.visible = true;
-                        idLabelErrorText.text = "Error while sending wake up packet!"
-                    }
+                    id: timBusyTimerWOL
+                    interval: 2000
+                    onTriggered: parent.busy = false
                 }
-            }
-
-        }
-        Rectangle
-        {
-            id: idRectangleShowError
-            anchors.top: parent.bottom;
-            anchors.left: parent.left;
-            anchors.right: parent.right;
-            height: id_TextField_PortNumber.height;
-            color: Theme.highlightColor;
-            opacity: 0.5
-            visible: false;
-            Label
-            {
-                id: idLabelErrorText
-                anchors.centerIn: parent
-                text: "Error ..."
             }
         }
     }
