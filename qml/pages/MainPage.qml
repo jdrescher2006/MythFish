@@ -62,7 +62,7 @@ Page
             Label
             {
                 x: Theme.paddingLarge
-                text: qsTr("Start by connecting\r\nto a frontend")
+                text: qsTr("Configuration")
                 color: Theme.secondaryHighlightColor
                 font.pixelSize: Theme.fontSizeExtraLarge
             }
@@ -109,6 +109,28 @@ Page
                     }
                 }
             }
+            TextField
+            {
+                anchors.margins: Theme.paddingLarge
+                id: id_TextField_MacAddress
+                placeholderText: "XXXXXXXXXXXX"
+                validator: RegExpValidator { regExp: /^((([0-9A-Fa-f]{2}[:-]){5})|(([0-9A-Fa-f]{2}){5}))([0-9A-Fa-f]{2})$/ }
+                color: errorHighlight? "red" : Theme.primaryColor
+                inputMethodHints: Qt.ImhNoPredictiveText | Qt.ImhNoAutoUppercase
+            }
+            Button
+            {
+                text: "Wake up TV station"
+                onClicked:
+                {
+                    if (id_CppTools.bSendMagicPacket(id_TextField_MacAddress.text) == false)
+                    {
+                        idRectangleShowError.visible = true;
+                        idLabelErrorText.text = "Error while sending wake up packet!"
+                    }
+                }
+            }
+
         }
         Rectangle
         {
