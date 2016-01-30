@@ -24,23 +24,42 @@ Page
     allowedOrientations: Orientation.All
 
     property bool bStartMainPage: true
+    property bool bInitPage: true
 
     onStatusChanged:
     {
         if (status == PageStatus.Active && bStartMainPage)
         {
-            bStartMainPage = false
+            bInitPage = true;
+            bStartMainPage = false;
 
             //Load settings
             var sHostname = id_CppTools.sLoadProjectData("HostName");
             var sPortnumber = id_CppTools.sLoadProjectData("PortNumber");
+            var sAutoConnect = id_CppTools.sLoadProjectData("AutoConnect");
+            var sMACaddress = id_CppTools.sLoadProjectData("MACaddress");
+            var sAutoWakeup = id_CppTools.sLoadProjectData("AutoWakeup");
+
+            console.log("sHostname: " + sHostname);
+            console.log("sPortnumber: " + sPortnumber);
+            console.log("sAutoConnect: " + sAutoConnect);
+            console.log("sMACaddress: " + sMACaddress);
+            console.log("sAutoWakeup: " + sAutoWakeup);
 
             if (sHostname.length > 0)
                 id_TextField_HostName.text = sHostname;
             if (sPortnumber.length > 0)
                 id_TextField_PortNumber.text = sPortnumber;
+            if (sAutoConnect.length > 0)
+                id_TextSwitch_AutoConnect.checked = (sAutoConnect === "true");
+            if (sMACaddress.length > 0)
+                id_TextField_MacAddress.text = sMACaddress;
+            if (sAutoWakeup.length > 0)
+                id_TextSwitch_AutoWakeup.checked = (sAutoWakeup === "true");
+
+            bInitPage = false;
         }
-    }
+    }  
 
     Timer
     {
@@ -93,11 +112,7 @@ Page
 
                     var status = id_CppTools.iConnect(id_TextField_HostName.text, id_TextField_PortNumber.text)
                     if (status == 0)
-                    {
-                        //Save connect settings to project settings
-                        id_CppTools.vSaveProjectData("HostName", id_TextField_HostName.text);
-                        id_CppTools.vSaveProjectData("PortNumber", id_TextField_PortNumber.text);
-
+                    {                       
                         pageStack.pushAttached(Qt.resolvedUrl("NavigationPage.qml"));
                         pageStack.navigateForward();
                         timMainLoopTimer.start();
@@ -123,6 +138,10 @@ Page
                         idRectangleShowError.visible = true;
                         idLabelErrorText.text = "Error while sending wake up packet!"
                         timErrorTimer.start();
+                    }
+                    else
+                    {
+
                     }
                 }
             }
@@ -151,7 +170,6 @@ Page
                     x: Theme.paddingMedium
                     font.pixelSize: Theme.fontSizeMedium
                     anchors.centerIn: parent
-                    color: "red"
                     text: "Error ..."
                 }
             }
@@ -174,6 +192,11 @@ Page
                 onErrorHighlightChanged: errorHighlight? id_menu_connect.enabled=false : id_menu_connect.enabled=true
                 text: "192.168.0.4"
                 width: parent.width
+                onAcceptableInputChanged:
+                {
+                    if (!bInitPage)
+                        id_CppTools.vSaveProjectData("HostName", id_TextField_HostName.text);
+                }
             }
 
             TextField
@@ -188,12 +211,24 @@ Page
                 onErrorHighlightChanged: errorHighlight? id_menu_connect.enabled=false : id_menu_connect.enabled=true
                 text: "6546"
                 width: parent.width
+                onAcceptableInputChanged:
+                {
+                    if (!bInitPage)
+                        id_CppTools.vSaveProjectData("PortNumber", id_TextField_PortNumber.text);
+                }
             }
             TextSwitch
             {
+                id: id_TextSwitch_AutoConnect
                 text: "Auto Connect"
                 description: "Connect on startup of this app."
-                onCheckedChanged: { busy = true; timBusyTimerConnect.start() }
+                onCheckedChanged:
+                {
+                    busy = true;
+                    timBusyTimerConnect.start();
+                    if (!bInitPage)
+                        id_CppTools.vSaveProjectData("AutoConnect", id_TextSwitch_AutoConnect.checked.toString());
+                }
                 Timer
                 {
                     id: timBusyTimerConnect
@@ -234,13 +269,25 @@ Page
                 text: "00:87:34:1d:8d:f4"
                 inputMethodHints: Qt.ImhNoPredictiveText | Qt.ImhNoAutoUppercase
                 width: parent.width
-                onErrorHighlightChanged: errorHighlight? id_menu_wol.enabled=false : id_menu_wol.enabled=true
+                onErrorHighlightChanged: errorHighlight? id_menu_wol.enabled=false : id_menu_wol.enabled=true                
+                onAcceptableInputChanged:
+                {
+                    if (!bInitPage)
+                        id_CppTools.vSaveProjectData("MACaddress", id_TextField_MacAddress.text);
+                }
             }
             TextSwitch
             {
+                id: id_TextSwitch_AutoWakeup
                 text: "Auto Wakeup"
                 description: "Wakeup TV station on startup of this app."
-                onCheckedChanged: { busy = true; timBusyTimerWOL.start() }
+                onCheckedChanged:
+                {
+                    busy = true;
+                    timBusyTimerWOL.start();
+                    if (!bInitPage)
+                        id_CppTools.vSaveProjectData("AutoWakeup", id_TextSwitch_AutoWakeup.checked.toString());
+                }
                 Timer
                 {
                     id: timBusyTimerWOL
