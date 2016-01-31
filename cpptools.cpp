@@ -154,7 +154,7 @@ QString Cpptools::sLoadProjectData(const QString &sKey)
     QSettings settings;
     QString sMySetting = settings.value(sKey, "").toString();
 
-    qDebug() << sMySetting;
+    //qDebug() << sMySetting;
 
     return sMySetting;
 }

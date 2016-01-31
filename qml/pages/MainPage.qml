@@ -40,11 +40,13 @@ Page
             var sMACaddress = id_CppTools.sLoadProjectData("MACaddress");
             var sAutoWakeup = id_CppTools.sLoadProjectData("AutoWakeup");
 
+            /*
             console.log("sHostname: " + sHostname);
             console.log("sPortnumber: " + sPortnumber);
             console.log("sAutoConnect: " + sAutoConnect);
             console.log("sMACaddress: " + sMACaddress);
             console.log("sAutoWakeup: " + sAutoWakeup);
+            */
 
             if (sHostname.length > 0)
                 id_TextField_HostName.text = sHostname;
@@ -64,12 +66,45 @@ Page
     Timer
     {
         id: timMainLoopTimer
-        interval: 1000
-        running: false
+        interval: 2000
+        running: true
         repeat: true
         onTriggered:
         {
-            console.log("Timer running in MainPage.qml");
+            //Don't do anything when page is initialising
+            if (bInitPage)
+                return;
+
+
+
+            //Are we connected to frontend?
+            if (id_CppTools.bGetConnected() && id_TextSwitch_AutoConnect.checked)
+            {
+                //First read current location
+                var sLocation = id_CppTools.sSendCommand("query location");
+
+                //possible locations:
+                //mainmenu, guidegrid, StatusBox, mythvideo, playlistview(Music), playbackbox(Recordings)
+
+                console.log("Location: " + sLocation);
+
+                //Extract what MythTV is currently doing
+                var iIndex = "unknown"
+                iIndex = sLocation.indexOf("Playback");     //playback of any media
+                if (iIndex == -1 )
+                    bMythPlayback = false;
+                else
+                    bMythPlayback = true;
+
+                if (bMythPlayback)
+                {
+                    var sVolume = id_CppTools.sSendCommand("query volume");
+
+                    console.log("Volume: " + sVolume);
+
+                    iVolumePercent = parseInt(sVolume);
+                }
+            }
         }
     }
     Timer
@@ -211,10 +246,14 @@ Page
                 onErrorHighlightChanged: errorHighlight? id_menu_connect.enabled=false : id_menu_connect.enabled=true
                 text: "6546"
                 width: parent.width
-                onAcceptableInputChanged:
+                onTextChanged:
                 {
+                    console.log("onAcceptableInputChanged");
                     if (!bInitPage)
+                    {
+                        console.log("vSaveProjectData: " + id_TextField_PortNumber.text);
                         id_CppTools.vSaveProjectData("PortNumber", id_TextField_PortNumber.text);
+                    }
                 }
             }
             TextSwitch

@@ -33,84 +33,7 @@ Page
             bPushNumbersPage = false
             pageStack.pushAttached(Qt.resolvedUrl("NumbersPage.qml"));
         }
-    }
-
-    Timer
-    {
-        id: timMainLoop
-        interval: 1000
-        running: false
-        repeat: true
-        onTriggered:
-        {
-            if (bSoundPressed)
-                return;
-
-            var sLocation = remote.send_command("query location");
-            var sVolume = remote.send_command("query volume");
-
-            //Analyse answer.
-            //Detect running playback of anything
-            var iIndex = sLocation.indexOf("Playback");
-            //Check if pause
-
-            if (iIndex != -1 )
-            {
-                idSLDPlaySlider.visible = true;
-                idSLDVolumeSlider.visible = true;
-
-                console.log("sVolume", sVolume);
-
-                var iVolume = parseInt(sVolume);
-                if (iVolume != idSLDVolumeSlider.value)
-                    idSLDVolumeSlider.value = iVolume;
-
-                //Get play location in recording
-                var sPlayLocation = sLocation.substring((sLocation.indexOf(":") - 2), (sLocation.indexOf(" ", iIndex + 18)));
-
-
-                console.log("sLocation", sLocation);
-                console.log("sPlayLocation", sPlayLocation);
-
-                //Get max length of recording
-                var sMaxLength = sLocation.substring((sLocation.indexOf("von", iIndex) + 4), (sLocation.indexOf(" ", (sLocation.indexOf("von", iIndex) + 4))));
-
-                console.log("sMaxLength", sMaxLength);
-
-                idSLDPlaySlider.valueText = sPlayLocation;
-
-                var sPlayLocation = sPlayLocation.split(":");
-                var sMaxLength = sMaxLength.split(":");
-
-                var iPlaySeconds = 0;
-                if (sPlayLocation.length == 2)
-                    iPlaySeconds = (parseInt(sPlayLocation[0]) * 60) + parseInt(sPlayLocation[1]);
-                else
-                    iPlaySeconds = (parseInt(sPlayLocation[0]) * 3600) + (parseInt(sPlayLocation[1]) * 60) + parseInt(sPlayLocation[2]);
-
-                var iLengthSeconds = 0;
-                if (sMaxLength.length == 2)
-                    iLengthSeconds = (parseInt(sMaxLength[0]) * 60) + parseInt(sMaxLength[1]);
-                else
-                    iLengthSeconds = (parseInt(sMaxLength[0]) * 3600) + (parseInt(sMaxLength[1]) * 60) + parseInt(sMaxLength[2]);
-
-                idSLDPlaySlider.maximumValue = iLengthSeconds;
-                idSLDPlaySlider.minimumValue = 0;
-                idSLDPlaySlider.value = iPlaySeconds;
-
-                //Paused?
-                if (sLocation.indexOf("pause") == -1)
-                    idSLDPlaySlider.label = "Play"
-                else
-                    idSLDPlaySlider.label = "Pause"
-            }
-            else
-            {
-                idSLDPlaySlider.visible = false;
-                idSLDVolumeSlider.visible = false;
-            }
-        }
-    }
+    } 
 
     SilicaFlickable
     {
@@ -123,7 +46,108 @@ Page
             width: parent.width
             spacing: Theme.paddingSmall
 
-            PageHeader { title: "Media" }
+            PageHeader { title: "Play Media" }
+
+            Row
+            {
+                spacing: Theme.paddingSmall
+                width: parent.width
+
+                Button
+                {
+                    width: parent.width/4;
+                    text: "Rec"
+                    onClicked:
+                    {
+                        id_CppTools.sSendCommand("key r");
+                    }
+                    Image
+                    {
+                        source: "image://theme/icon-m-dot"
+                    }
+                }
+                Button
+                {
+                    width: parent.width/4;
+                    text: "Stop"
+                    onClicked:
+                    {
+                        id_CppTools.sSendCommand("key stop");
+                    }
+                    Image
+                    {
+                        source: "../icon-m-stop.png"
+                    }
+                }
+                Button
+                {
+                    width: parent.width/4;
+                    text: "Pause"
+                    onClicked:
+                    {
+                        id_CppTools.sSendCommand("play speed pause");
+                    }
+                    Image
+                    {
+                        source: "image://theme/icon-m-pause"
+                    }
+                }
+                Button
+                {
+                    width: parent.width/4;
+                    text: "Play"
+                    onClicked:
+                    {
+                        id_CppTools.sSendCommand("play speed normal");
+                    }
+                    Image
+                    {
+                        source: "image://theme/icon-m-play"
+                    }
+                }
+            }
+            Row
+            {
+                spacing: Theme.paddingSmall
+                width: parent.width
+
+                Button
+                {
+                    width: parent.width/4;
+                    text: "Prev"
+                    onClicked:
+                    {
+                        id_CppTools.sSendCommand("play seek backward");
+                    }
+                }
+                Button
+                {
+                    width: parent.width/4;
+                    text: "Rew"
+                    onClicked:
+                    {
+                        id_CppTools.sSendCommand("key left");
+                    }
+                }
+                Button
+                {
+                    width: parent.width/4;
+                    text: "FF"
+                    onClicked:
+                    {
+                        id_CppTools.sSendCommand("key right");
+                    }
+                }
+                Button
+                {
+                    width: parent.width/4;
+                    text: "Next"
+                    onClicked:
+                    {
+                        id_CppTools.sSendCommand("play seek forward");
+                    }
+                }
+            }
 
             Row
             {
@@ -136,7 +160,7 @@ Page
                     text: "Info"
                     onClicked:
                     {
-                        remote.send_command("key i");
+                        id_CppTools.sSendCommand("key i");
                     }
                     Image
                     {
@@ -149,7 +173,7 @@ Page
                     text: ""
                     onClicked:
                     {
-                        remote.send_command("key up");
+                        id_CppTools.sSendCommand("key up");
                     }
                     Image
                     {
@@ -162,7 +186,7 @@ Page
                     text: "Guide"
                     onClicked:
                     {
-                        remote.send_command("key s");
+                        id_CppTools.sSendCommand("key s");
                     }
                     Image
                     {
@@ -181,7 +205,7 @@ Page
                     text: ""
                     onClicked:
                     {
-                        remote.send_command("key left");
+                        id_CppTools.sSendCommand("key left");
                     }
                     Image
                     {
@@ -194,7 +218,7 @@ Page
                     text: "OK"
                     onClicked:
                     {
-                        remote.send_command("key enter");
+                        id_CppTools.sSendCommand("key enter");
                     }
                     Image
                     {
@@ -207,7 +231,7 @@ Page
                     text: ""
                     onClicked:
                     {
-                        remote.send_command("key right");
+                        id_CppTools.sSendCommand("key right");
                     }
                     Image
                     {
@@ -226,7 +250,7 @@ Page
                     text: "Exit"
                     onClicked:
                     {
-                        remote.send_command("key back");
+                        id_CppTools.sSendCommand("key back");
                     }
                     Image
                     {
@@ -239,7 +263,7 @@ Page
                     text: ""
                     onClicked:
                     {
-                        remote.send_command("key down");
+                        id_CppTools.sSendCommand("key down");
                     }
                     Image
                     {
@@ -252,7 +276,7 @@ Page
                     text: "Menü"
                     onClicked:
                     {
-                        remote.send_command("key m");
+                        id_CppTools.sSendCommand("key m");
                     }
                     Image
                     {
@@ -271,7 +295,7 @@ Page
                     text: "Kanal -"
                     onClicked:
                     {
-                        remote.send_command("play channel down");
+                        id_CppTools.sSendCommand("play channel down");
                     }
                     Image
                     {
@@ -289,7 +313,7 @@ Page
                     text: "Kanal +"
                     onClicked:
                     {
-                        remote.send_command("play channel up");
+                        id_CppTools.sSendCommand("play channel up");
                     }
                     Image
                     {
@@ -308,7 +332,7 @@ Page
                     text: "Leiser"
                     onClicked:
                     {
-                        remote.send_command("key [");
+                        id_CppTools.sSendCommand("key [");
                     }
                     Image
                     {
@@ -321,7 +345,7 @@ Page
                     text: "Stumm"
                     onClicked:
                     {
-                        remote.send_command("key |");
+                        id_CppTools.sSendCommand("key |");
                     }
                     Image
                     {
@@ -334,73 +358,14 @@ Page
                     text: "Lauter"
                     onClicked:
                     {
-                        remote.send_command("key ]");
+                        id_CppTools.sSendCommand("key ]");
                     }
                     Image
                     {
                         source: "image://theme/icon-m-speaker"
                     }
                 }
-            }
-
-            Row
-            {
-                spacing: Theme.paddingSmall
-                width: parent.width
-
-                Button
-                {
-                    width: parent.width/4;
-                    text: "Rec"
-                    onClicked:
-                    {
-                        remote.send_command("key r");
-                    }
-                    Image
-                    {
-                        source: "image://theme/icon-m-dot"
-                    }
-                }
-                Button
-                {
-                    width: parent.width/4;
-                    text: "Stop"
-                    onClicked:
-                    {
-                        remote.send_command("key stop");
-                    }
-                    Image
-                    {
-                        source: "../icon-m-stop.png"
-                    }
-                }
-                Button
-                {
-                    width: parent.width/4;
-                    text: "Pause"
-                    onClicked:
-                    {
-                        remote.send_command("play speed pause");
-                    }
-                    Image
-                    {
-                        source: "image://theme/icon-m-pause"
-                    }
-                }
-                Button
-                {
-                    width: parent.width/4;
-                    text: "Play"
-                    onClicked:
-                    {
-                        remote.send_command("play speed normal");
-                    }
-                    Image
-                    {
-                        source: "image://theme/icon-m-play"
-                    }
-                }
-            }
+            }           
             Slider
             {
                 id: idSLDPlaySlider
@@ -412,10 +377,12 @@ Page
                 handleVisible: true
                 valueText : "Test Text"
                 label: "Test Label"
+                visible: bMythPlayback
             }
             Row
             {
                 width: parent.width
+                visible: bMythPlayback
                 Image
                 {
                     source: "../icon-m-quiet.png"
@@ -423,7 +390,7 @@ Page
                 Slider
                 {
                     id: idSLDVolumeSlider
-                    value: 0
+                    value: iVolumePercent
                     minimumValue: 0
                     maximumValue: 100
                     enabled: true
@@ -431,6 +398,7 @@ Page
                     handleVisible: true
                     valueText : ""
                     label: "Volume"
+                    visible: bMythPlayback
                     onValueChanged:
                     {
                         idSLDVolumeSlider.valueText = Math.ceil(idSLDVolumeSlider.value) + "%";
@@ -442,7 +410,7 @@ Page
                     onReleased:
                     {
                         //Set volume to selected value
-                        remote.send_command("play volume " + Math.ceil(idSLDVolumeSlider.value) + "%");
+                        id_CppTools.sSendCommand("play volume " + Math.ceil(idSLDVolumeSlider.value) + "%");
                         bSoundPressed = false;
                     }
                 }

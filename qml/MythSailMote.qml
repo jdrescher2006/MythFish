@@ -21,9 +21,9 @@ import "pages"
 import cpptools 1.0
 
 ApplicationWindow
-{
-    property string strVolume: '';
-    property string strLocation: '';
+{    
+    property bool bMythPlayback: false;
+    property int iVolumePercent: 0;
 
     Cpptools
     {
