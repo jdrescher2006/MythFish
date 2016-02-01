@@ -29,28 +29,25 @@ Page
         {
             title: "About MythFish"
         }
-        Item {
+        Item
+        {
             width: parent.width
             height: Theme.paddingMedium
         }
-        Image {
+        Image
+        {
             anchors.horizontalCenter: parent.horizontalCenter
             height: 256
             fillMode: Image.PreserveAspectFit
             source: "../MythSailMote.png"
         }
-        Item {
-            width: parent.width
-            height: Theme.paddingMedium
-        }
-        Label {
+        Label
+        {
             width: parent.width
             anchors.horizontalCenter: parent.horizontalCenter
-            font.pixelSize: Theme.fontSizeSmall
-            wrapMode: Text.WordWrap
-            maximumLineCount: 2
+            font.pixelSize: Theme.fontSizeLarge
             horizontalAlignment: Text.AlignHCenter
-            text: "Remote application for MythTV"
+            text: "MythFish"
         }
         Item
         {
@@ -59,15 +56,18 @@ Page
         }
         Label
         {
+            width: parent.width
             anchors.horizontalCenter: parent.horizontalCenter
             font.pixelSize: Theme.fontSizeExtraSmall
-            color: Theme.secondaryColor
-            text: "Version: 1.00"
+            wrapMode: Text.WordWrap
+            maximumLineCount: 2
+            horizontalAlignment: Text.AlignHCenter
+            text: "Remote control application for MythTV"
         }
         Item
         {
             width: parent.width
-            height: Theme.paddingMedium
+            height: Theme.paddingLarge
         }
         Label
         {
@@ -81,7 +81,41 @@ Page
             anchors.horizontalCenter: parent.horizontalCenter
             font.pixelSize: Theme.fontSizeExtraSmall
             color: Theme.secondaryColor
+            text: "Version: 1.00"
+        }
+        Label
+        {
+            anchors.horizontalCenter: parent.horizontalCenter
+            font.pixelSize: Theme.fontSizeExtraSmall
+            color: Theme.secondaryColor
+            text: "Date: 01.02.2016"
+        }
+        Label
+        {
+            anchors.horizontalCenter: parent.horizontalCenter
+            font.pixelSize: Theme.fontSizeExtraSmall
+            color: Theme.secondaryColor
             text: "License: GPLv3"
+        }
+        Item
+        {
+            width: parent.width
+            height: Theme.paddingLarge
+        }
+        Label
+        {
+            anchors.horizontalCenter: parent.horizontalCenter
+            font.pixelSize: Theme.fontSizeExtraSmall
+            color: Theme.secondaryColor
+            text: "Source code:"
+        }
+        Label
+        {
+            anchors.horizontalCenter: parent.horizontalCenter
+            font.pixelSize: Theme.fontSizeExtraSmall
+            property string urlstring: "https://github.com/jdrescher2006/MythSailMote"
+            text: "<a href=\"" + urlstring + "\">" +  urlstring + "<\a>"
+            onLinkActivated: Qt.openUrlExternally(link)
         }
     }
 }

@@ -38,13 +38,14 @@ Page
     SilicaFlickable
     {
         anchors.fill: parent
-        contentHeight: column.height
+        contentHeight: id_Column_FirstCol.height + Theme.paddingLarge + id_Column_SecondCol.height + Theme.paddingLarge + id_Column_ThirdCol.height + Theme.paddingLarge
 
         Column
         {
-            id: column
-            width: parent.width
+            id: id_Column_FirstCol
+
             spacing: Theme.paddingSmall
+            width: parent.width
 
             PageHeader { title: "Play Media" }
 
@@ -63,7 +64,9 @@ Page
                     }
                     Image
                     {
-                        source: "image://theme/icon-m-dot"
+                        width: 32;
+                        height: 32;
+                        source: "../ilocationcon-m-rec.png"
                     }
                 }
                 Button
@@ -76,6 +79,8 @@ Page
                     }
                     Image
                     {
+                        width: 32;
+                        height: 32;
                         source: "../icon-m-stop.png"
                     }
                 }
@@ -89,6 +94,8 @@ Page
                     }
                     Image
                     {
+                        width: 32;
+                        height: 32;
                         source: "image://theme/icon-m-pause"
                     }
                 }
@@ -102,6 +109,8 @@ Page
                     }
                     Image
                     {
+                        width: 32;
+                        height: 32;
                         source: "image://theme/icon-m-play"
                     }
                 }
@@ -119,13 +128,19 @@ Page
                     {
                         id_CppTools.sSendCommand("play seek backward");
                     }
+                    Image
+                    {
+                        width: 32;
+                        height: 32;
+                        source: "image://theme/icon-m-previous"
+                    }
                 }
                 Button
                 {
                     width: parent.width/4;
                     text: "Rew"
                     onClicked:
-                    {
+                    {                       
                         id_CppTools.sSendCommand("key left");
                     }
                 }
@@ -134,7 +149,7 @@ Page
                     width: parent.width/4;
                     text: "FF"
                     onClicked:
-                    {
+                    {                        
                         id_CppTools.sSendCommand("key right");
                     }
                 }
@@ -146,8 +161,28 @@ Page
                     {
                         id_CppTools.sSendCommand("play seek forward");
                     }
+                    Image
+                    {
+                        width: 32;
+                        height: 32;
+                        source: "image://theme/icon-m-next"
+                    }
                 }
             }
+        }
+        Item
+        {
+            id: id_Item_Separator
+            anchors.top: id_Column_FirstCol.bottom;
+            width: parent.width
+            height: Theme.paddingLarge
+        }
+        Column
+        {
+            id: id_Column_SecondCol
+            anchors.top: id_Item_Separator.bottom;
+            spacing: Theme.paddingSmall
+            width: parent.width
 
             Row
             {
@@ -159,25 +194,29 @@ Page
                     width: parent.width/3;
                     text: "Info"
                     onClicked:
-                    {
+                    {                        
                         id_CppTools.sSendCommand("key i");
                     }
                     Image
                     {
+                        width: 32;
+                        height: 32;
                         source: "image://theme/icon-m-about"
                     }
                 }
                 Button
                 {
                     width: parent.width/3;
-                    text: ""
+                    text: "Menu"
                     onClicked:
                     {
-                        id_CppTools.sSendCommand("key up");
+                        id_CppTools.sSendCommand("key m");
                     }
                     Image
                     {
-                        source: "image://theme/icon-m-up"
+                        width: 32;
+                        height: 32;
+                        source: "image://theme/icon-m-menu"
                     }
                 }
                 Button
@@ -190,10 +229,12 @@ Page
                     }
                     Image
                     {
+                        width: 32;
+                        height: 32;
                         source: "image://theme/icon-m-note"
                     }
                 }
-            }
+            }           
             Row
             {
                 spacing: Theme.paddingSmall
@@ -202,169 +243,48 @@ Page
                 Button
                 {
                     width: parent.width/3;
-                    text: ""
-                    onClicked:
-                    {
-                        id_CppTools.sSendCommand("key left");
-                    }
-                    Image
-                    {
-                        source: "image://theme/icon-m-left"
-                    }
-                }
-                Button
-                {
-                    width: parent.width/3;
-                    text: "OK"
-                    onClicked:
-                    {
-                        id_CppTools.sSendCommand("key enter");
-                    }
-                    Image
-                    {
-                        source: "image://theme/icon-m-enter"
-                    }
-                }
-                Button
-                {
-                    width: parent.width/3;
-                    text: ""
-                    onClicked:
-                    {
-                        id_CppTools.sSendCommand("key right");
-                    }
-                    Image
-                    {
-                        source: "image://theme/icon-m-right"
-                    }
-                }
-            }
-            Row
-            {
-                spacing: Theme.paddingSmall
-                width: parent.width
-
-                Button
-                {
-                    width: parent.width/3;
-                    text: "Exit"
-                    onClicked:
-                    {
-                        id_CppTools.sSendCommand("key back");
-                    }
-                    Image
-                    {
-                        source: "image://theme/icon-m-backspace"
-                    }
-                }
-                Button
-                {
-                    width: parent.width/3;
-                    text: ""
-                    onClicked:
-                    {
-                        id_CppTools.sSendCommand("key down");
-                    }
-                    Image
-                    {
-                        source: "image://theme/icon-m-down"
-                    }
-                }
-                Button
-                {
-                    width: parent.width/3;
-                    text: "Menü"
-                    onClicked:
-                    {
-                        id_CppTools.sSendCommand("key m");
-                    }
-                    Image
-                    {
-                        source: "image://theme/icon-m-menu"
-                    }
-                }
-            }
-            Row
-            {
-                spacing: Theme.paddingSmall
-                width: parent.width
-
-                Button
-                {
-                    width: parent.width/3;
-                    text: "Kanal -"
-                    onClicked:
-                    {
-                        id_CppTools.sSendCommand("play channel down");
-                    }
-                    Image
-                    {
-                        source: "image://theme/icon-m-page-down"
-                    }
-                }
-                Button
-                {
-                    width: parent.width/3;
-                    text: ""
-                }
-                Button
-                {
-                    width: parent.width/3;
-                    text: "Kanal +"
-                    onClicked:
-                    {
-                        id_CppTools.sSendCommand("play channel up");
-                    }
-                    Image
-                    {
-                        source: "image://theme/icon-m-page-up"
-                    }
-                }
-            }
-            Row
-            {
-                spacing: Theme.paddingSmall
-                width: parent.width
-
-                Button
-                {
-                    width: parent.width/3;
-                    text: "Leiser"
+                    text: "-"
                     onClicked:
                     {
                         id_CppTools.sSendCommand("key [");
                     }
                     Image
                     {
+                        width: 32;
+                        height: 32;
                         source: "../icon-m-quiet.png"
                     }
                 }
                 Button
                 {
                     width: parent.width/3;
-                    text: "Stumm"
+                    text: "Mute"
                     onClicked:
                     {
                         id_CppTools.sSendCommand("key |");
                     }
                     Image
                     {
+                        width: 32;
+                        height: 32;
                         source: "image://theme/icon-m-speaker-mute"
                     }
                 }
                 Button
                 {
                     width: parent.width/3;
-                    text: "Lauter"
+                    text: "+"
                     onClicked:
                     {
                         id_CppTools.sSendCommand("key ]");
                     }
                     Image
                     {
+                        width: 32;
+                        height: 32;
                         source: "image://theme/icon-m-speaker"
                     }
-                }
+                }                                
             }           
             Slider
             {
@@ -417,6 +337,115 @@ Page
                 Image
                 {
                     source: "image://theme/icon-m-speaker"
+                }
+            }
+        }
+        Item
+        {
+            id: id_Item_Separator2
+            anchors.top: id_Column_SecondCol.bottom;
+            width: parent.width
+            height: Theme.paddingLarge
+        }
+        Column
+        {
+            id: id_Column_ThirdCol
+            anchors.top: id_Item_Separator2.bottom;
+            width: parent.width
+            spacing: Theme.paddingSmall
+            anchors.topMargin: Theme.paddingLarge
+
+            Grid
+            {
+                columns: 3;
+                rows: 3;
+                width: parent.width;
+                spacing: Theme.paddingSmall;
+
+                Rectangle { color: "transparent"; width: 1; height: 1; }
+                Button
+                {
+                    width: parent.width/3;
+                    text: ""
+                    onClicked:
+                    {
+                        id_CppTools.sSendCommand("key up");
+                    }
+                    Image
+                    {
+                        source: "image://theme/icon-m-up"
+                    }
+                }
+                Rectangle { color: "transparent"; width: 1; height: 1; }
+                Button
+                {
+                    width: parent.width/3;
+                    text: ""
+                    onClicked:
+                    {
+                        id_CppTools.sSendCommand("key left");
+                    }
+                    Image
+                    {
+                        source: "image://theme/icon-m-left"
+                    }
+                }
+                Button
+                {
+                    width: parent.width/3;
+                    text: "OK"
+                    onClicked:
+                    {
+                        id_CppTools.sSendCommand("key enter");
+                    }
+                    Image
+                    {
+                        source: "../icon-m-stop.png"
+                    }
+                }
+                Button
+                {
+                    width: parent.width/3;
+                    text: ""
+                    onClicked:
+                    {
+                        id_CppTools.sSendCommand("key right");
+                    }
+                    Image
+                    {
+                        source: "image://theme/icon-m-right"
+                    }
+                }
+                Button
+                {
+                    width: parent.width/3;
+                    text: "Back"
+                    onClicked:
+                    {
+                        id_CppTools.sSendCommand("key escape");
+                    }
+                    Image
+                    {
+                        source: "image://theme/icon-m-enter"
+                    }
+                }
+                Button
+                {
+                    width: parent.width/3;
+                    text: ""
+                    onClicked:
+                    {
+                        id_CppTools.sSendCommand("key down");
+                    }
+                    Image
+                    {
+                        source: "image://theme/icon-m-down"
+                    }
+                }
+                Button
+                {
+                    width: parent.width/3;
+                    visible: false;
                 }
             }
         }

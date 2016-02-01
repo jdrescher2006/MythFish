@@ -139,6 +139,15 @@ Page
         {
             MenuItem
             {
+                text: "Debug, forward..."
+                onClicked:
+                {
+                    pageStack.pushAttached(Qt.resolvedUrl("NavigationPage.qml"));
+                }
+            }
+
+            MenuItem
+            {
                 id: id_menu_connect
                 text: "Connect to MythTV"
                 onClicked:
