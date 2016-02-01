@@ -15,47 +15,30 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-#ifndef CPPTOOLS
-#define CPPTOOLS
+#ifndef MYTHREMOTE
+#define MYTHREMOTE
 
 #include <QObject>
 #include <QTcpSocket>
-#include <QUdpSocket>
 #include <QRegExp>
 #include <QRegExpValidator>
 
-class Cpptools : public QObject {
+class MythRemote : public QObject{
     Q_OBJECT
     QTcpSocket *tcpSocket;
     Q_PROPERTY(QString host READ sGetHostname)
     Q_PROPERTY(QString port READ sGetPortnumber)
 public:
-    //Remote
+    explicit MythRemote(QObject *parent = 0);
+    bool bConnected;
     QString strHostname;
     QString strPortnumber;
-    bool bConnected;
-    explicit Cpptools(QObject *parent = 0);
     Q_INVOKABLE int iConnect(QString strGetHostname, QString strGetPortnumber);
     Q_INVOKABLE QString sSendCommand(QString strGetCommand);
     Q_INVOKABLE int iDisconnect();
     Q_INVOKABLE bool bGetConnected();
     Q_INVOKABLE QString sGetHostname();
     Q_INVOKABLE QString sGetPortnumber();
-
-    //WOL
-    Q_INVOKABLE QString sGetError();
-    Q_INVOKABLE bool bSendMagicPacket(QString sMacAddress);
-    Q_INVOKABLE bool bIsValidMacAddress(QString sMacAddress);
-
-    //Load/save
-    Q_INVOKABLE void vSaveProjectData(const QString &sKey, const QString &sValue);
-    Q_INVOKABLE QString sLoadProjectData(const QString &sKey);
-private:
-    //WOL
-    QUdpSocket *udpSocket;
-    QString sCleanMac(QString sMacAddress);
-    QString sError;
 };
 
-#endif // CPPTOOLS
-
+#endif // MYTHREMOTE

@@ -34,19 +34,11 @@ Page
             bStartMainPage = false;
 
             //Load settings
-            var sHostname = id_CppTools.sLoadProjectData("HostName");
-            var sPortnumber = id_CppTools.sLoadProjectData("PortNumber");
-            var sAutoConnect = id_CppTools.sLoadProjectData("AutoConnect");
-            var sMACaddress = id_CppTools.sLoadProjectData("MACaddress");
-            var sAutoWakeup = id_CppTools.sLoadProjectData("AutoWakeup");
-
-            /*
-            console.log("sHostname: " + sHostname);
-            console.log("sPortnumber: " + sPortnumber);
-            console.log("sAutoConnect: " + sAutoConnect);
-            console.log("sMACaddress: " + sMACaddress);
-            console.log("sAutoWakeup: " + sAutoWakeup);
-            */
+            var sHostname = id_ProjectSettings.sLoadProjectData("HostName");
+            var sPortnumber = id_ProjectSettings.sLoadProjectData("PortNumber");
+            var sAutoConnect = id_ProjectSettings.sLoadProjectData("AutoConnect");
+            var sMACaddress = id_ProjectSettings.sLoadProjectData("MACaddress");
+            var sAutoWakeup = id_ProjectSettings.sLoadProjectData("AutoWakeup");
 
             if (sHostname.length > 0)
                 id_TextField_HostName.text = sHostname;
@@ -58,6 +50,46 @@ Page
                 id_TextField_MacAddress.text = sMACaddress;
             if (sAutoWakeup.length > 0)
                 id_TextSwitch_AutoWakeup.checked = (sAutoWakeup === "true");
+
+            //If wake on lan then do it here
+            if (sAutoWakeup === "true")
+            {
+                idRectangleShowError.visible = false;
+
+                var iReturnByteCount = id_WakeOnLan.iSendMagicPacket(sMACaddress);
+
+                console.log("iReturnByteCount: " + iReturnByteCount.toString());
+
+                if (iReturnByteCount == -1)
+                {
+                    idRectangleShowError.visible = true;
+                    idLabelErrorText.text = qsTr("Error while sending wake up packet!");
+                    timErrorTimer.start();
+                }
+            }
+
+            //If wake on lan then do it here
+            if (sAutoConnect === "true")
+            {
+                idRectangleShowError.visible = false;
+
+                var status = id_MythRemote.iConnect(sHostname, sPortnumber)
+                if (status == 0)
+                {
+                    pageStack.pushAttached(Qt.resolvedUrl("NavigationPage.qml"));
+                    pageStack.navigateForward();
+                }
+                else
+                {
+                    idRectangleShowError.visible = true;
+                    if (status == 1)
+                        idLabelErrorText.text = qsTr("The connection was refused by the peer (or timed out).");
+                    if (status == 2)
+                        idLabelErrorText.text = qsTr("Could not connect, is this really MythTV?");
+
+                    timErrorTimer.start();
+                }
+            }
 
             bInitPage = false;
         }
@@ -74,37 +106,6 @@ Page
             //Don't do anything when page is initialising
             if (bInitPage)
                 return;
-
-
-
-            //Are we connected to frontend?
-            if (id_CppTools.bGetConnected() && id_TextSwitch_AutoConnect.checked)
-            {
-                //First read current location
-                var sLocation = id_CppTools.sSendCommand("query location");
-
-                //possible locations:
-                //mainmenu, guidegrid, StatusBox, mythvideo, playlistview(Music), playbackbox(Recordings)
-
-                console.log("Location: " + sLocation);
-
-                //Extract what MythTV is currently doing
-                var iIndex = "unknown"
-                iIndex = sLocation.indexOf("Playback");     //playback of any media
-                if (iIndex == -1 )
-                    bMythPlayback = false;
-                else
-                    bMythPlayback = true;
-
-                if (bMythPlayback)
-                {
-                    var sVolume = id_CppTools.sSendCommand("query volume");
-
-                    console.log("Volume: " + sVolume);
-
-                    iVolumePercent = parseInt(sVolume);
-                }
-            }
         }
     }
     Timer
@@ -136,16 +137,7 @@ Page
             }            
         }
         PushUpMenu
-        {
-            MenuItem
-            {
-                text: "Debug, forward..."
-                onClicked:
-                {
-                    pageStack.pushAttached(Qt.resolvedUrl("NavigationPage.qml"));
-                }
-            }
-
+        {           
             MenuItem
             {
                 id: id_menu_connect
@@ -154,17 +146,20 @@ Page
                 {
                     idRectangleShowError.visible = false;
 
-                    var status = id_CppTools.iConnect(id_TextField_HostName.text, id_TextField_PortNumber.text)
+                    var status = id_MythRemote.iConnect(id_TextField_HostName.text, id_TextField_PortNumber.text);
                     if (status == 0)
-                    {                       
+                    {
                         pageStack.pushAttached(Qt.resolvedUrl("NavigationPage.qml"));
                         pageStack.navigateForward();
-                        timMainLoopTimer.start();
                     }
                     else
                     {
                         idRectangleShowError.visible = true;
-                        idLabelErrorText.text = "Error while connecting to MythTV: " + status.toString();
+                        if (status == 1)
+                            idLabelErrorText.text = qsTr("The connection was refused by the peer (or timed out).");
+                        if (status == 2)
+                            idLabelErrorText.text = qsTr("Could not connect, is this really MythTV?");
+
                         timErrorTimer.start();
                     }
                 }
@@ -175,18 +170,14 @@ Page
                 text: "Wakeup TV station"
                 onClicked:
                 {
-                    //Save connect settings to project settings
+                    idRectangleShowError.visible = false;
 
-                    if (id_CppTools.bSendMagicPacket(id_TextField_MacAddress.text) == false)
+                    if (id_WakeOnLan.bSendMagicPacket(id_TextField_MacAddress.text) == false)
                     {
                         idRectangleShowError.visible = true;
                         idLabelErrorText.text = "Error while sending wake up packet!"
                         timErrorTimer.start();
-                    }
-                    else
-                    {
-
-                    }
+                    }                    
                 }
             }
         }
@@ -211,8 +202,8 @@ Page
                 Label
                 {
                     id: idLabelErrorText
-                    x: Theme.paddingMedium
-                    font.pixelSize: Theme.fontSizeMedium
+                    x: Theme.paddingSmall
+                    font.pixelSize: Theme.fontSizeSmall
                     anchors.centerIn: parent
                     text: "Error ..."
                 }
@@ -239,7 +230,7 @@ Page
                 onAcceptableInputChanged:
                 {
                     if (!bInitPage)
-                        id_CppTools.vSaveProjectData("HostName", id_TextField_HostName.text);
+                        id_ProjectSettings.vSaveProjectData("HostName", id_TextField_HostName.text);
                 }
             }
 
@@ -261,7 +252,7 @@ Page
                     if (!bInitPage)
                     {
                         console.log("vSaveProjectData: " + id_TextField_PortNumber.text);
-                        id_CppTools.vSaveProjectData("PortNumber", id_TextField_PortNumber.text);
+                        id_ProjectSettings.vSaveProjectData("PortNumber", id_TextField_PortNumber.text);
                     }
                 }
             }
@@ -275,7 +266,7 @@ Page
                     busy = true;
                     timBusyTimerConnect.start();
                     if (!bInitPage)
-                        id_CppTools.vSaveProjectData("AutoConnect", id_TextSwitch_AutoConnect.checked.toString());
+                        id_ProjectSettings.vSaveProjectData("AutoConnect", id_TextSwitch_AutoConnect.checked.toString());
                 }
                 Timer
                 {
@@ -321,7 +312,7 @@ Page
                 onAcceptableInputChanged:
                 {
                     if (!bInitPage)
-                        id_CppTools.vSaveProjectData("MACaddress", id_TextField_MacAddress.text);
+                        id_ProjectSettings.vSaveProjectData("MACaddress", id_TextField_MacAddress.text);
                 }
             }
             TextSwitch
@@ -334,7 +325,7 @@ Page
                     busy = true;
                     timBusyTimerWOL.start();
                     if (!bInitPage)
-                        id_CppTools.vSaveProjectData("AutoWakeup", id_TextSwitch_AutoWakeup.checked.toString());
+                        id_ProjectSettings.vSaveProjectData("AutoWakeup", id_TextSwitch_AutoWakeup.checked.toString());
                 }
                 Timer
                 {

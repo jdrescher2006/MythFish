@@ -60,13 +60,13 @@ Page
                     text: "Rec"
                     onClicked:
                     {
-                        id_CppTools.sSendCommand("key r");
+                        id_MythRemote.sSendCommand("key r");
                     }
                     Image
                     {
                         width: 32;
                         height: 32;
-                        source: "../ilocationcon-m-rec.png"
+                        source: "../icon-m-rec.png"
                     }
                 }
                 Button
@@ -75,7 +75,7 @@ Page
                     text: "Stop"
                     onClicked:
                     {
-                        id_CppTools.sSendCommand("key stop");
+                        id_MythRemote.sSendCommand("key stop");
                     }
                     Image
                     {
@@ -90,7 +90,7 @@ Page
                     text: "Pause"
                     onClicked:
                     {
-                        id_CppTools.sSendCommand("play speed pause");
+                        id_MythRemote.sSendCommand("play speed pause");
                     }
                     Image
                     {
@@ -105,7 +105,7 @@ Page
                     text: "Play"
                     onClicked:
                     {
-                        id_CppTools.sSendCommand("play speed normal");
+                        id_MythRemote.sSendCommand("play speed normal");
                     }
                     Image
                     {
@@ -126,7 +126,7 @@ Page
                     text: "Prev"
                     onClicked:
                     {
-                        id_CppTools.sSendCommand("play seek backward");
+                        id_MythRemote.sSendCommand("play seek backward");
                     }
                     Image
                     {
@@ -141,7 +141,7 @@ Page
                     text: "Rew"
                     onClicked:
                     {                       
-                        id_CppTools.sSendCommand("key left");
+                        id_MythRemote.sSendCommand("key left");
                     }
                 }
                 Button
@@ -150,7 +150,7 @@ Page
                     text: "FF"
                     onClicked:
                     {                        
-                        id_CppTools.sSendCommand("key right");
+                        id_MythRemote.sSendCommand("key right");
                     }
                 }
                 Button
@@ -159,7 +159,7 @@ Page
                     text: "Next"
                     onClicked:
                     {
-                        id_CppTools.sSendCommand("play seek forward");
+                        id_MythRemote.sSendCommand("play seek forward");
                     }
                     Image
                     {
@@ -195,7 +195,7 @@ Page
                     text: "Info"
                     onClicked:
                     {                        
-                        id_CppTools.sSendCommand("key i");
+                        id_MythRemote.sSendCommand("key i");
                     }
                     Image
                     {
@@ -210,7 +210,7 @@ Page
                     text: "Menu"
                     onClicked:
                     {
-                        id_CppTools.sSendCommand("key m");
+                        id_MythRemote.sSendCommand("key m");
                     }
                     Image
                     {
@@ -225,7 +225,7 @@ Page
                     text: "Guide"
                     onClicked:
                     {
-                        id_CppTools.sSendCommand("key s");
+                        id_MythRemote.sSendCommand("key s");
                     }
                     Image
                     {
@@ -246,7 +246,7 @@ Page
                     text: "-"
                     onClicked:
                     {
-                        id_CppTools.sSendCommand("key [");
+                        id_MythRemote.sSendCommand("key [");
                     }
                     Image
                     {
@@ -261,7 +261,7 @@ Page
                     text: "Mute"
                     onClicked:
                     {
-                        id_CppTools.sSendCommand("key |");
+                        id_MythRemote.sSendCommand("key |");
                     }
                     Image
                     {
@@ -276,7 +276,7 @@ Page
                     text: "+"
                     onClicked:
                     {
-                        id_CppTools.sSendCommand("key ]");
+                        id_MythRemote.sSendCommand("key ]");
                     }
                     Image
                     {
@@ -285,60 +285,7 @@ Page
                         source: "image://theme/icon-m-speaker"
                     }
                 }                                
-            }           
-            Slider
-            {
-                id: idSLDPlaySlider
-                value: 50
-                minimumValue: 0
-                maximumValue: 100
-                enabled: true
-                width: parent.width
-                handleVisible: true
-                valueText : "Test Text"
-                label: "Test Label"
-                visible: bMythPlayback
-            }
-            Row
-            {
-                width: parent.width
-                visible: bMythPlayback
-                Image
-                {
-                    source: "../icon-m-quiet.png"
-                }
-                Slider
-                {
-                    id: idSLDVolumeSlider
-                    value: iVolumePercent
-                    minimumValue: 0
-                    maximumValue: 100
-                    enabled: true
-                    width: parent.width/1.5
-                    handleVisible: true
-                    valueText : ""
-                    label: "Volume"
-                    visible: bMythPlayback
-                    onValueChanged:
-                    {
-                        idSLDVolumeSlider.valueText = Math.ceil(idSLDVolumeSlider.value) + "%";
-                    }
-                    onPressed:
-                    {
-                        bSoundPressed = true;
-                    }
-                    onReleased:
-                    {
-                        //Set volume to selected value
-                        id_CppTools.sSendCommand("play volume " + Math.ceil(idSLDVolumeSlider.value) + "%");
-                        bSoundPressed = false;
-                    }
-                }
-                Image
-                {
-                    source: "image://theme/icon-m-speaker"
-                }
-            }
+            }                      
         }
         Item
         {
@@ -369,7 +316,7 @@ Page
                     text: ""
                     onClicked:
                     {
-                        id_CppTools.sSendCommand("key up");
+                        id_MythRemote.sSendCommand("key up");
                     }
                     Image
                     {
@@ -383,7 +330,7 @@ Page
                     text: ""
                     onClicked:
                     {
-                        id_CppTools.sSendCommand("key left");
+                        id_MythRemote.sSendCommand("key left");
                     }
                     Image
                     {
@@ -396,7 +343,7 @@ Page
                     text: "OK"
                     onClicked:
                     {
-                        id_CppTools.sSendCommand("key enter");
+                        id_MythRemote.sSendCommand("key enter");
                     }
                     Image
                     {
@@ -409,7 +356,7 @@ Page
                     text: ""
                     onClicked:
                     {
-                        id_CppTools.sSendCommand("key right");
+                        id_MythRemote.sSendCommand("key right");
                     }
                     Image
                     {
@@ -422,7 +369,7 @@ Page
                     text: "Back"
                     onClicked:
                     {
-                        id_CppTools.sSendCommand("key escape");
+                        id_MythRemote.sSendCommand("key escape");
                     }
                     Image
                     {
@@ -435,7 +382,7 @@ Page
                     text: ""
                     onClicked:
                     {
-                        id_CppTools.sSendCommand("key down");
+                        id_MythRemote.sSendCommand("key down");
                     }
                     Image
                     {

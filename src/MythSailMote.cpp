@@ -20,7 +20,9 @@
 #endif
 
 #include <sailfishapp.h>
-#include "../cpptools.h"
+#include "../src/wakeonlan.h"
+#include "../src/projectsettings.h"
+#include "../src/mythremote.h"
 
 
 int main(int argc, char *argv[])
@@ -34,7 +36,9 @@ int main(int argc, char *argv[])
     //
     // To display the view, call "show()" (will show fullscreen on device).
 
-    qmlRegisterType<Cpptools,1>("cpptools", 1, 0, "Cpptools");
+    qmlRegisterType<WakeOnLan,1>("wakeonlan", 1, 0, "WakeOnLan");
+    qmlRegisterType<ProjectSettings,1>("projectsettings", 1, 0, "ProjectSettings");
+    qmlRegisterType<MythRemote,1>("mythremote", 1, 0, "MythRemote");
     return SailfishApp::main(argc, argv);
 }
 

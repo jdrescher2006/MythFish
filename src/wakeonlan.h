@@ -15,35 +15,22 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-import QtQuick 2.0
-import Sailfish.Silica 1.0
-import "pages"
-import wakeonlan 1.0
-import mythremote 1.0
-import projectsettings 1.0
+#ifndef WAKEONLAN
+#define WAKEONLAN
 
-ApplicationWindow
-{    
-    property bool bMythPlayback: false;
-    property int iVolumePercent: 0;
+#include <QObject>
+#include <QUdpSocket>
 
-    WakeOnLan
-    {
-        id: id_WakeOnLan
-    }
-    MythRemote
-    {
-        id: id_MythRemote
-    }
-    ProjectSettings
-    {
-        id: id_ProjectSettings
-    }
+class WakeOnLan : public QObject
+{
+    Q_OBJECT
+public:
+    explicit WakeOnLan(QObject *parent = 0);
+    Q_INVOKABLE qint64 iSendMagicPacket(QString sMacAddress);
+    Q_INVOKABLE bool bIsValidMacAddress(QString sMacAddress);
+private:
+    QUdpSocket *udpSocket;
+    QString sCleanMac(QString sMacAddress);
+};
 
-    initialPage: Component { MainPage { } }
-    cover: Qt.resolvedUrl("cover/CoverPage.qml")
-    allowedOrientations: Orientation.All
-    _defaultPageOrientations: Orientation.All
-}
-
-
+#endif // WAKEONLAN

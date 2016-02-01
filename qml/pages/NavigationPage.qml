@@ -58,7 +58,7 @@ Page
                     text: "Home"
                     onClicked:
                     {
-                        id_CppTools.sSendCommand("jump mainmenu");
+                        id_MythRemote.sSendCommand("jump mainmenu");
                     }
                     Image
                     {
@@ -73,7 +73,7 @@ Page
                     text: "Live TV"
                     onClicked:
                     {
-                        id_CppTools.sSendCommand("jump livetv");
+                        id_MythRemote.sSendCommand("jump livetv");
                     }
                     Image
                     {
@@ -88,7 +88,7 @@ Page
                     text: "Recordings"
                     onClicked:
                     {
-                        id_CppTools.sSendCommand("jump playbackrecordings");
+                        id_MythRemote.sSendCommand("jump playbackrecordings");
                     }
                     Image
                     {
@@ -109,7 +109,7 @@ Page
                     text: "Music"
                     onClicked:
                     {
-                        id_CppTools.sSendCommand("jump playmusic");
+                        id_MythRemote.sSendCommand("jump playmusic");
                     }
                     Image
                     {
@@ -124,7 +124,7 @@ Page
                     text: "Videos"
                     onClicked:
                     {
-                        id_CppTools.sSendCommand("jump mythvideo");
+                        id_MythRemote.sSendCommand("jump mythvideo");
                     }
                     Image
                     {
@@ -139,7 +139,7 @@ Page
                     text: "Status"
                     onClicked:
                     {
-                        id_CppTools.sSendCommand("jump statusbox");
+                        id_MythRemote.sSendCommand("jump statusbox");
                     }
                     Image
                     {
@@ -160,7 +160,7 @@ Page
                     text: "Guide"
                     onClicked:
                     {
-                        id_CppTools.sSendCommand("jump guidegrid");
+                        id_MythRemote.sSendCommand("jump guidegrid");
                     }
                     Image
                     {
@@ -194,7 +194,7 @@ Page
                     text: ""
                     onClicked:
                     {
-                        id_CppTools.sSendCommand("key up");
+                        id_MythRemote.sSendCommand("key up");
                     }
                     Image
                     {
@@ -208,7 +208,7 @@ Page
                     text: ""
                     onClicked:
                     {
-                        id_CppTools.sSendCommand("key left");
+                        id_MythRemote.sSendCommand("key left");
                     }
                     Image
                     {
@@ -221,7 +221,7 @@ Page
                     text: "OK"
                     onClicked:
                     {
-                        id_CppTools.sSendCommand("key enter");
+                        id_MythRemote.sSendCommand("key enter");
                     }
                     Image
                     {
@@ -234,7 +234,7 @@ Page
                     text: ""
                     onClicked:
                     {
-                        id_CppTools.sSendCommand("key right");
+                        id_MythRemote.sSendCommand("key right");
                     }
                     Image
                     {
@@ -247,7 +247,7 @@ Page
                     text: "Back"
                     onClicked:
                     {
-                        id_CppTools.sSendCommand("key escape");
+                        id_MythRemote.sSendCommand("key escape");
                     }
                     Image
                     {
@@ -260,7 +260,7 @@ Page
                     text: ""
                     onClicked:
                     {
-                        id_CppTools.sSendCommand("key down");
+                        id_MythRemote.sSendCommand("key down");
                     }
                     Image
                     {

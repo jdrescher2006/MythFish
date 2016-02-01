@@ -15,35 +15,18 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-import QtQuick 2.0
-import Sailfish.Silica 1.0
-import "pages"
-import wakeonlan 1.0
-import mythremote 1.0
-import projectsettings 1.0
+#ifndef PROJECTSETTINGS
+#define PROJECTSETTINGS
 
-ApplicationWindow
-{    
-    property bool bMythPlayback: false;
-    property int iVolumePercent: 0;
+#include <QObject>
 
-    WakeOnLan
-    {
-        id: id_WakeOnLan
-    }
-    MythRemote
-    {
-        id: id_MythRemote
-    }
-    ProjectSettings
-    {
-        id: id_ProjectSettings
-    }
+class ProjectSettings : public QObject
+{
+    Q_OBJECT
+public:
+    explicit ProjectSettings(QObject *parent = 0);
+    Q_INVOKABLE void vSaveProjectData(const QString &sKey, const QString &sValue);
+    Q_INVOKABLE QString sLoadProjectData(const QString &sKey);
+};
 
-    initialPage: Component { MainPage { } }
-    cover: Qt.resolvedUrl("cover/CoverPage.qml")
-    allowedOrientations: Orientation.All
-    _defaultPageOrientations: Orientation.All
-}
-
-
+#endif // PROJECTSETTINGS

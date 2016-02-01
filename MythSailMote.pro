@@ -3,7 +3,9 @@ TARGET = MythSailMote
 CONFIG += sailfishapp
 
 SOURCES += src/MythSailMote.cpp \
-    cpptools.cpp
+    src/wakeonlan.cpp \
+    src/mythremote.cpp \
+    src/projectsettings.cpp
 
 OTHER_FILES += qml/MythSailMote.qml \
     qml/cover/CoverPage.qml \
@@ -38,5 +40,7 @@ DISTFILES += \
     qml/MythSailMote.png
 
 HEADERS += \
-    cpptools.h
+    src/wakeonlan.h \
+    src/mythremote.h \
+    src/projectsettings.h
 

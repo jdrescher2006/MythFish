@@ -22,16 +22,17 @@ CoverBackground
 {
     Image
     {
-       anchors.margins: Theme.paddingMedium
-       anchors.top: parent.top
-       anchors.horizontalCenter: parent.horizontalCenter;
-       width: parent/3
-       fillMode: Image.PreserveAspectFit
-       source: "../MythSailMote.png"
+        anchors.margins: Theme.paddingMedium
+        anchors.top: parent.top
+        anchors.bottom: id_label_AppName.top
+        anchors.left: parent.left
+        anchors.right: parent.right
+        fillMode: Image.PreserveAspectFit
+        source: "../MythSailMote.png"
     }
     Label
     {
-        id: label
+        id: id_label_AppName
         anchors.centerIn: parent
         text: "MythFish"
     }
@@ -42,12 +43,20 @@ CoverBackground
 
         CoverAction
         {
-            iconSource: "image://theme/icon-cover-next"
+            iconSource: "image://theme/icon-cover-pause"
+            onTriggered:
+            {
+                id_MythRemote.sSendCommand("play speed pause");
+            }
         }
 
         CoverAction
-        {
-            iconSource: "image://theme/icon-cover-pause"
+        {            
+            iconSource: "image://theme/icon-cover-play"
+            onTriggered:
+            {
+                id_MythRemote.sSendCommand("play speed normal");
+            }
         }
     }
 }

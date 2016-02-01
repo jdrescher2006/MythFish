@@ -15,19 +15,16 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-#include "cpptools.h"
-#include <QTcpSocket>
+#include "mythremote.h"
 #include <QtGui>
 
-Cpptools::Cpptools(QObject *parent) : QObject(parent)
+MythRemote::MythRemote(QObject *parent) : QObject(parent)
 {
     this->tcpSocket = new QTcpSocket(this);
     this->bConnected = false;
-    this->udpSocket = new QUdpSocket(this);
 }
 
-//Remote functions
-int Cpptools::iConnect(QString strGetHostname, QString strGetPortnumber)
+int MythRemote::iConnect(QString strGetHostname, QString strGetPortnumber)
 {
     this->strHostname = strGetHostname;
     this->strPortnumber = strGetPortnumber;
@@ -37,8 +34,8 @@ int Cpptools::iConnect(QString strGetHostname, QString strGetPortnumber)
     this->tcpSocket->waitForConnected(1000);
     if (this->tcpSocket->error() == QAbstractSocket::ConnectionRefusedError)
     {
-        //qDebug() << "Connection refused\n";
-        return -1; // If can't connect
+        //The connection was refused by the peer (or timed out).
+        return 1;
     }
 
     this->tcpSocket->waitForReadyRead(1000);
@@ -47,19 +44,18 @@ int Cpptools::iConnect(QString strGetHostname, QString strGetPortnumber)
     {
         sReturnValue.append(QString(this->tcpSocket->read(128)));
     }
-    //qDebug() << "Connected\n" << ret_val;
 
     if (!sReturnValue.contains("MythFrontend Network Control"))
     {
-        //qDebug() << "Wrong server\nServer returned: " << ret_val;
         this->iDisconnect();
-        return -2; // If it's not mythfrontend
+        //The server did not give the right answer
+        return 2;
     }
     this->bConnected = true;
     return 0;
 }
 
-QString Cpptools::sSendCommand(QString strGetCommand)
+QString MythRemote::sSendCommand(QString strGetCommand)
 {
     strGetCommand.append("\n");
     this->tcpSocket->write(strGetCommand.toLatin1());
@@ -78,7 +74,7 @@ QString Cpptools::sSendCommand(QString strGetCommand)
     return sReturnValue;
 }
 
-int Cpptools::iDisconnect()
+int MythRemote::iDisconnect()
 {
     this->tcpSocket->disconnectFromHost();
     this->tcpSocket->abort();
@@ -90,71 +86,17 @@ int Cpptools::iDisconnect()
     return 0;
 }
 
-bool Cpptools::bGetConnected()
+bool MythRemote::bGetConnected()
 {
     return this->bConnected;
 }
 
-QString Cpptools::sGetHostname()
+QString MythRemote::sGetHostname()
 {
     return this->strHostname;
 }
 
-QString Cpptools::sGetPortnumber()
+QString MythRemote::sGetPortnumber()
 {
     return this->strPortnumber;
-}
-
-//WOL functions
-bool Cpptools::bIsValidMacAddress(QString sMacAddress)
-{
-    QRegExp r("^([0-9a-f]{2}([:-]|$)){6}$", Qt::CaseInsensitive);
-    return r.exactMatch(sMacAddress);
-}
-
-QString Cpptools::sGetError()
-{
-    return this->sError;
-}
-
-bool Cpptools::bSendMagicPacket(QString sMacAddress)
-{
-    QByteArray macDest = this->sCleanMac(sMacAddress).toLocal8Bit();
-
-    QByteArray magicSequence = QByteArray::fromHex("ffffffffffff");
-    for (int i=0; i<16; i++)
-        magicSequence.append(QByteArray::fromHex(macDest));
-
-    qint64 byteCount = this->udpSocket->writeDatagram(magicSequence.data(), magicSequence.size(), QHostAddress::Broadcast, 40000);
-
-    if (byteCount == -1)
-    {
-        qDebug() << "Magisches Paket konnte nicht gesendet werden";
-        this->sError = QObject::tr("Magisches Paket konnte nicht gesendet werden");
-    }
-
-    return (byteCount > -1);
-}
-
-QString Cpptools::sCleanMac(QString sMacAddress)
-{
-    return sMacAddress.replace(QRegExp("[:-]", Qt::CaseInsensitive), "");
-}
-
-//Save/load settings functions
-void Cpptools::vSaveProjectData(const QString &sKey, const QString &sValue)
-{
-    QSettings settings;
-    settings.setValue(sKey, sValue);
-
-    return;
-}
-QString Cpptools::sLoadProjectData(const QString &sKey)
-{
-    QSettings settings;
-    QString sMySetting = settings.value(sKey, "").toString();
-
-    //qDebug() << sMySetting;
-
-    return sMySetting;
 }
