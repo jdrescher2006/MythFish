@@ -40,6 +40,8 @@ Page
         anchors.fill: parent
         contentHeight: id_Column_FirstCol.height + Theme.paddingLarge + id_Column_SecondCol.height + Theme.paddingLarge + id_Column_ThirdCol.height + Theme.paddingLarge
 
+        VerticalScrollDecorator {}
+
         Column
         {
             id: id_Column_FirstCol

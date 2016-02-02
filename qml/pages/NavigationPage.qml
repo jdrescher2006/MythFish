@@ -38,8 +38,10 @@ Page
     SilicaFlickable
     {
         anchors.fill: parent                
+        contentHeight: id_column_jumpcolumn.height + id_column_arrowscolumn.height;
 
         VerticalScrollDecorator {}
+
         Column
         {
             id: id_column_jumpcolumn

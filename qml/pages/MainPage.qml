@@ -108,6 +108,38 @@ Page
             //Don't do anything when page is initialising
             if (bInitPage)
                 return;
+
+            if (!id_TextSwitch_PollServer.checked)
+                return;
+
+            //Are we connected to frontend?
+            if (!id_MythRemote.bGetConnected())
+                return;
+
+            //First read current location
+            var sLocation = id_MythRemote.sSendCommand("query location");
+
+            //possible locations:
+            //mainmenu, guidegrid, StatusBox, mythvideo, playlistview(Music), playbackbox(Recordings)
+
+            console.log("Location: " + sLocation);
+
+            //Extract what MythTV is currently doing
+            var iIndex = "unknown"
+            iIndex = sLocation.indexOf("Playback");     //playback of any media
+            if (iIndex == -1 )
+                bMythPlayback = false;
+            else
+                bMythPlayback = true;
+
+            if (!bMythPlayback)
+                return;
+
+            var sVolume = id_MythRemote.sSendCommand("query volume");
+
+            console.log("Volume: " + sVolume);
+
+            iVolumePercent = parseInt(sVolume);
         }
     }
     Timer
@@ -178,6 +210,7 @@ Page
                 {
                     id_MythRemote.vDisconnect();
                     bConnected = false;
+                    pageStack.popAttached(undefined, PageStackAction.Immediate);
                 }
             }
             MenuItem
@@ -290,6 +323,12 @@ Page
                     interval: 1000
                     onTriggered: parent.busy = false
                 }
+            }
+            TextSwitch
+            {
+                id: id_TextSwitch_PollServer
+                text: "Poll"
+                description: "Poll server."
             }
         }
         Item

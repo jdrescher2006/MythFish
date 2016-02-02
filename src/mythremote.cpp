@@ -31,13 +31,13 @@ QString MythRemote::sConnect(QString strGetHostname, QString strGetPortnumber)
     if (this->bConnected)
         disconnect();
     this->tcpSocket->connectToHost(this->strHostname, this->strPortnumber.toInt());
-    this->tcpSocket->waitForConnected(1000);
 
-    QString sError = this->tcpSocket->errorString();
-    qDebug() << "Host: " << strGetHostname << ", Port: " << strGetPortnumber << ", Error: " << sError;
-
-    if (sError.length() > 0)    //an error occured so break here and return error message.
+    if (this->tcpSocket->waitForConnected(1000) == false)
+    {
+        QString sError = this->tcpSocket->errorString();
+        qDebug() << "Host: " << strGetHostname << ", Port: " << strGetPortnumber << ", Error: " << sError;
         return sError;
+    }
 
     this->tcpSocket->waitForReadyRead(1000);
     QString sReturnValue;

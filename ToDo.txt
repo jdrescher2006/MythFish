@@ -1,9 +1,9 @@
 ToDo
 ----
 
-- Errorcodes der Socketverbindung erkennen und durchleiten. Für alle einen Text anlegen: http://doc.qt.io/qt-4.8/qabstractsocket.html
-- Disconnect in Pullmenü einfügen
-- Connect/Disconnect im Pullmenü enable/disable
+- Errorcodes der Socketverbindung erkennen und durchleiten. Für alle einen Text anlegen: http://doc.qt.io/qt-4.8/qabstractsocket.html		OK
+- Disconnect in Pullmenü einfügen																											OK
+- Connect/Disconnect im Pullmenü enable/disable																								OK
 
 
 
