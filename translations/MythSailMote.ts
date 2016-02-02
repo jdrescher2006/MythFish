@@ -8,10 +8,6 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>The connection was refused by the peer (or timed out).</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Could not connect, is this really MythTV?</source>
         <translation type="unfinished"></translation>
     </message>

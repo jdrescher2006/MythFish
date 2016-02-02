@@ -73,20 +73,22 @@ Page
             {
                 idRectangleShowError.visible = false;
 
-                var status = id_MythRemote.iConnect(sHostname, sPortnumber)
-                if (status == 0)
+                var sReturn = id_MythRemote.sConnect(id_TextField_HostName.text, id_TextField_PortNumber.text);
+                if (sReturn == "OK")
                 {
+                    bConnected = true;
                     pageStack.pushAttached(Qt.resolvedUrl("NavigationPage.qml"));
                     pageStack.navigateForward();
                 }
                 else
                 {
                     idRectangleShowError.visible = true;
-                    if (status == 1)
-                        idLabelErrorText.text = qsTr("The connection was refused by the peer (or timed out).");
-                    if (status == 2)
-                        idLabelErrorText.text = qsTr("Could not connect, is this really MythTV?");
 
+                    //Check for specific error message
+                    if (sReturn === "Error: Wrong machine!")
+                        sReturn = qsTr("Could not connect, is this really MythTV?")
+
+                    idLabelErrorText.text = sReturn;
                     timErrorTimer.start();
                 }
             }
@@ -142,26 +144,40 @@ Page
             {
                 id: id_menu_connect
                 text: "Connect to MythTV"
+                visible: !bConnected
                 onClicked:
                 {
                     idRectangleShowError.visible = false;
 
-                    var status = id_MythRemote.iConnect(id_TextField_HostName.text, id_TextField_PortNumber.text);
-                    if (status == 0)
+                    var sReturn = id_MythRemote.sConnect(id_TextField_HostName.text, id_TextField_PortNumber.text);
+                    if (sReturn == "OK")
                     {
+                        bConnected = true;
                         pageStack.pushAttached(Qt.resolvedUrl("NavigationPage.qml"));
                         pageStack.navigateForward();
                     }
                     else
                     {
                         idRectangleShowError.visible = true;
-                        if (status == 1)
-                            idLabelErrorText.text = qsTr("The connection was refused by the peer (or timed out).");
-                        if (status == 2)
-                            idLabelErrorText.text = qsTr("Could not connect, is this really MythTV?");
 
+                        //Check for specific error message
+                        if (sReturn === "Error: Wrong machine!")
+                            sReturn = qsTr("Could not connect, is this really MythTV?")
+
+                        idLabelErrorText.text = sReturn;
                         timErrorTimer.start();
                     }
+                }
+            }
+            MenuItem
+            {
+                id: id_menu_disconnect
+                text: "Disconnect from MythTV"
+                visible: bConnected
+                onClicked:
+                {
+                    id_MythRemote.vDisconnect();
+                    bConnected = false;
                 }
             }
             MenuItem
@@ -203,6 +219,8 @@ Page
                 {
                     id: idLabelErrorText
                     x: Theme.paddingSmall
+                    width: parent.width
+                    wrapMode: Text.WordWrap
                     font.pixelSize: Theme.fontSizeSmall
                     anchors.centerIn: parent
                     text: "Error ..."
@@ -248,10 +266,8 @@ Page
                 width: parent.width
                 onTextChanged:
                 {
-                    console.log("onAcceptableInputChanged");
                     if (!bInitPage)
                     {
-                        console.log("vSaveProjectData: " + id_TextField_PortNumber.text);
                         id_ProjectSettings.vSaveProjectData("PortNumber", id_TextField_PortNumber.text);
                     }
                 }

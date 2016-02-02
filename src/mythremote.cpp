@@ -24,7 +24,7 @@ MythRemote::MythRemote(QObject *parent) : QObject(parent)
     this->bConnected = false;
 }
 
-int MythRemote::iConnect(QString strGetHostname, QString strGetPortnumber)
+QString MythRemote::sConnect(QString strGetHostname, QString strGetPortnumber)
 {
     this->strHostname = strGetHostname;
     this->strPortnumber = strGetPortnumber;
@@ -32,11 +32,12 @@ int MythRemote::iConnect(QString strGetHostname, QString strGetPortnumber)
         disconnect();
     this->tcpSocket->connectToHost(this->strHostname, this->strPortnumber.toInt());
     this->tcpSocket->waitForConnected(1000);
-    if (this->tcpSocket->error() == QAbstractSocket::ConnectionRefusedError)
-    {
-        //The connection was refused by the peer (or timed out).
-        return 1;
-    }
+
+    QString sError = this->tcpSocket->errorString();
+    qDebug() << "Host: " << strGetHostname << ", Port: " << strGetPortnumber << ", Error: " << sError;
+
+    if (sError.length() > 0)    //an error occured so break here and return error message.
+        return sError;
 
     this->tcpSocket->waitForReadyRead(1000);
     QString sReturnValue;
@@ -47,12 +48,12 @@ int MythRemote::iConnect(QString strGetHostname, QString strGetPortnumber)
 
     if (!sReturnValue.contains("MythFrontend Network Control"))
     {
-        this->iDisconnect();
-        //The server did not give the right answer
-        return 2;
+        this->vDisconnect();
+
+        return "Error: Wrong machine!";
     }
     this->bConnected = true;
-    return 0;
+    return "OK";
 }
 
 QString MythRemote::sSendCommand(QString strGetCommand)
@@ -65,25 +66,30 @@ QString MythRemote::sSendCommand(QString strGetCommand)
     {
         sReturnValue.append(QString(this->tcpSocket->read(128)));
     }
-    //qDebug() << "Command:" << command << ret_val;
-    if (this->tcpSocket->error() == QAbstractSocket::RemoteHostClosedError)
+
+    QString sError = this->tcpSocket->errorString();
+    qDebug() << "Send error: " << sError;
+
+    if (sError.length() > 0)    //an error occured so break here and return error message.
     {
-        this->iDisconnect();
-        return "Error: RemoteHostClosed"; // If frontend is closed
+        this->vDisconnect();
+        QString sReturn = "Error: ";
+        sReturn.append(sError);
+
+        return sReturn;
     }
+
     return sReturnValue;
 }
 
-int MythRemote::iDisconnect()
+void MythRemote::vDisconnect()
 {
     this->tcpSocket->disconnectFromHost();
     this->tcpSocket->abort();
     if (this->bConnected)
     {
         this->bConnected = false;
-    }
-    //qDebug() << "Disconnected";
-    return 0;
+    }    
 }
 
 bool MythRemote::bGetConnected()

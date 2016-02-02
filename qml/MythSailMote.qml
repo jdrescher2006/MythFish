@@ -26,6 +26,7 @@ ApplicationWindow
 {    
     property bool bMythPlayback: false;
     property int iVolumePercent: 0;
+    property bool bConnected: false;
 
     WakeOnLan
     {
