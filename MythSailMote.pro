@@ -37,7 +37,10 @@ DISTFILES += \
     qml/icon-m-tv.png \
     qml/icon-m-rec.png \
     qml/pages/AboutPage.qml \
-    qml/MythSailMote.png
+    qml/MythSailMote.png \
+    qml/pages/SettingsPage.qml \
+    qml/pages/ConnectSettingsPage.qml \
+    qml/pages/WOLSettingsPage.qml
 
 HEADERS += \
     src/wakeonlan.h \

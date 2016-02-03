@@ -158,7 +158,7 @@ Page
     SilicaFlickable
     {
         anchors.fill: parent
-        contentHeight: id_Column_FirstCol.height + idRectangleShowError.height + id_Column_SecondCol.height + Theme.paddingLarge
+        contentHeight: id_Column_Main.height + idRectangleShowError.height
 
         VerticalScrollDecorator {}
 
@@ -166,7 +166,12 @@ Page
         {
             MenuItem
             {
-                text: "About"
+                text: qsTr("Settings")
+                onClicked: {pageStack.push(Qt.resolvedUrl("SettingsPage.qml"))}
+            }
+            MenuItem
+            {
+                text: qsTr("About")
                 onClicked: {pageStack.push(Qt.resolvedUrl("AboutPage.qml"))}
             }            
         }
@@ -233,9 +238,9 @@ Page
 
         Column
         {
-            id: id_Column_FirstCol
+            id: id_Column_Main
 
-            spacing: Theme.paddingSmall
+            spacing: Theme.paddingLarge
             width: parent.width
 
             PageHeader { title: "Welcome to MythFish" }
@@ -244,7 +249,7 @@ Page
             {
                 id: idRectangleShowError
                 width: parent.width
-                height: id_TextField_PortNumber.height
+                height: Theme.paddingLarge
                 color: Theme.highlightColor
                 opacity: 0.5
                 visible: false
@@ -259,136 +264,39 @@ Page
                     text: "Error ..."
                 }
             }
-            Label
+            Button
             {
-                x: Theme.paddingLarge
-                text: "Connection settings"
-                color: Theme.secondaryHighlightColor
-                font.pixelSize: Theme.fontSizeExtraLarge
-            }
-            TextField
-            {
-                anchors.margins: Theme.paddingLarge
-                id: id_TextField_HostName
-                inputMethodHints: Qt.ImhNoAutoUppercase | Qt.ImhNoPredictiveText
-                label: "Enter host name or ip address"
-                validator: RegExpValidator { regExp: /^(([a-zA-Z0-9]|[a-zA-Z0-9][a-zA-Z0-9\-]*[a-zA-Z0-9])\.)*([A-Za-z0-9]|[A-Za-z0-9][A-Za-z0-9\-]*[A-Za-z0-9])$/ }
-                color: errorHighlight? "red" : Theme.primaryColor
-                placeholderText: "Enter host name or ip address"
-                onErrorHighlightChanged: errorHighlight? id_menu_connect.enabled=false : id_menu_connect.enabled=true
-                text: "192.168.0.4"
                 width: parent.width
-                onAcceptableInputChanged:
+                text: "Connect to MythTV"
+                onClicked:
                 {
-                    if (!bInitPage)
-                        id_ProjectSettings.vSaveProjectData("HostName", id_TextField_HostName.text);
+
+                }
+                Image
+                {
+                   source: "image://theme/icon-m-transfer"
+                }
+            }
+            Button
+            {
+                width: parent.width
+                text: "Wakeup TV station"
+                onClicked:
+                {
+
+                }
+                Image
+                {
+                    source: "../icon-m-tv.png"
                 }
             }
 
-            TextField
-            {
-                anchors.margins: Theme.paddingSmall
-                id: id_TextField_PortNumber
-                inputMethodHints: Qt.ImhDigitsOnly | Qt.ImhNoPredictiveText
-                validator: RegExpValidator { regExp: /^(6553[0-5])|(655[0-2]\d)|(65[0-4]\d{2})|(6[0-4]\d{3})|([1-5]\d{4})|([1-9]\d{1,3})|(\d)$/ }
-                color: errorHighlight? "red" : Theme.primaryColor
-                placeholderText: "Enter port number"
-                label: "Enter port number"
-                onErrorHighlightChanged: errorHighlight? id_menu_connect.enabled=false : id_menu_connect.enabled=true
-                text: "6546"
-                width: parent.width
-                onTextChanged:
-                {
-                    if (!bInitPage)
-                    {
-                        id_ProjectSettings.vSaveProjectData("PortNumber", id_TextField_PortNumber.text);
-                    }
-                }
-            }
-            TextSwitch
-            {
-                id: id_TextSwitch_AutoConnect
-                text: "Auto Connect"
-                description: "Connect on startup of this app."
-                onCheckedChanged:
-                {
-                    busy = true;
-                    timBusyTimerConnect.start();
-                    if (!bInitPage)
-                        id_ProjectSettings.vSaveProjectData("AutoConnect", id_TextSwitch_AutoConnect.checked.toString());
-                }
-                Timer
-                {
-                    id: timBusyTimerConnect
-                    interval: 1000
-                    onTriggered: parent.busy = false
-                }
-            }
             TextSwitch
             {
                 id: id_TextSwitch_PollServer
                 text: "Poll"
                 description: "Poll server."
             }
-        }
-        Item
-        {
-            id: id_Item_Separator
-            anchors.top: id_Column_FirstCol.bottom;
-            width: parent.width
-            height: Theme.paddingLarge
-        }
-        Column
-        {
-            id: id_Column_SecondCol
-            anchors.top: id_Item_Separator.bottom;
-            spacing: Theme.paddingSmall
-            width: parent.width
-
-            Label
-            {
-                x: Theme.paddingLarge
-                text: "Wake on lan settings"
-                color: Theme.secondaryHighlightColor
-                font.pixelSize: Theme.fontSizeExtraLarge
-            }
-            TextField
-            {
-                anchors.margins: Theme.paddingLarge
-                id: id_TextField_MacAddress
-                placeholderText: "Enter mac address"
-                validator: RegExpValidator { regExp: /^((([0-9A-Fa-f]{2}[:-]){5})|(([0-9A-Fa-f]{2}){5}))([0-9A-Fa-f]{2})$/ }
-                color: errorHighlight? "red" : Theme.primaryColor
-                label: "Enter mac address"
-                text: "00:87:34:1d:8d:f4"
-                inputMethodHints: Qt.ImhNoPredictiveText | Qt.ImhNoAutoUppercase
-                width: parent.width
-                onErrorHighlightChanged: errorHighlight? id_menu_wol.enabled=false : id_menu_wol.enabled=true                
-                onAcceptableInputChanged:
-                {
-                    if (!bInitPage)
-                        id_ProjectSettings.vSaveProjectData("MACaddress", id_TextField_MacAddress.text);
-                }
-            }
-            TextSwitch
-            {
-                id: id_TextSwitch_AutoWakeup
-                text: "Auto Wakeup"
-                description: "Wakeup TV station on startup of this app."
-                onCheckedChanged:
-                {
-                    busy = true;
-                    timBusyTimerWOL.start();
-                    if (!bInitPage)
-                        id_ProjectSettings.vSaveProjectData("AutoWakeup", id_TextSwitch_AutoWakeup.checked.toString());
-                }
-                Timer
-                {
-                    id: timBusyTimerWOL
-                    interval: 2000
-                    onTriggered: parent.busy = false
-                }
-            }
-        }
+        }       
     }
 }
