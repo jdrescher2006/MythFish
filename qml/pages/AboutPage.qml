@@ -64,7 +64,7 @@ Page
             wrapMode: Text.WordWrap
             maximumLineCount: 2
             horizontalAlignment: Text.AlignHCenter
-            text: "Remote control application for MythTV"
+            text: "MythTV remote control application for Sailfish OS"
         }
         Item
         {

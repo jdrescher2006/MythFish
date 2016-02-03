@@ -1,5 +1,5 @@
-# MythSailMote
-Sailfish remote application for MythTV frontend
+# MythFish
+MythTV remote control application for Sailfish OS
 
 Features:
 - languages: german, english
