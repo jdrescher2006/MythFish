@@ -51,11 +51,11 @@ Page
                 validator: RegExpValidator { regExp: /^(([a-zA-Z0-9]|[a-zA-Z0-9][a-zA-Z0-9\-]*[a-zA-Z0-9])\.)*([A-Za-z0-9]|[A-Za-z0-9][A-Za-z0-9\-]*[A-Za-z0-9])$/ }
                 color: errorHighlight? "red" : Theme.primaryColor
                 placeholderText: qsTr("Enter host name or ip address")
-                onErrorHighlightChanged: errorHighlight? id_menu_connect.enabled=false : id_menu_connect.enabled=true
-                text: "192.168.0.4"
+                text: sHostname
                 width: parent.width
                 onAcceptableInputChanged:
                 {
+                    sHostname = id_TextField_HostName.text;
                     id_ProjectSettings.vSaveProjectData("HostName", id_TextField_HostName.text);
                 }
             }
@@ -68,11 +68,11 @@ Page
                 color: errorHighlight? "red" : Theme.primaryColor
                 placeholderText: qsTr("Enter port number")
                 label: qsTr("Enter port number")
-                onErrorHighlightChanged: errorHighlight? id_menu_connect.enabled=false : id_menu_connect.enabled=true
-                text: "6546"
+                text: sPortnumber
                 width: parent.width
                 onTextChanged:
                 {
+                    sPortnumber = id_TextField_PortNumber.text;
                     id_ProjectSettings.vSaveProjectData("PortNumber", id_TextField_PortNumber.text);
                 }
             }
@@ -81,11 +81,13 @@ Page
                 id: id_TextSwitch_AutoConnect
                 text: qsTr("Auto Connect")
                 description: qsTr("Connect on startup of this app.")
+                checked: bAutoWakeup
                 onCheckedChanged:
                 {
                     busy = true;
                     timBusyTimerConnect.start();
-                    id_ProjectSettings.vSaveProjectData("AutoConnect", id_TextSwitch_AutoConnect.checked.toString());
+                    bAutoWakeup = checked;
+                    id_ProjectSettings.vSaveProjectData("AutoConnect", checked.toString());
                 }
                 Timer
                 {

@@ -23,23 +23,20 @@ import mythremote 1.0
 import projectsettings 1.0
 
 ApplicationWindow
-{    
+{       
     property bool bMythPlayback: false;
     property int iVolumePercent: 0;
     property bool bConnected: false;
 
-    WakeOnLan
-    {
-        id: id_WakeOnLan
-    }
-    MythRemote
-    {
-        id: id_MythRemote
-    }
-    ProjectSettings
-    {
-        id: id_ProjectSettings
-    }
+    property string sHostname: "";
+    property string sPortnumber: "";
+    property bool bAutoConnect: false;
+    property string sMACaddress: "";
+    property bool bAutoWakeup: false;
+
+    WakeOnLan{ id: id_WakeOnLan }
+    MythRemote{ id: id_MythRemote }
+    ProjectSettings{ id: id_ProjectSettings }
 
     initialPage: Component { MainPage { } }
     cover: Qt.resolvedUrl("cover/CoverPage.qml")

@@ -54,12 +54,12 @@ Page
                 validator: RegExpValidator { regExp: /^((([0-9A-Fa-f]{2}[:-]){5})|(([0-9A-Fa-f]{2}){5}))([0-9A-Fa-f]{2})$/ }
                 color: errorHighlight? "red" : Theme.primaryColor
                 label: qsTr("Enter mac address")
-                text: "00:87:34:1d:8d:f4"
+                text: sMACaddress
                 inputMethodHints: Qt.ImhNoPredictiveText | Qt.ImhNoAutoUppercase
                 width: parent.width
-                onErrorHighlightChanged: errorHighlight? id_menu_wol.enabled=false : id_menu_wol.enabled=true
                 onAcceptableInputChanged:
                 {
+                    sMACaddress = id_TextField_MacAddress.text;
                     id_ProjectSettings.vSaveProjectData("MACaddress", id_TextField_MacAddress.text);
                 }
             }
@@ -68,11 +68,13 @@ Page
                 id: id_TextSwitch_AutoWakeup
                 text: qsTr("Auto Wakeup")
                 description: qsTr("Wakeup TV station on startup of this app.")
+                checked: bAutoWakeup
                 onCheckedChanged:
                 {
                     busy = true;
                     timBusyTimerWOL.start();
-                    id_ProjectSettings.vSaveProjectData("AutoWakeup", id_TextSwitch_AutoWakeup.checked.toString());
+                    bAutoWakeup = checked;
+                    id_ProjectSettings.vSaveProjectData("AutoWakeup", checked.toString());
                 }
                 Timer
                 {

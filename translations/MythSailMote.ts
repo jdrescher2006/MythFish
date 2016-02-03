@@ -46,6 +46,18 @@
         <source>About</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Connect to MythTV</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Disconnect from MythTV</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Wakeup TV station</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>SettingsPage</name>

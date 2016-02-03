@@ -138,35 +138,37 @@ if (bSoundPressed)
 
 
 
-//Are we connected to frontend?
-            if (id_CppTools.bGetConnected() && id_TextSwitch_AutoConnect.checked)
-            {
-                //First read current location
-                var sLocation = id_CppTools.sSendCommand("query location");
+ if (!id_TextSwitch_PollServer.checked)
+                return;
 
-                //possible locations:
-                //mainmenu, guidegrid, StatusBox, mythvideo, playlistview(Music), playbackbox(Recordings)
+            //Are we connected to frontend?
+            if (!id_MythRemote.bGetConnected())
+                return;
 
-                console.log("Location: " + sLocation);
+            //First read current location
+            var sLocation = id_MythRemote.sSendCommand("query location");
 
-                //Extract what MythTV is currently doing
-                var iIndex = "unknown"
-                iIndex = sLocation.indexOf("Playback");     //playback of any media
-                if (iIndex == -1 )
-                    bMythPlayback = false;
-                else
-                    bMythPlayback = true;
+            //possible locations:
+            //mainmenu, guidegrid, StatusBox, mythvideo, playlistview(Music), playbackbox(Recordings)
 
-                if (bMythPlayback)
-                {
-                    var sVolume = id_CppTools.sSendCommand("query volume");
+            console.log("Location: " + sLocation);
 
-                    console.log("Volume: " + sVolume);
+            //Extract what MythTV is currently doing
+            var iIndex = "unknown"
+            iIndex = sLocation.indexOf("Playback");     //playback of any media
+            if (iIndex == -1 )
+                bMythPlayback = false;
+            else
+                bMythPlayback = true;
 
-                    iVolumePercent = parseInt(sVolume);
-                }
-            }
-#
+            if (!bMythPlayback)
+                return;
+
+            var sVolume = id_MythRemote.sSendCommand("query volume");
+
+            console.log("Volume: " + sVolume);
+
+            iVolumePercent = parseInt(sVolume);
 
 
 

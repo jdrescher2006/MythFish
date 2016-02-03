@@ -31,28 +31,31 @@ Page
         if (status == PageStatus.Active && bStartMainPage)
         {
             bInitPage = true;
-            bStartMainPage = false;
+            bStartMainPage = false;            
 
-            //Load settings
-            var sHostname = id_ProjectSettings.sLoadProjectData("HostName");
-            var sPortnumber = id_ProjectSettings.sLoadProjectData("PortNumber");
-            var sAutoConnect = id_ProjectSettings.sLoadProjectData("AutoConnect");
-            var sMACaddress = id_ProjectSettings.sLoadProjectData("MACaddress");
-            var sAutoWakeup = id_ProjectSettings.sLoadProjectData("AutoWakeup");
+            var sGetHostname = id_ProjectSettings.sLoadProjectData("HostName");
+            var sGetPortnumber = id_ProjectSettings.sLoadProjectData("PortNumber");
+            var bGetAutoConnect = (id_ProjectSettings.sLoadProjectData("AutoConnect")  === "true");
+            var sGetMACaddress = id_ProjectSettings.sLoadProjectData("MACaddress");
+            var bGetAutoWakeup = (id_ProjectSettings.sLoadProjectData("AutoWakeup") === "true");
 
-            if (sHostname.length > 0)
-                id_TextField_HostName.text = sHostname;
-            if (sPortnumber.length > 0)
-                id_TextField_PortNumber.text = sPortnumber;
-            if (sAutoConnect.length > 0)
-                id_TextSwitch_AutoConnect.checked = (sAutoConnect === "true");
-            if (sMACaddress.length > 0)
-                id_TextField_MacAddress.text = sMACaddress;
-            if (sAutoWakeup.length > 0)
-                id_TextSwitch_AutoWakeup.checked = (sAutoWakeup === "true");
+            console.log("sGetHostname: " + sGetHostname);
+            console.log("sGetPortnumber: " + sGetPortnumber);
+            console.log("bGetAutoConnect: " + bGetAutoConnect);
+            console.log("sGetMACaddress: " + sGetMACaddress.toString());
+            console.log("bGetAutoWakeup: " + bGetAutoWakeup.toString());
+
+            //Default values for very first start of app
+            if (sHostname.length < 1) sHostname="192.168.0.4"
+            if (sPortnumber.length < 1) sPortnumber="6546"
+            if (sMACaddress.length < 1) sMACaddress="00:87:34:1d:8d:f4"
+
+            console.log("sHostname: " + sHostname);
+            console.log("sPortnumber: " + sPortnumber);
+            console.log("sMACaddress: " + sMACaddress);
 
             //If wake on lan then do it here
-            if (sAutoWakeup === "true")
+            if (bAutoWakeup)
             {
                 idRectangleShowError.visible = false;
 
@@ -69,7 +72,7 @@ Page
             }
 
             //If wake on lan then do it here
-            if (sAutoConnect === "true")
+            if (bAutoConnect)
             {
                 idRectangleShowError.visible = false;
 
@@ -109,37 +112,7 @@ Page
             if (bInitPage)
                 return;
 
-            if (!id_TextSwitch_PollServer.checked)
-                return;
 
-            //Are we connected to frontend?
-            if (!id_MythRemote.bGetConnected())
-                return;
-
-            //First read current location
-            var sLocation = id_MythRemote.sSendCommand("query location");
-
-            //possible locations:
-            //mainmenu, guidegrid, StatusBox, mythvideo, playlistview(Music), playbackbox(Recordings)
-
-            console.log("Location: " + sLocation);
-
-            //Extract what MythTV is currently doing
-            var iIndex = "unknown"
-            iIndex = sLocation.indexOf("Playback");     //playback of any media
-            if (iIndex == -1 )
-                bMythPlayback = false;
-            else
-                bMythPlayback = true;
-
-            if (!bMythPlayback)
-                return;
-
-            var sVolume = id_MythRemote.sSendCommand("query volume");
-
-            console.log("Volume: " + sVolume);
-
-            iVolumePercent = parseInt(sVolume);
         }
     }
     Timer
@@ -174,67 +147,7 @@ Page
                 text: qsTr("About")
                 onClicked: {pageStack.push(Qt.resolvedUrl("AboutPage.qml"))}
             }            
-        }
-        PushUpMenu
-        {           
-            MenuItem
-            {
-                id: id_menu_connect
-                text: "Connect to MythTV"
-                visible: !bConnected
-                onClicked:
-                {
-                    idRectangleShowError.visible = false;
-
-                    var sReturn = id_MythRemote.sConnect(id_TextField_HostName.text, id_TextField_PortNumber.text);
-                    if (sReturn == "OK")
-                    {
-                        bConnected = true;
-                        pageStack.pushAttached(Qt.resolvedUrl("NavigationPage.qml"));
-                        pageStack.navigateForward();
-                    }
-                    else
-                    {
-                        idRectangleShowError.visible = true;
-
-                        //Check for specific error message
-                        if (sReturn === "Error: Wrong machine!")
-                            sReturn = qsTr("Could not connect, is this really MythTV?")
-
-                        idLabelErrorText.text = sReturn;
-                        timErrorTimer.start();
-                    }
-                }
-            }
-            MenuItem
-            {
-                id: id_menu_disconnect
-                text: "Disconnect from MythTV"
-                visible: bConnected
-                onClicked:
-                {
-                    id_MythRemote.vDisconnect();
-                    bConnected = false;
-                    pageStack.popAttached(undefined, PageStackAction.Immediate);
-                }
-            }
-            MenuItem
-            {
-                id: id_menu_wol
-                text: "Wakeup TV station"
-                onClicked:
-                {
-                    idRectangleShowError.visible = false;
-
-                    if (id_WakeOnLan.bSendMagicPacket(id_TextField_MacAddress.text) == false)
-                    {
-                        idRectangleShowError.visible = true;
-                        idLabelErrorText.text = "Error while sending wake up packet!"
-                        timErrorTimer.start();
-                    }                    
-                }
-            }
-        }
+        }        
 
         Column
         {
@@ -267,10 +180,30 @@ Page
             Button
             {
                 width: parent.width
-                text: "Connect to MythTV"
+                text: qsTr("Connect to MythTV")
+                visible: !bConnected
                 onClicked:
                 {
+                    idRectangleShowError.visible = false;
 
+                    var sReturn = id_MythRemote.sConnect(sHostname, sPortnumber);
+                    if (sReturn == "OK")
+                    {
+                        bConnected = true;
+                        pageStack.pushAttached(Qt.resolvedUrl("NavigationPage.qml"));
+                        pageStack.navigateForward();
+                    }
+                    else
+                    {
+                        idRectangleShowError.visible = true;
+
+                        //Check for specific error message
+                        if (sReturn === "Error: Wrong machine!")
+                            sReturn = qsTr("Could not connect, is this really MythTV?")
+
+                        idLabelErrorText.text = sReturn;
+                        timErrorTimer.start();
+                    }
                 }
                 Image
                 {
@@ -280,22 +213,38 @@ Page
             Button
             {
                 width: parent.width
-                text: "Wakeup TV station"
+                text: qsTr("Disconnect from MythTV")
+                visible: bConnected
                 onClicked:
                 {
+                    id_MythRemote.vDisconnect();
+                    bConnected = false;
+                    pageStack.popAttached(undefined, PageStackAction.Immediate);
+                }
+                Image
+                {
+                   source: "image://theme/icon-m-reset"
+                }
+            }
+            Button
+            {
+                width: parent.width
+                text: qsTr("Wakeup TV station")
+                onClicked:
+                {
+                    idRectangleShowError.visible = false;
 
+                    if (id_WakeOnLan.bSendMagicPacket(id_TextField_MacAddress.text) == false)
+                    {
+                        idRectangleShowError.visible = true;
+                        idLabelErrorText.text = "Error while sending wake up packet!"
+                        timErrorTimer.start();
+                    }
                 }
                 Image
                 {
                     source: "../icon-m-tv.png"
                 }
-            }
-
-            TextSwitch
-            {
-                id: id_TextSwitch_PollServer
-                text: "Poll"
-                description: "Poll server."
             }
         }       
     }
