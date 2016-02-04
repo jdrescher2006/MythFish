@@ -22,6 +22,46 @@ Page
 {
     allowedOrientations: Orientation.All
 
+    property bool bStartConnectSettingsPage: true
+    property bool bInitPage: true
+
+    onStatusChanged:
+    {
+        //If dialog is started, set project values to dialog
+        if (status === PageStatus.Active && bStartConnectSettingsPage)
+        {
+            bInitPage = true;
+            bStartConnectSettingsPage = false;
+
+            id_TextField_HostName.text = sHostname;
+            id_TextField_PortNumber.text = sPortnumber;
+            id_TextSwitch_AutoConnect.checked = bAutoConnect;
+
+            bInitPage = false;
+        }
+
+        //Save values to project data when page is closed
+        if (status === PageStatus.Deactivating && !bInitPage)
+        {
+            //Check if fields are valid and have changed
+            if (!id_TextField_HostName.errorHighlight && sHostname !== id_TextField_HostName.text)
+            {
+                sHostname = id_TextField_HostName.text;
+                id_ProjectSettings.vSaveProjectData("HostName", id_TextField_HostName.text);
+            }
+            if (!id_TextField_PortNumber.errorHighlight && sPortnumber !== id_TextField_PortNumber.text)
+            {
+                sPortnumber = id_TextField_PortNumber.text;
+                id_ProjectSettings.vSaveProjectData("sPortnumber", id_TextField_PortNumber.text);
+            }
+            if (bAutoConnect != id_TextSwitch_AutoConnect.checked)
+            {
+                bAutoConnect = id_TextSwitch_AutoConnect.checked;
+                id_ProjectSettings.vSaveProjectData("AutoConnect", id_TextSwitch_AutoConnect.checked.toString());
+            }
+        }
+    }
+
     SilicaFlickable
     {
         anchors.fill: parent
@@ -51,13 +91,7 @@ Page
                 validator: RegExpValidator { regExp: /^(([a-zA-Z0-9]|[a-zA-Z0-9][a-zA-Z0-9\-]*[a-zA-Z0-9])\.)*([A-Za-z0-9]|[A-Za-z0-9][A-Za-z0-9\-]*[A-Za-z0-9])$/ }
                 color: errorHighlight? "red" : Theme.primaryColor
                 placeholderText: qsTr("Enter host name or ip address")
-                text: sHostname
-                width: parent.width
-                onAcceptableInputChanged:
-                {
-                    sHostname = id_TextField_HostName.text;
-                    id_ProjectSettings.vSaveProjectData("HostName", id_TextField_HostName.text);
-                }
+                width: parent.width                
             }
             TextField
             {
@@ -68,33 +102,13 @@ Page
                 color: errorHighlight? "red" : Theme.primaryColor
                 placeholderText: qsTr("Enter port number")
                 label: qsTr("Enter port number")
-                text: sPortnumber
-                width: parent.width
-                onTextChanged:
-                {
-                    sPortnumber = id_TextField_PortNumber.text;
-                    id_ProjectSettings.vSaveProjectData("PortNumber", id_TextField_PortNumber.text);
-                }
+                width: parent.width                
             }
             TextSwitch
             {
                 id: id_TextSwitch_AutoConnect
                 text: qsTr("Auto Connect")
-                description: qsTr("Connect on startup of this app.")
-                checked: bAutoWakeup
-                onCheckedChanged:
-                {
-                    busy = true;
-                    timBusyTimerConnect.start();
-                    bAutoWakeup = checked;
-                    id_ProjectSettings.vSaveProjectData("AutoConnect", checked.toString());
-                }
-                Timer
-                {
-                    id: timBusyTimerConnect
-                    interval: 1000
-                    onTriggered: parent.busy = false
-                }
+                description: qsTr("Connect on startup of this app.")               
             }
         }
     }

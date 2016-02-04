@@ -7,8 +7,14 @@ Features:
 - navigation page, mediaplayer page, numbers page
 - connect and wakeup on start of application
 
+Links:
+- MythTV: https://www.mythtv.org
+- GitHub: https://github.com/jdrescher2006/MythFish
+- Openrepos: 
+
+
 Ideas:
-- About page for MythTV
+- New dialog about page for MythTV
 	- system load
 	- free/used memory
 	- version
@@ -18,5 +24,5 @@ Ideas:
 	- play progress bar
 	- now playing 
 
-License
+License:
 GNU General Public License (GNU GPLv3)

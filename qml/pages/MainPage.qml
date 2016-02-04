@@ -33,26 +33,31 @@ Page
             bInitPage = true;
             bStartMainPage = false;            
 
+            //Load project data
             var sGetHostname = id_ProjectSettings.sLoadProjectData("HostName");
             var sGetPortnumber = id_ProjectSettings.sLoadProjectData("PortNumber");
-            var bGetAutoConnect = (id_ProjectSettings.sLoadProjectData("AutoConnect")  === "true");
+            var bGetAutoConnect = id_ProjectSettings.sLoadProjectData("AutoConnect");
             var sGetMACaddress = id_ProjectSettings.sLoadProjectData("MACaddress");
-            var bGetAutoWakeup = (id_ProjectSettings.sLoadProjectData("AutoWakeup") === "true");
+            var bGetAutoWakeup = id_ProjectSettings.sLoadProjectData("AutoWakeup");
 
             console.log("sGetHostname: " + sGetHostname);
             console.log("sGetPortnumber: " + sGetPortnumber);
             console.log("bGetAutoConnect: " + bGetAutoConnect);
-            console.log("sGetMACaddress: " + sGetMACaddress.toString());
-            console.log("bGetAutoWakeup: " + bGetAutoWakeup.toString());
+            console.log("sGetMACaddress: " + sGetMACaddress);
+            console.log("bGetAutoWakeup: " + bGetAutoWakeup);
 
-            //Default values for very first start of app
-            if (sHostname.length < 1) sHostname="192.168.0.4"
-            if (sPortnumber.length < 1) sPortnumber="6546"
-            if (sMACaddress.length < 1) sMACaddress="00:87:34:1d:8d:f4"
+            //If there is something in the project data, use it.
+            if (sGetHostname.length > 0) sHostname=sGetHostname;
+            if (sGetPortnumber.length > 0) sPortnumber=sGetPortnumber;
+            if (bGetAutoConnect.length > 0) bAutoConnect=(bGetAutoConnect === "true");
+            if (sGetMACaddress.length > 0) sMACaddress=sGetMACaddress;
+            if (bGetAutoWakeup.length > 0) bAutoWakeup=(bGetAutoWakeup === "true");
 
             console.log("sHostname: " + sHostname);
             console.log("sPortnumber: " + sPortnumber);
+            console.log("bAutoConnect: " + bAutoConnect.toString());
             console.log("sMACaddress: " + sMACaddress);
+            console.log("bAutoWakeup: " + bAutoWakeup.toString());
 
             //If wake on lan then do it here
             if (bAutoWakeup)
@@ -76,7 +81,7 @@ Page
             {
                 idRectangleShowError.visible = false;
 
-                var sReturn = id_MythRemote.sConnect(id_TextField_HostName.text, id_TextField_PortNumber.text);
+                var sReturn = id_MythRemote.sConnect(sHostname, sPortnumber);
                 if (sReturn == "OK")
                 {
                     bConnected = true;
@@ -164,7 +169,6 @@ Page
                 width: parent.width
                 height: Theme.paddingLarge
                 color: Theme.highlightColor
-                opacity: 0.5
                 visible: false
                 Label
                 {
@@ -172,6 +176,7 @@ Page
                     x: Theme.paddingSmall
                     width: parent.width
                     wrapMode: Text.WordWrap
+                    color: "red";
                     font.pixelSize: Theme.fontSizeSmall
                     anchors.centerIn: parent
                     text: "Error ..."
@@ -200,6 +205,8 @@ Page
                         //Check for specific error message
                         if (sReturn === "Error: Wrong machine!")
                             sReturn = qsTr("Could not connect, is this really MythTV?")
+                        else
+                            sReturn = qsTr("Error: ") + sReturn;
 
                         idLabelErrorText.text = sReturn;
                         timErrorTimer.start();
@@ -234,10 +241,14 @@ Page
                 {
                     idRectangleShowError.visible = false;
 
-                    if (id_WakeOnLan.bSendMagicPacket(id_TextField_MacAddress.text) == false)
+                    var iReturnByteCount = id_WakeOnLan.iSendMagicPacket(sMACaddress);
+
+                    console.log("iReturnByteCount: " + iReturnByteCount.toString());
+
+                    if (iReturnByteCount == -1)
                     {
                         idRectangleShowError.visible = true;
-                        idLabelErrorText.text = "Error while sending wake up packet!"
+                        idLabelErrorText.text = qsTr("Error while sending wake up packet!");
                         timErrorTimer.start();
                     }
                 }

@@ -115,7 +115,7 @@ Page
         {
             anchors.horizontalCenter: parent.horizontalCenter
             font.pixelSize: Theme.fontSizeExtraSmall
-            property string urlstring: "https://github.com/jdrescher2006/MythSailMote"
+            property string urlstring: "https://github.com/jdrescher2006/MythFish"
             text: "<a href=\"" + urlstring + "\">" +  urlstring + "<\a>"
             onLinkActivated: Qt.openUrlExternally(link)
         }

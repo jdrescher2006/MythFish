@@ -28,10 +28,10 @@ ApplicationWindow
     property int iVolumePercent: 0;
     property bool bConnected: false;
 
-    property string sHostname: "";
-    property string sPortnumber: "";
+    property string sHostname: "192.168.0.4";
+    property string sPortnumber: "6546";
     property bool bAutoConnect: false;
-    property string sMACaddress: "";
+    property string sMACaddress: "00:19:99:3b:15:f7";
     property bool bAutoWakeup: false;
 
     WakeOnLan{ id: id_WakeOnLan }

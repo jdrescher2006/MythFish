@@ -58,6 +58,10 @@
         <source>Wakeup TV station</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Error: </source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>SettingsPage</name>

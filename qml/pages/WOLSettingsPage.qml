@@ -22,6 +22,40 @@ Page
 {
     allowedOrientations: Orientation.All
 
+    property bool bStartWOLSettingsPage: true
+    property bool bInitPage: true
+
+    onStatusChanged:
+    {
+        //If dialog is started, set project values to dialog
+        if (status == PageStatus.Active && bStartWOLSettingsPage)
+        {
+            bInitPage = true;
+            bStartWOLSettingsPage = false;
+
+            id_TextField_MacAddress.text = sMACaddress;
+            id_TextSwitch_AutoWakeup.checked = bAutoWakeup;
+
+            bInitPage = false;
+        }
+
+        //Save values to project data when page is closed
+        if (status === PageStatus.Deactivating && !bInitPage)
+        {
+            //Check if fields are valid and have changed
+            if (!id_TextField_MacAddress.errorHighlight && sMACaddress !== id_TextField_MacAddress.text)
+            {
+                sMACaddress = id_TextField_MacAddress.text;
+                id_ProjectSettings.vSaveProjectData("MACaddress", id_TextField_MacAddress.text);
+            }
+            if (bAutoWakeup != id_TextSwitch_AutoWakeup.checked)
+            {
+                bAutoWakeup = id_TextSwitch_AutoWakeup.checked;
+                id_ProjectSettings.vSaveProjectData("AutoConnect", id_TextSwitch_AutoWakeup.checked.toString());
+            }
+        }
+    }
+
     SilicaFlickable
     {
         anchors.fill: parent
@@ -54,34 +88,14 @@ Page
                 validator: RegExpValidator { regExp: /^((([0-9A-Fa-f]{2}[:-]){5})|(([0-9A-Fa-f]{2}){5}))([0-9A-Fa-f]{2})$/ }
                 color: errorHighlight? "red" : Theme.primaryColor
                 label: qsTr("Enter mac address")
-                text: sMACaddress
                 inputMethodHints: Qt.ImhNoPredictiveText | Qt.ImhNoAutoUppercase
-                width: parent.width
-                onAcceptableInputChanged:
-                {
-                    sMACaddress = id_TextField_MacAddress.text;
-                    id_ProjectSettings.vSaveProjectData("MACaddress", id_TextField_MacAddress.text);
-                }
+                width: parent.width              
             }
             TextSwitch
             {
                 id: id_TextSwitch_AutoWakeup
                 text: qsTr("Auto Wakeup")
-                description: qsTr("Wakeup TV station on startup of this app.")
-                checked: bAutoWakeup
-                onCheckedChanged:
-                {
-                    busy = true;
-                    timBusyTimerWOL.start();
-                    bAutoWakeup = checked;
-                    id_ProjectSettings.vSaveProjectData("AutoWakeup", checked.toString());
-                }
-                Timer
-                {
-                    id: timBusyTimerWOL
-                    interval: 2000
-                    onTriggered: parent.busy = false
-                }
+                description: qsTr("Wakeup TV station on startup of this app.")               
             }
         }
     }
