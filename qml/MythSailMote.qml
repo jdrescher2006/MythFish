@@ -24,20 +24,20 @@ import projectsettings 1.0
 
 ApplicationWindow
 {       
-    property bool bMythPlayback: false;
-    property int iVolumePercent: 0;
+    //Define global variables
     property bool bConnected: false;
-
     property string sHostname: "192.168.0.4";
     property string sPortnumber: "6546";
     property bool bAutoConnect: false;
     property string sMACaddress: "00:19:99:3b:15:f7";
     property bool bAutoWakeup: false;
 
+    //Init C++ classes
     WakeOnLan{ id: id_WakeOnLan }
     MythRemote{ id: id_MythRemote }
     ProjectSettings{ id: id_ProjectSettings }
 
+    //Call main page
     initialPage: Component { MainPage { } }
     cover: Qt.resolvedUrl("cover/CoverPage.qml")
     allowedOrientations: Orientation.All

@@ -40,11 +40,13 @@ Page
             var sGetMACaddress = id_ProjectSettings.sLoadProjectData("MACaddress");
             var bGetAutoWakeup = id_ProjectSettings.sLoadProjectData("AutoWakeup");
 
+
             console.log("sGetHostname: " + sGetHostname);
             console.log("sGetPortnumber: " + sGetPortnumber);
             console.log("bGetAutoConnect: " + bGetAutoConnect);
             console.log("sGetMACaddress: " + sGetMACaddress);
             console.log("bGetAutoWakeup: " + bGetAutoWakeup);
+
 
             //If there is something in the project data, use it.
             if (sGetHostname.length > 0) sHostname=sGetHostname;
@@ -53,11 +55,13 @@ Page
             if (sGetMACaddress.length > 0) sMACaddress=sGetMACaddress;
             if (bGetAutoWakeup.length > 0) bAutoWakeup=(bGetAutoWakeup === "true");
 
+
             console.log("sHostname: " + sHostname);
             console.log("sPortnumber: " + sPortnumber);
             console.log("bAutoConnect: " + bAutoConnect.toString());
             console.log("sMACaddress: " + sMACaddress);
             console.log("bAutoWakeup: " + bAutoWakeup.toString());
+
 
             //If wake on lan then do it here
             if (bAutoWakeup)
@@ -161,7 +165,7 @@ Page
             spacing: Theme.paddingLarge
             width: parent.width
 
-            PageHeader { title: "Welcome to MythFish" }
+            PageHeader { title: qsTr("Welcome to MythFish") }
 
             Rectangle
             {

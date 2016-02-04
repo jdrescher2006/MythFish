@@ -72,7 +72,7 @@ QString MythRemote::sSendCommand(QString strGetCommand)
 
     if (sError.length() > 0)    //an error occured so break here and return error message.
     {
-        this->vDisconnect();
+        //this->vDisconnect();
         QString sReturn = "Error: ";
         sReturn.append(sError);
 

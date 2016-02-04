@@ -22,7 +22,6 @@ Page
 {
     allowedOrientations: Orientation.All
     id: id_page_mediapage
-    property variant bSoundPressed:false
     property bool bPushNumbersPage: true
 
     onStatusChanged:
