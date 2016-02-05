@@ -26,6 +26,16 @@ Page
     property bool bStartMainPage: true
     property bool bInitPage: true
 
+    function fncDisconnect()
+    {
+        if (bConnected)
+        {
+            id_MythRemote.vDisconnect();
+            bConnected = false;
+            pageStack.popAttached(undefined, PageStackAction.Immediate);
+        }
+    }
+
     onStatusChanged:
     {
         if (status == PageStatus.Active && bStartMainPage)
@@ -186,6 +196,17 @@ Page
                     text: "Error ..."
                 }
             }
+
+            Button
+            {
+                width: parent.width
+                text: "Tester"
+                onClicked:
+                {
+                    pageStack.pushAttached(Qt.resolvedUrl("NavigationPage.qml"));
+                }
+            }
+
             Button
             {
                 width: parent.width

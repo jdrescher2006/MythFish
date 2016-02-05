@@ -22,52 +22,42 @@ Page
 {
     allowedOrientations: Orientation.All
 
-    ListModel
+    SilicaFlickable
     {
-        id: id_ListModel_SettingsPages
-
-        ListElement
-        {
-            page: "WOLSettingsPage.qml"
-            title: "Wake on LAN"
-            subtitle: "Licht Schalten"
-            section: "Main"
-        }
-        ListElement
-        {
-            page: "ConnectSettingsPage.qml"
-            title: "Connect to MythTV"
-            subtitle: "Heizung Übersicht"
-            section: "Main"
-        }
-    }
-    SilicaListView
-    {
-        id: listView
         anchors.fill: parent
-        model: id_ListModel_SettingsPages
-        header: PageHeader { title: qsTr("Settings") }
-        section {
-            property: 'section'
-            delegate: SectionHeader
-            {
-                text: section
-            }
-        }
-        delegate: BackgroundItem
-        {
-            width: listView.width
-            Label
-            {
-                id: firstName
-                text: model.title
-                color: highlighted ? Theme.highlightColor : Theme.primaryColor
-                anchors.verticalCenter: parent.verticalCenter
-                x: Theme.horizontalPageMargin
-            }
-            onClicked: pageStack.push(Qt.resolvedUrl(page))
-        }
+        contentHeight: id_Column_Main.height
+
         VerticalScrollDecorator {}
+
+        Column
+        {
+            id: id_Column_Main
+
+            spacing: Theme.paddingLarge
+            width: parent.width
+
+            PageHeader { title: qsTr("Settings") }
+
+            Button
+            {
+                width: parent.width
+                text: qsTr("MythTV Connection Settings")
+                onClicked: {pageStack.push(Qt.resolvedUrl("ConnectSettingsPage.qml"))}
+                Image
+                {
+                   source: "image://theme/icon-m-developer-mode"
+                }
+            }
+            Button
+            {
+                width: parent.width
+                text: qsTr("Wake On LAN Settings")
+                onClicked: {pageStack.push(Qt.resolvedUrl("WOLSettingsPage.qml"))}
+                Image
+                {
+                   source: "image://theme/icon-m-developer-mode"
+                }
+            }
+        }
     }
 }
-

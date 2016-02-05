@@ -37,6 +37,16 @@ ApplicationWindow
     MythRemote{ id: id_MythRemote }
     ProjectSettings{ id: id_ProjectSettings }
 
+    //Define global functions
+    function fncSendCommand(sCommand)
+    {
+        var sReturnValue = id_MythRemote.sSendCommand(sCommand);
+        if (sReturnValue === "ERROR: disconnect!")
+        {
+            MainPage.fncDisconnect();
+        }
+    }
+
     //Call main page
     initialPage: Component { MainPage { } }
     cover: Qt.resolvedUrl("cover/CoverPage.qml")

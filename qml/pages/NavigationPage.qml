@@ -25,6 +25,7 @@ Page
     allowedOrientations: Orientation.All
     property bool bPushMediaPage: true
 
+
     onStatusChanged:
     {
         if (status == PageStatus.Active && bPushMediaPage)
@@ -60,7 +61,7 @@ Page
                     text: "Home"
                     onClicked:
                     {
-                        id_MythRemote.sSendCommand("jump mainmenu");
+                        fncSendCommand("jump mainmenu");
                     }
                     Image
                     {
@@ -75,7 +76,7 @@ Page
                     text: "Live TV"
                     onClicked:
                     {
-                        id_MythRemote.sSendCommand("jump livetv");
+                        fncSendCommand("jump livetv");
                     }
                     Image
                     {
@@ -90,7 +91,7 @@ Page
                     text: "Recordings"
                     onClicked:
                     {
-                        id_MythRemote.sSendCommand("jump playbackrecordings");
+                        fncSendCommand("jump playbackrecordings");
                     }
                     Image
                     {

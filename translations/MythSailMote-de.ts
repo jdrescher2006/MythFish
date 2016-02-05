@@ -73,6 +73,14 @@
         <source>Settings</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>MythTV Connection Settings</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Wake On LAN Settings</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>WOLSettingsPage</name>

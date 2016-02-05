@@ -67,16 +67,10 @@ QString MythRemote::sSendCommand(QString strGetCommand)
         sReturnValue.append(QString(this->tcpSocket->read(128)));
     }
 
-    QString sError = this->tcpSocket->errorString();
-    qDebug() << "Send error: " << sError;
-
-    if (sError.length() > 0)    //an error occured so break here and return error message.
+    if (tcpSocket->error() == QAbstractSocket::RemoteHostClosedError)
     {
-        //this->vDisconnect();
-        QString sReturn = "Error: ";
-        sReturn.append(sError);
-
-        return sReturn;
+        this->vDisconnect();
+        return "ERROR: disconnect!";        //If this error is given back, the qml part has to disconnect
     }
 
     return sReturnValue;
