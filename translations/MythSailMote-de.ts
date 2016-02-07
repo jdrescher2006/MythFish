@@ -5,27 +5,27 @@
     <name>ConnectSettingsPage</name>
     <message>
         <source>Connect to MythTV</source>
-        <translation type="unfinished"></translation>
+        <translation>Mit MythTV Verbinden</translation>
     </message>
     <message>
         <source>Connection settings</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Enter host name or ip address</source>
-        <translation type="unfinished"></translation>
+        <translation>Verbindungseinstellungen</translation>
     </message>
     <message>
         <source>Enter port number</source>
-        <translation type="unfinished"></translation>
+        <translation>Port-Nummer eingeben</translation>
     </message>
     <message>
         <source>Auto Connect</source>
-        <translation type="unfinished"></translation>
+        <translation>Automatischen Verbinden</translation>
     </message>
     <message>
         <source>Connect on startup of this app.</source>
-        <translation type="unfinished"></translation>
+        <translation>Verbinden beim Start dieser App</translation>
+    </message>
+    <message>
+        <source>Enter hostname or IP address</source>
+        <translation>Hostnamen oder IP-Adresse eingeben</translation>
     </message>
 </context>
 <context>
@@ -48,14 +48,10 @@
     </message>
     <message>
         <source>Connect to MythTV</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Mit MythTV Verbinden</translation>
     </message>
     <message>
         <source>Disconnect from MythTV</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Wakeup TV station</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -64,6 +60,50 @@
     </message>
     <message>
         <source>Welcome to MythFish</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Cancel</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Connecting to MythTV, please wait...</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Connect</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Disconnect</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Wake up TV station</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Wake up</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Initializing...</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Waking up TV station...</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Not connected</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Conecting to MythTV...</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Connected</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -89,19 +129,19 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Wake on lan settings</source>
+        <source>Wake on LAN settings</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Enter mac address</source>
+        <source>Enter MAC address</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Auto Wakeup</source>
+        <source>Auto Wake up</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Wakeup TV station on startup of this app.</source>
+        <source>Wake up TV station on startup of this app.</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

@@ -25,6 +25,7 @@ Page
 
     property bool bStartMainPage: true
     property bool bInitPage: true
+    property bool bAutoConnecting: false
 
     function fncDisconnect()
     {
@@ -41,7 +42,8 @@ Page
         if (status == PageStatus.Active && bStartMainPage)
         {
             bInitPage = true;
-            bStartMainPage = false;            
+            bStartMainPage = false;
+            sCoverPageStatusText = qsTr("Initializing...");
 
             //Load project data
             var sGetHostname = id_ProjectSettings.sLoadProjectData("HostName");
@@ -50,13 +52,13 @@ Page
             var sGetMACaddress = id_ProjectSettings.sLoadProjectData("MACaddress");
             var bGetAutoWakeup = id_ProjectSettings.sLoadProjectData("AutoWakeup");
 
-
+            /*
             console.log("sGetHostname: " + sGetHostname);
             console.log("sGetPortnumber: " + sGetPortnumber);
             console.log("bGetAutoConnect: " + bGetAutoConnect);
             console.log("sGetMACaddress: " + sGetMACaddress);
             console.log("bGetAutoWakeup: " + bGetAutoWakeup);
-
+            */
 
             //If there is something in the project data, use it.
             if (sGetHostname.length > 0) sHostname=sGetHostname;
@@ -65,17 +67,19 @@ Page
             if (sGetMACaddress.length > 0) sMACaddress=sGetMACaddress;
             if (bGetAutoWakeup.length > 0) bAutoWakeup=(bGetAutoWakeup === "true");
 
-
+            /*
             console.log("sHostname: " + sHostname);
             console.log("sPortnumber: " + sPortnumber);
             console.log("bAutoConnect: " + bAutoConnect.toString());
             console.log("sMACaddress: " + sMACaddress);
             console.log("bAutoWakeup: " + bAutoWakeup.toString());
-
+            */
 
             //If wake on lan then do it here
             if (bAutoWakeup)
             {
+                sCoverPageStatusText = qsTr("Waking up TV station...");
+
                 idRectangleShowError.visible = false;
 
                 var iReturnByteCount = id_WakeOnLan.iSendMagicPacket(sMACaddress);
@@ -92,28 +96,12 @@ Page
 
             //If wake on lan then do it here
             if (bAutoConnect)
-            {
-                idRectangleShowError.visible = false;
-
-                var sReturn = id_MythRemote.sConnect(sHostname, sPortnumber);
-                if (sReturn == "OK")
-                {
-                    bConnected = true;
-                    pageStack.pushAttached(Qt.resolvedUrl("NavigationPage.qml"));
-                    pageStack.navigateForward();
-                }
-                else
-                {
-                    idRectangleShowError.visible = true;
-
-                    //Check for specific error message
-                    if (sReturn === "Error: Wrong machine!")
-                        sReturn = qsTr("Could not connect, is this really MythTV?")
-
-                    idLabelErrorText.text = sReturn;
-                    timErrorTimer.start();
-                }
+            {                
+                bAutoConnecting = true;
+                timConnectLoopTimer.start();
             }
+
+            sCoverPageStatusText = qsTr("Not connected");
 
             bInitPage = false;
         }
@@ -121,17 +109,37 @@ Page
 
     Timer
     {
-        id: timMainLoopTimer
-        interval: 2000
-        running: true
+        id: timConnectLoopTimer
+        interval: 3000
+        running: false
         repeat: true
         onTriggered:
         {
-            //Don't do anything when page is initialising
-            if (bInitPage)
-                return;
+            sCoverPageStatusText = qsTr("Conecting to MythTV...");
 
+            idRectangleShowError.visible = false;
 
+            var sReturn = id_MythRemote.sConnect(sHostname, sPortnumber);
+            if (sReturn == "OK")
+            {
+                bAutoConnecting = false;
+                timConnectLoopTimer.stop();
+                bConnected = true;
+                sCoverPageStatusText = qsTr("Connected");
+                pageStack.pushAttached(Qt.resolvedUrl("NavigationPage.qml"));
+                pageStack.navigateForward();
+            }
+            else
+            {
+                idRectangleShowError.visible = true;
+
+                //Check for specific error message
+                if (sReturn === "Error: Wrong machine!")
+                    sReturn = qsTr("Could not connect, is this really MythTV?")
+
+                idLabelErrorText.text = sReturn;
+                timErrorTimer.start();
+            }
         }
     }
     Timer
@@ -197,21 +205,47 @@ Page
                 }
             }
 
+            SectionHeader
+            {
+                text: qsTr("Connecting to MythTV, please wait...")
+                visible: bAutoConnecting
+            }
             Button
             {
                 width: parent.width
-                text: "Tester"
+                text: qsTr("Cancel")
+                visible: bAutoConnecting
                 onClicked:
                 {
-                    pageStack.pushAttached(Qt.resolvedUrl("NavigationPage.qml"));
+                    timConnectLoopTimer.stop();
+                    bAutoConnecting = false;
+                    sCoverPageStatusText = qsTr("Not connected");
+                }
+                Image
+                {
+                    source: "image://theme/icon-m-sync"
+                    anchors.verticalCenter: parent.verticalCenter
+                    smooth: true
+                    NumberAnimation on rotation
+                    {                     
+                      from: 0
+                      to: 360
+                      loops: Animation.Infinite
+                      duration: 2000
+                    }
                 }
             }
 
+            SectionHeader
+            {
+                text: qsTr("Connect to MythTV")
+                visible: (!bConnected && !bAutoConnecting)
+            }
             Button
             {
                 width: parent.width
-                text: qsTr("Connect to MythTV")
-                visible: !bConnected
+                text: qsTr("Connect")
+                visible: (!bConnected && !bAutoConnecting)
                 onClicked:
                 {
                     idRectangleShowError.visible = false;
@@ -220,6 +254,7 @@ Page
                     if (sReturn == "OK")
                     {
                         bConnected = true;
+                        sCoverPageStatusText = qsTr("Connected");
                         pageStack.pushAttached(Qt.resolvedUrl("NavigationPage.qml"));
                         pageStack.navigateForward();
                     }
@@ -239,29 +274,43 @@ Page
                 }
                 Image
                 {
-                   source: "image://theme/icon-m-transfer"
+                    anchors.verticalCenter: parent.verticalCenter
+                    source: "image://theme/icon-m-transfer"
                 }
+            }
+
+            SectionHeader
+            {
+                text: qsTr("Disconnect from MythTV")
+                visible: bConnected
             }
             Button
             {
                 width: parent.width
-                text: qsTr("Disconnect from MythTV")
+                text: qsTr("Disconnect")
                 visible: bConnected
                 onClicked:
                 {
                     id_MythRemote.vDisconnect();
                     bConnected = false;
+                    sCoverPageStatusText = qsTr("Not connected");
                     pageStack.popAttached(undefined, PageStackAction.Immediate);
                 }
                 Image
                 {
-                   source: "image://theme/icon-m-reset"
+                    anchors.verticalCenter: parent.verticalCenter
+                    source: "image://theme/icon-m-reset"
                 }
+            }
+
+            SectionHeader
+            {
+                text: qsTr("Wake up TV station")
             }
             Button
             {
                 width: parent.width
-                text: qsTr("Wakeup TV station")
+                text: qsTr("Wake up")
                 onClicked:
                 {
                     idRectangleShowError.visible = false;
@@ -279,6 +328,7 @@ Page
                 }
                 Image
                 {
+                    anchors.verticalCenter: parent.verticalCenter
                     source: "../icon-m-tv.png"
                 }
             }

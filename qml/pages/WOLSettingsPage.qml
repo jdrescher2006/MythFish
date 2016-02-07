@@ -76,7 +76,7 @@ Page
             Label
             {
                 x: Theme.paddingLarge
-                text: qsTr("Wake on lan settings")
+                text: qsTr("Wake on LAN settings")
                 color: Theme.secondaryHighlightColor
                 font.pixelSize: Theme.fontSizeExtraLarge
             }
@@ -84,18 +84,18 @@ Page
             {
                 anchors.margins: Theme.paddingLarge
                 id: id_TextField_MacAddress
-                placeholderText: qsTr("Enter mac address")
+                placeholderText: qsTr("Enter MAC address")
                 validator: RegExpValidator { regExp: /^((([0-9A-Fa-f]{2}[:-]){5})|(([0-9A-Fa-f]{2}){5}))([0-9A-Fa-f]{2})$/ }
                 color: errorHighlight? "red" : Theme.primaryColor
-                label: qsTr("Enter mac address")
+                label: qsTr("Enter MAC address")
                 inputMethodHints: Qt.ImhNoPredictiveText | Qt.ImhNoAutoUppercase
                 width: parent.width              
             }
             TextSwitch
             {
                 id: id_TextSwitch_AutoWakeup
-                text: qsTr("Auto Wakeup")
-                description: qsTr("Wakeup TV station on startup of this app.")               
+                text: qsTr("Auto Wake up")
+                description: qsTr("Wake up TV station on startup of this app.")
             }
         }
     }

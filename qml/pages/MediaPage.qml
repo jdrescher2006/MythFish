@@ -61,7 +61,7 @@ Page
                     text: "Rec"
                     onClicked:
                     {
-                        id_MythRemote.sSendCommand("key r");
+                        fncSendCommand("key r");
                     }
                     Image
                     {
@@ -76,7 +76,7 @@ Page
                     text: "Stop"
                     onClicked:
                     {
-                        id_MythRemote.sSendCommand("key stop");
+                        fncSendCommand("key stop");
                     }
                     Image
                     {
@@ -91,7 +91,7 @@ Page
                     text: "Pause"
                     onClicked:
                     {
-                        id_MythRemote.sSendCommand("play speed pause");
+                        fncSendCommand("play speed pause");
                     }
                     Image
                     {
@@ -106,7 +106,7 @@ Page
                     text: "Play"
                     onClicked:
                     {
-                        id_MythRemote.sSendCommand("play speed normal");
+                        fncSendCommand("play speed normal");
                     }
                     Image
                     {
@@ -127,7 +127,7 @@ Page
                     text: "Prev"
                     onClicked:
                     {
-                        id_MythRemote.sSendCommand("play seek backward");
+                        fncSendCommand("play seek backward");
                     }
                     Image
                     {
@@ -142,7 +142,7 @@ Page
                     text: "Rew"
                     onClicked:
                     {                       
-                        id_MythRemote.sSendCommand("key left");
+                        fncSendCommand("key left");
                     }
                 }
                 Button
@@ -151,7 +151,7 @@ Page
                     text: "FF"
                     onClicked:
                     {                        
-                        id_MythRemote.sSendCommand("key right");
+                        fncSendCommand("key right");
                     }
                 }
                 Button
@@ -160,7 +160,7 @@ Page
                     text: "Next"
                     onClicked:
                     {
-                        id_MythRemote.sSendCommand("play seek forward");
+                        fncSendCommand("play seek forward");
                     }
                     Image
                     {
@@ -196,7 +196,7 @@ Page
                     text: "Info"
                     onClicked:
                     {                        
-                        id_MythRemote.sSendCommand("key i");
+                        fncSendCommand("key i");
                     }
                     Image
                     {
@@ -211,7 +211,7 @@ Page
                     text: "Menu"
                     onClicked:
                     {
-                        id_MythRemote.sSendCommand("key m");
+                        fncSendCommand("key m");
                     }
                     Image
                     {
@@ -226,7 +226,7 @@ Page
                     text: "Guide"
                     onClicked:
                     {
-                        id_MythRemote.sSendCommand("key s");
+                        fncSendCommand("key s");
                     }
                     Image
                     {
@@ -247,7 +247,7 @@ Page
                     text: "-"
                     onClicked:
                     {
-                        id_MythRemote.sSendCommand("key [");
+                        fncSendCommand("key [");
                     }
                     Image
                     {
@@ -262,7 +262,7 @@ Page
                     text: "Mute"
                     onClicked:
                     {
-                        id_MythRemote.sSendCommand("key |");
+                        fncSendCommand("key |");
                     }
                     Image
                     {
@@ -277,7 +277,7 @@ Page
                     text: "+"
                     onClicked:
                     {
-                        id_MythRemote.sSendCommand("key ]");
+                        fncSendCommand("key ]");
                     }
                     Image
                     {
@@ -317,10 +317,11 @@ Page
                     text: ""
                     onClicked:
                     {
-                        id_MythRemote.sSendCommand("key up");
+                        fncSendCommand("key up");
                     }
                     Image
                     {
+                        anchors.verticalCenter: parent.verticalCenter
                         source: "image://theme/icon-m-up"
                     }
                 }
@@ -331,10 +332,11 @@ Page
                     text: ""
                     onClicked:
                     {
-                        id_MythRemote.sSendCommand("key left");
+                        fncSendCommand("key left");
                     }
                     Image
                     {
+                        anchors.verticalCenter: parent.verticalCenter
                         source: "image://theme/icon-m-left"
                     }
                 }
@@ -344,10 +346,11 @@ Page
                     text: "OK"
                     onClicked:
                     {
-                        id_MythRemote.sSendCommand("key enter");
+                        fncSendCommand("key enter");
                     }
                     Image
                     {
+                        anchors.verticalCenter: parent.verticalCenter
                         source: "../icon-m-stop.png"
                     }
                 }
@@ -357,10 +360,11 @@ Page
                     text: ""
                     onClicked:
                     {
-                        id_MythRemote.sSendCommand("key right");
+                        fncSendCommand("key right");
                     }
                     Image
                     {
+                        anchors.verticalCenter: parent.verticalCenter
                         source: "image://theme/icon-m-right"
                     }
                 }
@@ -370,10 +374,11 @@ Page
                     text: "Back"
                     onClicked:
                     {
-                        id_MythRemote.sSendCommand("key escape");
+                        fncSendCommand("key escape");
                     }
                     Image
                     {
+                        anchors.verticalCenter: parent.verticalCenter
                         source: "image://theme/icon-m-enter"
                     }
                 }
@@ -383,10 +388,11 @@ Page
                     text: ""
                     onClicked:
                     {
-                        id_MythRemote.sSendCommand("key down");
+                        fncSendCommand("key down");
                     }
                     Image
                     {
+                        anchors.verticalCenter: parent.verticalCenter
                         source: "image://theme/icon-m-down"
                     }
                 }

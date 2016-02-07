@@ -31,6 +31,7 @@ ApplicationWindow
     property bool bAutoConnect: false;
     property string sMACaddress: "00:19:99:3b:15:f7";
     property bool bAutoWakeup: false;
+    property string sCoverPageStatusText: "";
 
     //Init C++ classes
     WakeOnLan{ id: id_WakeOnLan }

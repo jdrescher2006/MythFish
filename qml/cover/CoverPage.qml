@@ -36,6 +36,13 @@ CoverBackground
         anchors.centerIn: parent
         text: "MythFish"
     }
+    Label
+    {
+        id: id_label_AppStatus
+        anchors.horizontalCenter: parent.horizontalCenter
+        anchors.top: id_label_AppName.bottom
+        text: sCoverPageStatusText
+    }
 
     CoverActionList
     {
@@ -43,10 +50,11 @@ CoverBackground
 
         CoverAction
         {
-            iconSource: "image://theme/icon-cover-pause"
+            iconSource: "image://theme/icon-cover-pause"           
             onTriggered:
             {
-                id_MythRemote.sSendCommand("play speed pause");
+                if (bConnected)
+                    fncSendCommand("play speed pause");
             }
         }
 
@@ -55,7 +63,8 @@ CoverBackground
             iconSource: "image://theme/icon-cover-play"
             onTriggered:
             {
-                id_MythRemote.sSendCommand("play speed normal");
+                if (bConnected)
+                    fncSendCommand("play speed normal");
             }
         }
     }

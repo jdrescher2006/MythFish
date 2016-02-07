@@ -39,7 +39,7 @@ Page
     SilicaFlickable
     {
         anchors.fill: parent                
-        contentHeight: id_column_jumpcolumn.height + id_column_arrowscolumn.height;
+        contentHeight: id_column_jumpcolumn.height + id_column_arrowscolumn.height + Theme.paddingLarge;
 
         VerticalScrollDecorator {}
 
@@ -112,7 +112,7 @@ Page
                     text: "Music"
                     onClicked:
                     {
-                        id_MythRemote.sSendCommand("jump playmusic");
+                        fncSendCommand("jump playmusic");
                     }
                     Image
                     {
@@ -127,7 +127,7 @@ Page
                     text: "Videos"
                     onClicked:
                     {
-                        id_MythRemote.sSendCommand("jump mythvideo");
+                        fncSendCommand("jump mythvideo");
                     }
                     Image
                     {
@@ -142,7 +142,7 @@ Page
                     text: "Status"
                     onClicked:
                     {
-                        id_MythRemote.sSendCommand("jump statusbox");
+                        fncSendCommand("jump statusbox");
                     }
                     Image
                     {
@@ -163,7 +163,7 @@ Page
                     text: "Guide"
                     onClicked:
                     {
-                        id_MythRemote.sSendCommand("jump guidegrid");
+                        fncSendCommand("jump guidegrid");
                     }
                     Image
                     {
@@ -174,14 +174,19 @@ Page
                 }
             }
         }
-
+        Item
+        {
+            id: id_Item_Separator
+            anchors.top: id_column_jumpcolumn.bottom;
+            width: parent.width
+            height: Theme.paddingLarge
+        }
         Column
         {
             id: id_column_arrowscolumn
-            anchors.top: id_column_jumpcolumn.bottom;
+            anchors.top: id_Item_Separator.bottom;
             width: parent.width
             spacing: Theme.paddingSmall
-            anchors.topMargin: 30;
 
             Grid
             {
@@ -197,10 +202,11 @@ Page
                     text: ""
                     onClicked:
                     {
-                        id_MythRemote.sSendCommand("key up");
+                        fncSendCommand("key up");
                     }
                     Image
                     {
+                        anchors.verticalCenter: parent.verticalCenter
                         source: "image://theme/icon-m-up"
                     }
                 }
@@ -211,10 +217,11 @@ Page
                     text: ""
                     onClicked:
                     {
-                        id_MythRemote.sSendCommand("key left");
+                        fncSendCommand("key left");
                     }
                     Image
                     {
+                        anchors.verticalCenter: parent.verticalCenter
                         source: "image://theme/icon-m-left"
                     }
                 }
@@ -224,10 +231,11 @@ Page
                     text: "OK"
                     onClicked:
                     {
-                        id_MythRemote.sSendCommand("key enter");
+                        fncSendCommand("key enter");
                     }
                     Image
                     {
+                        anchors.verticalCenter: parent.verticalCenter
                         source: "../icon-m-stop.png"
                     }
                 }
@@ -237,10 +245,11 @@ Page
                     text: ""
                     onClicked:
                     {
-                        id_MythRemote.sSendCommand("key right");
+                        fncSendCommand("key right");
                     }
                     Image
                     {
+                        anchors.verticalCenter: parent.verticalCenter
                         source: "image://theme/icon-m-right"
                     }
                 }
@@ -250,10 +259,11 @@ Page
                     text: "Back"
                     onClicked:
                     {
-                        id_MythRemote.sSendCommand("key escape");
+                        fncSendCommand("key escape");
                     }
                     Image
                     {
+                        anchors.verticalCenter: parent.verticalCenter
                         source: "image://theme/icon-m-enter"
                     }
                 }
@@ -263,10 +273,11 @@ Page
                     text: ""
                     onClicked:
                     {
-                        id_MythRemote.sSendCommand("key down");
+                        fncSendCommand("key down");
                     }
                     Image
                     {
+                        anchors.verticalCenter: parent.verticalCenter
                         source: "image://theme/icon-m-down"
                     }
                 }

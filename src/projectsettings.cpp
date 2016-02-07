@@ -27,7 +27,7 @@ void ProjectSettings::vSaveProjectData(const QString &sKey, const QString &sValu
 {
     QSettings settings;
 
-    qDebug() << "Save key: " << sKey << ", value: " << sValue;
+    //qDebug() << "Save key: " << sKey << ", value: " << sValue;
 
     settings.setValue(sKey, sValue);
 
@@ -38,7 +38,7 @@ QString ProjectSettings::sLoadProjectData(const QString &sKey)
     QSettings settings;
     QString sMySetting = settings.value(sKey, "").toString();
 
-    qDebug() << "Load key: " << sKey << ", value: " << sMySetting;
+    //qDebug() << "Load key: " << sKey << ", value: " << sMySetting;
 
     return sMySetting;
 }

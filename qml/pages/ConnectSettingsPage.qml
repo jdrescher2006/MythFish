@@ -87,10 +87,10 @@ Page
                 anchors.margins: Theme.paddingLarge
                 id: id_TextField_HostName
                 inputMethodHints: Qt.ImhNoAutoUppercase | Qt.ImhNoPredictiveText
-                label: qsTr("Enter host name or ip address")
+                label: qsTr("Enter hostname or IP address")
                 validator: RegExpValidator { regExp: /^(([a-zA-Z0-9]|[a-zA-Z0-9][a-zA-Z0-9\-]*[a-zA-Z0-9])\.)*([A-Za-z0-9]|[A-Za-z0-9][A-Za-z0-9\-]*[A-Za-z0-9])$/ }
                 color: errorHighlight? "red" : Theme.primaryColor
-                placeholderText: qsTr("Enter host name or ip address")
+                placeholderText: qsTr("Enter hostname or IP address")
                 width: parent.width                
             }
             TextField

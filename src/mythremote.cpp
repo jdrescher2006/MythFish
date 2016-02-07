@@ -35,7 +35,7 @@ QString MythRemote::sConnect(QString strGetHostname, QString strGetPortnumber)
     if (this->tcpSocket->waitForConnected(1000) == false)
     {
         QString sError = this->tcpSocket->errorString();
-        qDebug() << "Host: " << strGetHostname << ", Port: " << strGetPortnumber << ", Error: " << sError;
+        //qDebug() << "Host: " << strGetHostname << ", Port: " << strGetPortnumber << ", Error: " << sError;
         return sError;
     }
 
@@ -58,6 +58,29 @@ QString MythRemote::sConnect(QString strGetHostname, QString strGetPortnumber)
 
 QString MythRemote::sSendCommand(QString strGetCommand)
 {
+    //Check if socket is connected.
+    //ACHTUNG: Es gibt auch ein Signal. Besser das verwenden!!!
+
+    /*
+    MythRemote::sSendCommand:81 - SendCommand, error:  "Unknown error"
+   [D] MythRemote::sSendCommand:63 - QAbstractSocket::ConnectedState
+   [D] MythRemote::sSendCommand:81 - SendCommand, error:  "Unknown error"
+   [D] MythRemote::sSendCommand:63 - QAbstractSocket::ConnectedState
+   [D] MythRemote::sSendCommand:81 - SendCommand, error:  "Unknown error"
+   [D] MythRemote::sSendCommand:63 - QAbstractSocket::ConnectedState
+   [D] MythRemote::sSendCommand:81 - SendCommand, error:  "Unknown error"
+   [D] MythRemote::sSendCommand:63 - QAbstractSocket::UnconnectedState
+   [D] MythRemote::sSendCommand:81 - SendCommand, error:  "Socket is not connected"
+    */
+
+    qDebug() << this->tcpSocket->state();
+
+    if (!this->tcpSocket->state() == QAbstractSocket::ConnectedState)
+    {
+        this->vDisconnect();
+        return "ERROR: disconnect!";        //If this error is given back, the qml part has to disconnect
+    }
+
     strGetCommand.append("\n");
     this->tcpSocket->write(strGetCommand.toLatin1());
     this->tcpSocket-> waitForReadyRead(1000);
@@ -66,6 +89,9 @@ QString MythRemote::sSendCommand(QString strGetCommand)
     {
         sReturnValue.append(QString(this->tcpSocket->read(128)));
     }
+
+    QString sError = this->tcpSocket->errorString();
+    qDebug() << "SendCommand, error: " << sError;
 
     if (tcpSocket->error() == QAbstractSocket::RemoteHostClosedError)
     {

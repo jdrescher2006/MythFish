@@ -52,7 +52,7 @@ Page
                     text: "1"
                     onClicked:
                     {
-                        id_MythRemote.sSendCommand("key 1");
+                        fncSendCommand("key 1");
                     }
                 }
                 Button
@@ -61,7 +61,7 @@ Page
                     text: "2"
                     onClicked:
                     {
-                        id_MythRemote.sSendCommand("key 2");
+                        fncSendCommand("key 2");
                     }
                 }
                 Button
@@ -70,7 +70,7 @@ Page
                     text: "3"
                     onClicked:
                     {
-                        id_MythRemote.sSendCommand("key 3");
+                        fncSendCommand("key 3");
                     }
                 }
                 Button
@@ -79,7 +79,7 @@ Page
                     text: "4"
                     onClicked:
                     {
-                       id_MythRemote.sSendCommand("key 4");
+                       fncSendCommand("key 4");
                     }
                 }
                 Button
@@ -88,7 +88,7 @@ Page
                     text: "5"
                     onClicked:
                     {
-                        id_MythRemote.sSendCommand("key 5");
+                        fncSendCommand("key 5");
                     }
                 }
                 Button
@@ -97,7 +97,7 @@ Page
                     text: "6"
                     onClicked:
                     {
-                        id_MythRemote.sSendCommand("key 6");
+                        fncSendCommand("key 6");
                     }
                 }
                 Button
@@ -106,7 +106,7 @@ Page
                     text: "7"
                     onClicked:
                     {
-                        id_MythRemote.sSendCommand("key 7");
+                        fncSendCommand("key 7");
                     }
                 }
                 Button
@@ -115,7 +115,7 @@ Page
                     text: "8"
                     onClicked:
                     {
-                        id_MythRemote.sSendCommand("key 8");
+                        fncSendCommand("key 8");
                     }
                 }
                 Button
@@ -124,7 +124,7 @@ Page
                     text: "9"
                     onClicked:
                     {
-                        id_MythRemote.sSendCommand("key 9");
+                        fncSendCommand("key 9");
                     }
                 }
                 Button
@@ -133,7 +133,7 @@ Page
                     text: "Delete"
                     onClicked:
                     {
-                        id_MythRemote.sSendCommand("key delete");
+                        fncSendCommand("key delete");
                     }
                 }
                 Button
@@ -142,7 +142,7 @@ Page
                     text: "0"
                     onClicked:
                     {
-                        id_MythRemote.sSendCommand("key 0");
+                        fncSendCommand("key 0");
                     }
                 }
                 Button
@@ -151,7 +151,7 @@ Page
                     text: "Enter"
                     onClicked:
                     {
-                        id_MythRemote.sSendCommand("key return");
+                        fncSendCommand("key return");
                     }
                 }
             }
