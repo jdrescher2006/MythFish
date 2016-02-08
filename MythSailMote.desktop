@@ -4,3 +4,4 @@ X-Nemo-Application-Type=silica-qt5
 Icon=MythSailMote
 Exec=MythSailMote
 Name=MythFish
+Name[de]=MythFish

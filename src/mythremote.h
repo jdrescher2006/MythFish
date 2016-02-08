@@ -39,6 +39,8 @@ public:
     Q_INVOKABLE bool bGetConnected();
     Q_INVOKABLE QString sGetHostname();
     Q_INVOKABLE QString sGetPortnumber();
+private slots:
+    void slotDisconnected();
 };
 
 #endif // MYTHREMOTE

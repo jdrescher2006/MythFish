@@ -22,6 +22,7 @@ MythRemote::MythRemote(QObject *parent) : QObject(parent)
 {
     this->tcpSocket = new QTcpSocket(this);
     this->bConnected = false;
+    connect(this->tcpSocket,SIGNAL(disconnected()),this,SLOT(slotDisconnected()));
 }
 
 QString MythRemote::sConnect(QString strGetHostname, QString strGetPortnumber)
@@ -75,8 +76,10 @@ QString MythRemote::sSendCommand(QString strGetCommand)
 
     qDebug() << this->tcpSocket->state();
 
-    if (!this->tcpSocket->state() == QAbstractSocket::ConnectedState)
+    if (this->tcpSocket->state() != QAbstractSocket::ConnectedState)
     {
+        qDebug() << "Unconnected was recognized!!!";
+
         this->vDisconnect();
         return "ERROR: disconnect!";        //If this error is given back, the qml part has to disconnect
     }
@@ -102,14 +105,17 @@ QString MythRemote::sSendCommand(QString strGetCommand)
     return sReturnValue;
 }
 
+void MythRemote::slotDisconnected()
+{
+    this->vDisconnect();
+    qDebug() << "Signal Disconnected!!!" << QDateTime::currentDateTime().toString("hh:mm:ss dd.MM.yyyy");
+}
+
 void MythRemote::vDisconnect()
 {
     this->tcpSocket->disconnectFromHost();
-    this->tcpSocket->abort();
-    if (this->bConnected)
-    {
-        this->bConnected = false;
-    }    
+    this->tcpSocket->abort();    
+    this->bConnected = false;
 }
 
 bool MythRemote::bGetConnected()

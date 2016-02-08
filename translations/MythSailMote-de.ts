@@ -24,7 +24,7 @@
         <translation>Verbinden beim Start dieser App</translation>
     </message>
     <message>
-        <source>Enter hostname or IP address</source>
+        <source>Enter hostname or IP address</sour<TS version="2.1">ce>
         <translation>Hostnamen oder IP-Adresse eingeben</translation>
     </message>
 </context>
@@ -48,7 +48,7 @@
     </message>
     <message>
         <source>Connect to MythTV</source>
-        <translation type="unfinished">Mit MythTV Verbinden</translation>
+        <translation>Mit MythTV Verbinden</translation>
     </message>
     <message>
         <source>Disconnect from MythTV</source>
@@ -60,7 +60,7 @@
     </message>
     <message>
         <source>Welcome to MythFish</source>
-        <translation type="unfinished"></translation>
+        <translation>MythFish</translation>
     </message>
     <message>
         <source>Cancel</source>
