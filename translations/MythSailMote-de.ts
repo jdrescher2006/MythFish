@@ -24,7 +24,7 @@
         <translation>Verbinden beim Start dieser App</translation>
     </message>
     <message>
-        <source>Enter hostname or IP address</sour<TS version="2.1">ce>
+        <source>Enter hostname or IP address</source>
         <translation>Hostnamen oder IP-Adresse eingeben</translation>
     </message>
 </context>

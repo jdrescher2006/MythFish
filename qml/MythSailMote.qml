@@ -44,6 +44,9 @@ ApplicationWindow
         var sReturnValue = id_MythRemote.sSendCommand(sCommand);
         if (sReturnValue === "ERROR: disconnect!")
         {
+            //Funktioniert beides nicht!!!
+            //Komme nicht an Main!!!
+            id_page_mainpage.fncDisconnect();
             MainPage.fncDisconnect();
         }
     }
@@ -54,5 +57,3 @@ ApplicationWindow
     allowedOrientations: Orientation.All
     _defaultPageOrientations: Orientation.All
 }
-
-
