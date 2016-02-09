@@ -35,20 +35,13 @@ ApplicationWindow
 
     //Init C++ classes
     WakeOnLan{ id: id_WakeOnLan }
-    MythRemote{ id: id_MythRemote }
+    MythRemote { id: id_MythRemote }
     ProjectSettings{ id: id_ProjectSettings }
 
     //Define global functions
     function fncSendCommand(sCommand)
     {
-        var sReturnValue = id_MythRemote.sSendCommand(sCommand);
-        if (sReturnValue === "ERROR: disconnect!")
-        {
-            //Funktioniert beides nicht!!!
-            //Komme nicht an Main!!!
-            id_page_mainpage.fncDisconnect();
-            MainPage.fncDisconnect();
-        }
+        id_MythRemote.vSendCommand(sCommand);
     }
 
     //Call main page

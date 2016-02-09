@@ -106,6 +106,10 @@
         <source>Connected</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Closed connection to MythTV!</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>SettingsPage</name>

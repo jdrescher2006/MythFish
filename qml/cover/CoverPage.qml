@@ -39,6 +39,8 @@ CoverBackground
     Label
     {
         id: id_label_AppStatus
+        x: Theme.paddingSmall
+        font.pixelSize: Theme.fontSizeSmall
         anchors.horizontalCenter: parent.horizontalCenter
         anchors.top: id_label_AppName.bottom
         text: sCoverPageStatusText

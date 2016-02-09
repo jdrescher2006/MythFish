@@ -25,13 +25,18 @@ Page
 
     property bool bStartMainPage: true
     property bool bInitPage: true
-    property bool bAutoConnecting: false
+    property bool bAutoConnecting: false    
 
-    function fncDisconnect()
+    Connections     //amazing trick...
     {
-        if (bConnected)
+        target: id_MythRemote
+        onVDisconnected:
         {
-            id_MythRemote.vDisconnect();
+            idRectangleShowError.visible = true;
+            idLabelErrorText.text = qsTr("Closed connection to MythTV!");
+            sCoverPageStatusText = qsTr("Not connected");
+            timErrorTimer.start();
+
             bConnected = false;
             pageStack.popAttached(undefined, PageStackAction.Immediate);
         }
@@ -291,10 +296,7 @@ Page
                 visible: bConnected
                 onClicked:
                 {
-                    id_MythRemote.vDisconnect();
-                    bConnected = false;
-                    sCoverPageStatusText = qsTr("Not connected");
-                    pageStack.popAttached(undefined, PageStackAction.Immediate);
+                    id_MythRemote.vDisconnect();                   
                 }
                 Image
                 {

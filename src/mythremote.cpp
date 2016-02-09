@@ -57,32 +57,10 @@ QString MythRemote::sConnect(QString strGetHostname, QString strGetPortnumber)
     return "OK";
 }
 
-QString MythRemote::sSendCommand(QString strGetCommand)
+void MythRemote::vSendCommand(QString strGetCommand)
 {
-    //Check if socket is connected.
-    //ACHTUNG: Es gibt auch ein Signal. Besser das verwenden!!!
-
-    /*
-    MythRemote::sSendCommand:81 - SendCommand, error:  "Unknown error"
-   [D] MythRemote::sSendCommand:63 - QAbstractSocket::ConnectedState
-   [D] MythRemote::sSendCommand:81 - SendCommand, error:  "Unknown error"
-   [D] MythRemote::sSendCommand:63 - QAbstractSocket::ConnectedState
-   [D] MythRemote::sSendCommand:81 - SendCommand, error:  "Unknown error"
-   [D] MythRemote::sSendCommand:63 - QAbstractSocket::ConnectedState
-   [D] MythRemote::sSendCommand:81 - SendCommand, error:  "Unknown error"
-   [D] MythRemote::sSendCommand:63 - QAbstractSocket::UnconnectedState
-   [D] MythRemote::sSendCommand:81 - SendCommand, error:  "Socket is not connected"
-    */
-
-    qDebug() << this->tcpSocket->state();
-
-    if (this->tcpSocket->state() != QAbstractSocket::ConnectedState)
-    {
-        qDebug() << "Unconnected was recognized!!!";
-
-        this->vDisconnect();
-        return "ERROR: disconnect!";        //If this error is given back, the qml part has to disconnect
-    }
+    if (this->bConnected == false)
+        return;
 
     strGetCommand.append("\n");
     this->tcpSocket->write(strGetCommand.toLatin1());
@@ -93,22 +71,19 @@ QString MythRemote::sSendCommand(QString strGetCommand)
         sReturnValue.append(QString(this->tcpSocket->read(128)));
     }
 
-    QString sError = this->tcpSocket->errorString();
-    qDebug() << "SendCommand, error: " << sError;
+    qDebug() << "Send command returned: " << sReturnValue;
 
-    if (tcpSocket->error() == QAbstractSocket::RemoteHostClosedError)
-    {
-        this->vDisconnect();
-        return "ERROR: disconnect!";        //If this error is given back, the qml part has to disconnect
-    }
-
-    return sReturnValue;
+    return;
 }
 
 void MythRemote::slotDisconnected()
 {
-    this->vDisconnect();
-    qDebug() << "Signal Disconnected!!!" << QDateTime::currentDateTime().toString("hh:mm:ss dd.MM.yyyy");
+    //Send a signal to QML UI
+    emit this->vDisconnected();
+
+    this->vDisconnect();    
+
+    qDebug() << "Signal Disconnected!!!";
 }
 
 void MythRemote::vDisconnect()
