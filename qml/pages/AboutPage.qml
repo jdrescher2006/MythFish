@@ -29,7 +29,7 @@ Page
 
         PageHeader
         {
-            title: "About MythFish"
+            title: qsTr("About MythFish")
         }
         Item
         {
@@ -64,7 +64,7 @@ Page
             wrapMode: Text.WordWrap
             maximumLineCount: 2
             horizontalAlignment: Text.AlignHCenter
-            text: "MythTV remote control application for Sailfish OS"
+            text: qsTr("MythTV remote control application for Sailfish OS")
         }
         Item
         {
@@ -90,14 +90,14 @@ Page
             anchors.horizontalCenter: parent.horizontalCenter
             font.pixelSize: Theme.fontSizeExtraSmall
             color: Theme.secondaryColor
-            text: "Date: 01.02.2016"
+            text: qsTr("Date: 01.02.2016")
         }
         Label
         {
             anchors.horizontalCenter: parent.horizontalCenter
             font.pixelSize: Theme.fontSizeExtraSmall
             color: Theme.secondaryColor
-            text: "License: GPLv3"
+            text: qsTr("License: GPLv3")
         }
         Item
         {
@@ -109,7 +109,7 @@ Page
             anchors.horizontalCenter: parent.horizontalCenter
             font.pixelSize: Theme.fontSizeExtraSmall
             color: Theme.secondaryColor
-            text: "Source code:"
+            text: qsTr("Source code:")
         }
         Label
         {
