@@ -41,7 +41,7 @@ Page
             Button
             {
                 width: parent.width
-                text: qsTr("MythTV Connection Settings")
+                text: qsTr("Connection Settings")
                 onClicked: {pageStack.push(Qt.resolvedUrl("ConnectSettingsPage.qml"))}
                 Image
                 {

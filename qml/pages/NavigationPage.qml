@@ -88,7 +88,7 @@ Page
                 Button
                 {
                     width: parent.width/3
-                    text: "Recordings"
+                    text: qsTr("Recordings")
                     onClicked:
                     {
                         fncSendCommand("jump playbackrecordings");
@@ -109,7 +109,7 @@ Page
                 Button
                 {
                     width: parent.width/3
-                    text: "Music"
+                    text: qsTr("Music")
                     onClicked:
                     {
                         fncSendCommand("jump playmusic");
@@ -256,7 +256,7 @@ Page
                 Button
                 {
                     width: parent.width/3;
-                    text: "Back"
+                    text: qsTr("Back")
                     onClicked:
                     {
                         fncSendCommand("key escape");

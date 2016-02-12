@@ -90,10 +90,6 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Connecting to MythTV, please wait...</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Connect</source>
         <translation type="unfinished"></translation>
     </message>
@@ -133,6 +129,59 @@
         <source>Closed connection to MythTV!</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Connecting to MythTV...</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>MediaPage</name>
+    <message>
+        <source>Play Media</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Menu</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Mute</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Back</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>NavigationPage</name>
+    <message>
+        <source>Recordings</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Music</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Back</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>NumbersPage</name>
+    <message>
+        <source>Numbers</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Delete</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Enter</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>SettingsPage</name>
@@ -141,11 +190,11 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>MythTV Connection Settings</source>
+        <source>Wake On LAN Settings</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Wake On LAN Settings</source>
+        <source>Connection Settings</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

@@ -41,7 +41,7 @@ Page
             anchors.horizontalCenter: parent.horizontalCenter
             height: 256
             fillMode: Image.PreserveAspectFit
-            source: "../MythSailMote.png"
+            source: "../MythFish.png"
         }
         Label
         {

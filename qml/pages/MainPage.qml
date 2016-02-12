@@ -89,7 +89,7 @@ Page
 
                 var iReturnByteCount = id_WakeOnLan.iSendMagicPacket(sMACaddress);
 
-                console.log("iReturnByteCount: " + iReturnByteCount.toString());
+                //console.log("iReturnByteCount: " + iReturnByteCount.toString());
 
                 if (iReturnByteCount == -1)
                 {
@@ -212,7 +212,7 @@ Page
 
             SectionHeader
             {
-                text: qsTr("Connecting to MythTV, please wait...")
+                text: qsTr("Connecting to MythTV...")
                 visible: bAutoConnecting
             }
             Button
@@ -319,7 +319,7 @@ Page
 
                     var iReturnByteCount = id_WakeOnLan.iSendMagicPacket(sMACaddress);
 
-                    console.log("iReturnByteCount: " + iReturnByteCount.toString());
+                    //console.log("iReturnByteCount: " + iReturnByteCount.toString());
 
                     if (iReturnByteCount == -1)
                     {

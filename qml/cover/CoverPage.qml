@@ -28,7 +28,7 @@ CoverBackground
         anchors.left: parent.left
         anchors.right: parent.right
         fillMode: Image.PreserveAspectFit
-        source: "../MythSailMote.png"
+        source: "../MythFish.png"
     }
     Label
     {

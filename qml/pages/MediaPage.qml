@@ -28,7 +28,7 @@ Page
     {
         if (status == PageStatus.Active && bPushNumbersPage)
         {
-            console.log("SecondPage: pushAttach of NumbersPage!!!");
+            //console.log("SecondPage: pushAttach of NumbersPage!!!");
             bPushNumbersPage = false
             pageStack.pushAttached(Qt.resolvedUrl("NumbersPage.qml"));
         }
@@ -48,7 +48,7 @@ Page
             spacing: Theme.paddingSmall
             width: parent.width
 
-            PageHeader { title: "Play Media" }
+            PageHeader { title: qsTr("Play Media") }
 
             Row
             {
@@ -208,7 +208,7 @@ Page
                 Button
                 {
                     width: parent.width/3;
-                    text: "Menu"
+                    text: qsTr("Menu")
                     onClicked:
                     {
                         fncSendCommand("key m");
@@ -259,7 +259,7 @@ Page
                 Button
                 {
                     width: parent.width/3;
-                    text: "Mute"
+                    text: qsTr("Mute")
                     onClicked:
                     {
                         fncSendCommand("key |");
@@ -371,7 +371,7 @@ Page
                 Button
                 {
                     width: parent.width/3;
-                    text: "Back"
+                    text: qsTr("Back")
                     onClicked:
                     {
                         fncSendCommand("key escape");

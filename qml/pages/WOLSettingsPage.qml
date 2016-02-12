@@ -75,10 +75,10 @@ Page
 
             Label
             {
-                x: Theme.paddingLarge
+                x: Theme.paddingMedium
                 text: qsTr("Wake on LAN settings")
                 color: Theme.secondaryHighlightColor
-                font.pixelSize: Theme.fontSizeExtraLarge
+                font.pixelSize: Theme.fontSizeMedium
             }
             TextField
             {

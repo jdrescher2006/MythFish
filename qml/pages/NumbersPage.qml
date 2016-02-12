@@ -36,7 +36,7 @@ Page
             width: parent.width
             height: parent.height;
             spacing: Theme.paddingSmall
-            PageHeader { title: "Numbers" }
+            PageHeader { title: qsTr("Numbers") }
 
             Grid
             {
@@ -130,7 +130,7 @@ Page
                 Button
                 {
                     width: parent.width/3                    
-                    text: "Delete"
+                    text: qsTr("Delete")
                     onClicked:
                     {
                         fncSendCommand("key delete");
@@ -148,7 +148,7 @@ Page
                 Button
                 {
                     width: parent.width/3                    
-                    text: "Enter"
+                    text: qsTr("Enter")
                     onClicked:
                     {
                         fncSendCommand("key return");

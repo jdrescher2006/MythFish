@@ -1,4 +1,4 @@
-TARGET = MythSailMote
+TARGET = MythFish
 
 CONFIG += sailfishapp
 
@@ -7,13 +7,9 @@ SOURCES += src/MythSailMote.cpp \
     src/mythremote.cpp \
     src/projectsettings.cpp
 
-OTHER_FILES += qml/MythSailMote.qml \
+OTHER_FILES += \
     qml/cover/CoverPage.qml \
-    rpm/MythSailMote.changes.in \
-    rpm/MythSailMote.spec \
-    rpm/MythSailMote.yaml \
-    translations/*.ts \
-    MythSailMote.desktop
+    translations/*.ts
 
 SAILFISHAPP_ICONS = 86x86 108x108 128x128 256x256
 
@@ -37,7 +33,13 @@ DISTFILES += \
     qml/MythSailMote.png \
     qml/pages/SettingsPage.qml \
     qml/pages/ConnectSettingsPage.qml \
-    qml/pages/WOLSettingsPage.qml
+    qml/pages/WOLSettingsPage.qml \
+    rpm/MythFish.yaml \
+    rpm/MythFish.changes.in \
+    rpm/MythFish.spec \
+    qml/MythFish.qml \
+    MythFish.desktop \
+    qml/MythFish.png
 
 HEADERS += \
     src/wakeonlan.h \

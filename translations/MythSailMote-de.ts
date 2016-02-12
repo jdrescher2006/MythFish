@@ -5,23 +5,23 @@
     <name>AboutPage</name>
     <message>
         <source>About MythFish</source>
-        <translation type="unfinished"></translation>
+        <translation>Über MythFish</translation>
     </message>
     <message>
         <source>MythTV remote control application for Sailfish OS</source>
-        <translation type="unfinished"></translation>
+        <translation>Sailfish OS Fernbedienung für MythTV</translation>
     </message>
     <message>
         <source>Date: 01.02.2016</source>
-        <translation type="unfinished"></translation>
+        <translation>Datum: 01.02.2016</translation>
     </message>
     <message>
         <source>License: GPLv3</source>
-        <translation type="unfinished"></translation>
+        <translation>Lizenz: GPLv3</translation>
     </message>
     <message>
         <source>Source code:</source>
-        <translation type="unfinished"></translation>
+        <translation>Quellcode:</translation>
     </message>
 </context>
 <context>
@@ -130,8 +130,57 @@
         <translation>Verbindung mit MythTV geschlossen!</translation>
     </message>
     <message>
-        <source>Connecting to MythTV, please wait...</source>
-        <translation type="unfinished"></translation>
+        <source>Connecting to MythTV...</source>
+        <translation>Verbinde mit MythTV...</translation>
+    </message>
+</context>
+<context>
+    <name>MediaPage</name>
+    <message>
+        <source>Play Media</source>
+        <translation>Medien Abspielen</translation>
+    </message>
+    <message>
+        <source>Menu</source>
+        <translation>Menü</translation>
+    </message>
+    <message>
+        <source>Mute</source>
+        <translation>Stumm</translation>
+    </message>
+    <message>
+        <source>Back</source>
+        <translation>Zurück</translation>
+    </message>
+</context>
+<context>
+    <name>NavigationPage</name>
+    <message>
+        <source>Recordings</source>
+        <translation>Aufnahmen</translation>
+    </message>
+    <message>
+        <source>Music</source>
+        <translation>Musik</translation>
+    </message>
+    <message>
+        <source>Back</source>
+        <translation>Zurück</translation>
+    </message>
+</context>
+<context>
+    <name>NumbersPage</name>
+    <message>
+        <source>Numbers</source>
+        <translation>Zahlen</translation>
+    </message>
+    <message>
+        <source>Delete</source>
+        <translation>Löschen</translation>
+    </message>
+    <message>
+        <source>Enter</source>
+        <translation>Eingabe</translation>
     </message>
 </context>
 <context>
@@ -141,12 +190,12 @@
         <translation>Einstellungen</translation>
     </message>
     <message>
-        <source>MythTV Connection Settings</source>
-        <translation>MythTV Verbindungseinstellungen</translation>
+        <source>Wake On LAN Settings</source>
+        <translation>Wake On LAN Einstellungen</translation>
     </message>
     <message>
-        <source>Wake On LAN Settings</source>
-        <translation type="unfinished"></translation>
+        <source>Connection Settings</source>
+        <translation>Verbindungseinstellungen</translation>
     </message>
 </context>
 <context>
