@@ -10,10 +10,11 @@ Features:
 Links:
 - MythTV: https://www.mythtv.org
 - GitHub: https://github.com/jdrescher2006/MythFish
-- Openrepos: 
+- Openrepos: https://openrepos.net/content/jdrescher/mythfish
 
 
-Ideas:
+Future plans:
+- Load into Jolla store
 - New dialog: about page for MythTV
 	- system load
 	- free/used memory
