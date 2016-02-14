@@ -1,0 +1,242 @@
+ToDo
+----
+- Prüfen ob die Netzwerkverbindung steht -> macht YTPlayer auch.
+- Errormessage soll beim unsichtbar machen faden. "Behavior on opacity { FadeAnimation {} }"
+- Mitbekommen wenn die App von extern geschlossen wird. Disconnect() auslösen.
+
+
+
+Erledigt
+--------
+- Cover: Buttons deaktivieren wenn nicht connected!!																						OK
+- Errorcodes der Socketverbindung erkennen und durchleiten. Für alle einen Text anlegen: http://doc.qt.io/qt-4.8/qabstractsocket.html		OK
+- Disconnect in Pullmenü einfügen																											OK
+- Connect/Disconnect im Pullmenü enable/disable																								OK
+
+
+
+
+
+
+[D] Remote::send_command:66 - Command: "query location
+" "Playback Recorded 0:27:08 von 1:31:27 1x 11301 2016-01-03T20:49:00Z 81435 /var/lib/mythtv/recordings/11301_20160103204900.mpg 50 Subtitles: *0:[None]* 1:[Untertitel 1: German] 2:[TT-Menü 1: German] 3:[TT-Menü 2: German] 4:[TT-Menü 3: German]
+# " 
+
+
+[D] Remote::send_command:66 - Command: "query location
+" "Playback Recorded 0:28:37 von 1:31:27 1x 11301 2016-01-03T20:49:00Z 85876 /var/lib/mythtv/recordings/11301_20160103204900.mpg 50 Subtitles: *0:[None]* 1:[Untertitel 1: German] 2:[TT-Menü 1: German] 3:[TT-Menü 2: German] 4:[TT-Menü 3: German]
+# " 
+
+
+[D] Remote::send_command:66 - Command: "query location
+" "Playback Recorded 0:53:54 von 1:31:27 pause 11301 2016-01-03T20:49:00Z 161713 /var/lib/mythtv/recordings/11301_20160103204900.mpg 50 Subtitles: *0:[None]* 1:[Untertitel 1: German] 2:[TT-Menü 1: German] 3:[TT-Menü 2: German] 4:[TT-Menü 3: German]
+# " 
+
+
+[D] Remote::send_command:66 - Command: "query location
+" "Playback LiveTV 0:31 von 0:33 1x 12110 2016-01-05T19:25:00Z 1561 /var/lib/mythtv/livetv/12110_20160105195307.mpg 50 Subtitles: *0:[None]* 1:[Untertitel 1: German] 2:[TT-Menü 1: German]
+# " 
+
+[D] Remote::send_command:66 - Command: "query location
+" "Playback LiveTV 1:21 von 1:23 1x 12110 2016-01-05T19:25:00Z 4073 /var/lib/mythtv/livetv/12110_20160105195414.mpg 50 Subtitles: *0:[None]* 1:[Untertitel 1: German] 2:[TT-Menü 1: German]
+# " 
+
+[D] Remote::send_command:66 - Command: "query location
+" "Playback Recorded 44:16 von 44:59 1x 29306 2015-12-29T11:00:00Z 66418 /var/lib/mythtv/recordings/29306_20151229110000.mpg 25 Subtitles: *0:[None]* 1:[Untertitel 1: German] 2:[TT-Menü 1: German] 3:[TT-Menü 2: German]
+# " 
+
+
+nc <ip-address> 6546 -i 1 key up
+
+[D] Remote::send_command:66 - Command: "query location
+" "mainmenu
+# " 
+
+
+--- Hier klappt das nicht richtig: LiveTV ---
+[D] Remote::send_command:66 - Command: "query location
+" "Playback LiveTV 0:59 von 5:40 1x 12110 2016-01-12T18:20:00Z 2961 /var/lib/mythtv/livetv/12110_20160112182500.mpg 50 Subtitles: *0:[None]* 1:[Untertitel 1: German] 2:[TT-Menü 1: German]
+# " 
+
+ERROR: Timed out waiting for reply from player
+
+
+Playback LiveTV 0:00 von 1:59 1x 2793 2016-01-31T12:30:00Z 1 /var/lib/mythtv/livetv/2793_20160131123547.mpg 25 Subtitles: *0:[None]* 1:[TT CC 1: German] 2:[TT-Menü 1: German]
+
+
+Playback LiveTV 0:01 von 0:42 1x 12110 2016-01-31T18:30:00Z 98 /var/lib/mythtv/livetv/12110_20160131183456.mpg 50 Subtitles: *0:[None]* 1:[Untertitel 1: German] 2:[TT-Menü 1: German]
+
+
+
+
+
+
+
+
+
+
+if (bSoundPressed)
+                return;
+
+            var sLocation = remote.send_command("query location");
+            var sVolume = remote.send_command("query volume");
+
+            //Analyse answer.
+            //Detect running playback of anything
+            var iIndex = sLocation.indexOf("Playback");
+            //Check if pause
+
+            if (iIndex != -1 )
+            {
+                idSLDPlaySlider.visible = true;
+                idSLDVolumeSlider.visible = true;
+
+                console.log("sVolume", sVolume);
+
+                var iVolume = parseInt(sVolume);
+                if (iVolume != idSLDVolumeSlider.value)
+                    idSLDVolumeSlider.value = iVolume;
+
+                //Get play location in recording
+                var sPlayLocation = sLocation.substring((sLocation.indexOf(":") - 2), (sLocation.indexOf(" ", iIndex + 18)));
+
+
+                console.log("sLocation", sLocation);
+                console.log("sPlayLocation", sPlayLocation);
+
+                //Get max length of recording
+                var sMaxLength = sLocation.substring((sLocation.indexOf("von", iIndex) + 4), (sLocation.indexOf(" ", (sLocation.indexOf("von", iIndex) + 4))));
+
+                console.log("sMaxLength", sMaxLength);
+
+                idSLDPlaySlider.valueText = sPlayLocation;
+
+                var sPlayLocation = sPlayLocation.split(":");
+                var sMaxLength = sMaxLength.split(":");
+
+                var iPlaySeconds = 0;
+                if (sPlayLocation.length == 2)
+                    iPlaySeconds = (parseInt(sPlayLocation[0]) * 60) + parseInt(sPlayLocation[1]);
+                else
+                    iPlaySeconds = (parseInt(sPlayLocation[0]) * 3600) + (parseInt(sPlayLocation[1]) * 60) + parseInt(sPlayLocation[2]);
+
+                var iLengthSeconds = 0;
+                if (sMaxLength.length == 2)
+                    iLengthSeconds = (parseInt(sMaxLength[0]) * 60) + parseInt(sMaxLength[1]);
+                else
+                    iLengthSeconds = (parseInt(sMaxLength[0]) * 3600) + (parseInt(sMaxLength[1]) * 60) + parseInt(sMaxLength[2]);
+
+                idSLDPlaySlider.maximumValue = iLengthSeconds;
+                idSLDPlaySlider.minimumValue = 0;
+                idSLDPlaySlider.value = iPlaySeconds;
+
+                //Paused?
+                if (sLocation.indexOf("pause") == -1)
+                    idSLDPlaySlider.label = "Play"
+                else
+                    idSLDPlaySlider.label = "Pause"
+            }
+            else
+            {
+                idSLDPlaySlider.visible = false;
+                idSLDVolumeSlider.visible = false;
+            }
+
+
+
+
+
+
+
+ if (!id_TextSwitch_PollServer.checked)
+                return;
+
+            //Are we connected to frontend?
+            if (!id_MythRemote.bGetConnected())
+                return;
+
+            //First read current location
+            var sLocation = id_MythRemote.sSendCommand("query location");
+
+            //possible locations:
+            //mainmenu, guidegrid, StatusBox, mythvideo, playlistview(Music), playbackbox(Recordings)
+
+            console.log("Location: " + sLocation);
+
+            //Extract what MythTV is currently doing
+            var iIndex = "unknown"
+            iIndex = sLocation.indexOf("Playback");     //playback of any media
+            if (iIndex == -1 )
+                bMythPlayback = false;
+            else
+                bMythPlayback = true;
+
+            if (!bMythPlayback)
+                return;
+
+            var sVolume = id_MythRemote.sSendCommand("query volume");
+
+            console.log("Volume: " + sVolume);
+
+            iVolumePercent = parseInt(sVolume);
+
+
+
+
+
+
+
+
+ Slider
+            {
+                id: idSLDPlaySlider
+                value: 50
+                minimumValue: 0
+                maximumValue: 100
+                enabled: true
+                width: parent.width
+                handleVisible: true
+                valueText : "Test Text"
+                label: "Test Label"
+                visible: bMythPlayback
+            }
+            Row
+            {
+                width: parent.width
+                visible: bMythPlayback
+                Image
+                {
+                    source: "../icon-m-quiet.png"
+                }
+                Slider
+                {
+                    id: idSLDVolumeSlider
+                    value: iVolumePercent
+                    minimumValue: 0
+                    maximumValue: 100
+                    enabled: true
+                    width: parent.width/1.5
+                    handleVisible: true
+                    valueText : ""
+                    label: "Volume"
+                    visible: bMythPlayback
+                    onValueChanged:
+                    {
+                        idSLDVolumeSlider.valueText = Math.ceil(idSLDVolumeSlider.value) + "%";
+                    }
+                    onPressed:
+                    {
+                        bSoundPressed = true;
+                    }
+                    onReleased:
+                    {
+                        //Set volume to selected value
+                        id_CppTools.sSendCommand("play volume " + Math.ceil(idSLDVolumeSlider.value) + "%");
+                        bSoundPressed = false;
+                    }
+                }
+                Image
+                {
+                    source: "image://theme/icon-m-speaker"
+                }
+            }
