@@ -12,15 +12,15 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Date: 01.02.2016</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>License: GPLv3</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Source code:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Date: 16.02.2016</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

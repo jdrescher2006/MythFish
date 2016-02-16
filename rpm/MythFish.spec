@@ -14,7 +14,7 @@ Name:       MythFish
 %{?qtc_builddir:%define _builddir %qtc_builddir}
 Summary:    MythFish
 Version:    1.1
-Release:    1
+Release:    2
 Group:      Qt/Qt
 License:    LICENSE
 URL:        http://example.org/

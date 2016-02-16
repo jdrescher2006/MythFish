@@ -83,14 +83,14 @@ Page
             anchors.horizontalCenter: parent.horizontalCenter
             font.pixelSize: Theme.fontSizeExtraSmall
             color: Theme.secondaryColor
-            text: "Version: 1.00"
+            text: "Version: 1.10"
         }
         Label
         {
             anchors.horizontalCenter: parent.horizontalCenter
             font.pixelSize: Theme.fontSizeExtraSmall
             color: Theme.secondaryColor
-            text: qsTr("Date: 01.02.2016")
+            text: qsTr("Date: 16.02.2016")
         }
         Label
         {
