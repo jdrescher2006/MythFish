@@ -57,10 +57,10 @@ QString MythRemote::sConnect(QString strGetHostname, QString strGetPortnumber)
     return "OK";
 }
 
-void MythRemote::vSendCommand(QString strGetCommand)
+QString MythRemote::sSendCommand(QString strGetCommand)
 {
     if (this->bConnected == false)
-        return;
+        return "Error";
 
     strGetCommand.append("\n");
     this->tcpSocket->write(strGetCommand.toLatin1());
@@ -73,7 +73,7 @@ void MythRemote::vSendCommand(QString strGetCommand)
 
     //qDebug() << "Send command returned: " << sReturnValue;
 
-    return;
+    return sReturnValue;
 }
 
 void MythRemote::slotDisconnected()

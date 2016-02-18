@@ -149,6 +149,42 @@ Page
     }
     Timer
     {
+        id: timQueryMythTVTimer
+        interval: 2000
+        running: bConnected
+        repeat: true
+        onTriggered:
+        {
+            //Read current location of MythTV
+            var sLocation = id_MythRemote.sSendCommand("query location");
+
+            console.log("Location: " + sLocation);
+
+            //possible locations:
+            //mainmenu, guidegrid, StatusBox, mythvideo, playlistview (Music), playbackbox (Recordings), OK
+            if (sLocation.indexOf("mainmenu") != "-1")
+                sCurrentLocation = qsTr("Main menu");
+            else if (sLocation.indexOf("guidegrid") != "-1")
+                sCurrentLocation = qsTr("Guide");
+            else if (sLocation.indexOf("StatusBox") != "-1")
+                sCurrentLocation = qsTr("Status");
+            else if (sLocation.indexOf("mythvideo") != "-1")
+                sCurrentLocation = qsTr("Videos");
+            else if (sLocation.indexOf("playlistview") != "-1")
+                sCurrentLocation = qsTr("Music");
+            else if (sLocation.indexOf("playbackbox") != "-1")
+                sCurrentLocation = qsTr("Recordings");
+            else if (sLocation.indexOf("Playback Recorded") != "-1")
+                sCurrentLocation = qsTr("Play recording");
+            else if (sLocation.indexOf("Playback LiveTV") != "-1")
+                sCurrentLocation = qsTr("Play live TV");
+            else
+                sCurrentLocation = "";
+        }
+    }
+
+    Timer
+    {
         id: timErrorTimer
         interval: 10000
         running: false

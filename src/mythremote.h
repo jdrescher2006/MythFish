@@ -34,7 +34,7 @@ public:
     QString strHostname;
     QString strPortnumber;
     Q_INVOKABLE QString sConnect(QString strGetHostname, QString strGetPortnumber);
-    Q_INVOKABLE void vSendCommand(QString strGetCommand);
+    Q_INVOKABLE QString sSendCommand(QString strGetCommand);
     Q_INVOKABLE void vDisconnect();
     Q_INVOKABLE bool bGetConnected();
     Q_INVOKABLE QString sGetHostname();

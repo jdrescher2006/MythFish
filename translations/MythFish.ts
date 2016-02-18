@@ -133,6 +133,38 @@
         <source>Wake up</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Main menu</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Guide</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Status</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Videos</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Music</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Recordings</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Play recording</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Play live TV</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>MediaPage</name>

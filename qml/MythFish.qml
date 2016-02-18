@@ -32,6 +32,7 @@ ApplicationWindow
     property string sMACaddress: "00:19:99:3b:15:f7";
     property bool bAutoWakeup: false;
     property string sCoverPageStatusText: "";
+    property string sCurrentLocation: "";
 
     //Init C++ classes
     WakeOnLan{ id: id_WakeOnLan }
@@ -41,7 +42,7 @@ ApplicationWindow
     //Define global functions
     function fncSendCommand(sCommand)
     {
-        id_MythRemote.vSendCommand(sCommand);
+        id_MythRemote.sSendCommand(sCommand);
     }
 
     initialPage: Component { MainPage { } }

@@ -2,12 +2,13 @@ ToDo
 ----
 - Prüfen ob die Netzwerkverbindung steht -> macht YTPlayer auch.
 - Errormessage soll beim unsichtbar machen faden. "Behavior on opacity { FadeAnimation {} }"
-- Mitbekommen wenn die App von extern geschlossen wird. Disconnect() auslösen.
+
 
 
 
 Erledigt
 --------
+- Mitbekommen wenn die App von extern geschlossen wird. Disconnect() auslösen.																OK
 - Cover: Buttons deaktivieren wenn nicht connected!!																						OK
 - Errorcodes der Socketverbindung erkennen und durchleiten. Für alle einen Text anlegen: http://doc.qt.io/qt-4.8/qabstractsocket.html		OK
 - Disconnect in Pullmenü einfügen																											OK

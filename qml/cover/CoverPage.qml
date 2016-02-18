@@ -38,12 +38,11 @@ CoverBackground
     }
     Label
     {
-        id: id_label_AppStatus
-        x: Theme.paddingSmall
-        font.pixelSize: Theme.fontSizeSmall
+        id: id_label_AppStatus        
         anchors.horizontalCenter: parent.horizontalCenter
         anchors.top: id_label_AppName.bottom
-        text: sCoverPageStatusText
+        text: sCurrentLocation===""? sCoverPageStatusText : sCurrentLocation
+        font { family: Theme.fontFamily; pixelSize: Theme.fontSizeTiny }
     }
 
     CoverActionList

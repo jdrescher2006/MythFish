@@ -287,6 +287,18 @@ Page
                     visible: false;
                 }
             }
+            Item
+            {
+                width: parent.width
+                height: Theme.paddingLarge
+            }
+            Label
+            {
+                id: id_label_CurrentLocation
+                anchors.horizontalCenter: parent.horizontalCenter
+                visible: !(sCurrentLocation==="")
+                text: "MythTV status: " + sCurrentLocation
+            }
         }
     }
 }
