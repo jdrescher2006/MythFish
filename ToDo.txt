@@ -1,5 +1,7 @@
 ToDo
 ----
+- Neues Notification System einbauen. Siehe YTPlayer in der Datei "YTPlayer.qml". >import org.nemomobile.notifications 1.0<
+- Name ändern für Jolla Store: harbour-mythfish. Für .desktop, .pro und icons.
 - Prüfen ob die Netzwerkverbindung steht -> macht YTPlayer auch.
 - Errormessage soll beim unsichtbar machen faden. "Behavior on opacity { FadeAnimation {} }"
 
