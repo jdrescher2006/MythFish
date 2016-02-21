@@ -20,7 +20,7 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Date: 16.02.2016</source>
+        <source>Date: 20.02.2016</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -184,6 +184,10 @@
         <source>Back</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Volume</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>NavigationPage</name>
@@ -197,6 +201,10 @@
     </message>
     <message>
         <source>Back</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Weather</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

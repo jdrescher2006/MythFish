@@ -172,6 +172,36 @@ Page
                         source: "image://theme/icon-m-events"
                     }
                 }
+                Button
+                {
+                    width: parent.width/3
+                    text: "DVD"
+                    onClicked:
+                    {
+                        fncSendCommand("jump playdvd");
+                    }
+                    Image
+                    {
+                        width: 32;
+                        height: 32;
+                        source: "image://theme/icon-m-ambience";
+                    }
+                }
+                Button
+                {
+                    width: parent.width/3
+                    text: qsTr("Weather")
+                    onClicked:
+                    {
+                        fncSendCommand("jump mythweather");
+                    }
+                    Image
+                    {
+                        width: 32;
+                        height: 32;
+                        source: "../icon-m-cloud.png";
+                    }
+                }
             }
         }
         Item

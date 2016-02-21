@@ -21,7 +21,7 @@ import Sailfish.Silica 1.0
 Page
 {
     id: id_page_mainpage
-    allowedOrientations: Orientation.All
+    allowedOrientations: Orientation.All       
 
     property bool bStartMainPage: true
     property bool bInitPage: true
@@ -32,10 +32,9 @@ Page
         target: id_MythRemote
         onVDisconnected:
         {
-            idRectangleShowError.visible = true;
-            idLabelErrorText.text = qsTr("Closed connection to MythTV!");
+            fncViewMessage("info", qsTr("Closed connection to MythTV!"));
+
             sCoverPageStatusText = qsTr("Not connected");
-            timErrorTimer.start();
 
             bConnected = false;
             pageStack.popAttached(undefined, PageStackAction.Immediate);
@@ -85,17 +84,13 @@ Page
             {
                 sCoverPageStatusText = qsTr("Waking up TV station...");
 
-                idRectangleShowError.visible = false;
-
                 var iReturnByteCount = id_WakeOnLan.iSendMagicPacket(sMACaddress);
 
                 //console.log("iReturnByteCount: " + iReturnByteCount.toString());
 
                 if (iReturnByteCount == -1)
                 {
-                    idRectangleShowError.visible = true;
-                    idLabelErrorText.text = qsTr("Error while sending wake up packet!");
-                    timErrorTimer.start();
+                    fncViewMessage("error", qsTr("Error while sending wake up packet!"));
                 }
             }
 
@@ -122,28 +117,24 @@ Page
         {
             sCoverPageStatusText = qsTr("Conecting to MythTV...");
 
-            idRectangleShowError.visible = false;
-
             var sReturn = id_MythRemote.sConnect(sHostname, sPortnumber);
             if (sReturn == "OK")
             {
                 bAutoConnecting = false;
                 timConnectLoopTimer.stop();
-                bConnected = true;
+                bConnected = true;                
                 sCoverPageStatusText = qsTr("Connected");
+                fncViewMessage("info", sCoverPageStatusText);
                 pageStack.pushAttached(Qt.resolvedUrl("NavigationPage.qml"));
                 pageStack.navigateForward();
             }
             else
             {
-                idRectangleShowError.visible = true;
-
                 //Check for specific error message
                 if (sReturn === "Error: Wrong machine!")
                     sReturn = qsTr("Could not connect, is this really MythTV?")
 
-                idLabelErrorText.text = sReturn;
-                timErrorTimer.start();
+                fncViewMessage("error", sReturn);
             }
         }
     }
@@ -157,8 +148,10 @@ Page
         {
             //Read current location of MythTV
             var sLocation = id_MythRemote.sSendCommand("query location");
+            var sVolume = id_MythRemote.sSendCommand("query volume");
 
             console.log("Location: " + sLocation);
+            console.log("Volume: " + sVolume);
 
             //possible locations:
             //mainmenu, guidegrid, StatusBox, mythvideo, playlistview (Music), playbackbox (Recordings), OK
@@ -178,28 +171,17 @@ Page
                 sCurrentLocation = qsTr("Play recording");
             else if (sLocation.indexOf("Playback LiveTV") != "-1")
                 sCurrentLocation = qsTr("Play live TV");
+            else if (sLocation.indexOf("mythgallery") != "-1")
+                sCurrentLocation = qsTr("Pictures");
             else
                 sCurrentLocation = "";
         }
     }
 
-    Timer
-    {
-        id: timErrorTimer
-        interval: 10000
-        running: false
-        repeat: false
-        onTriggered:
-        {
-            idRectangleShowError.visible = false
-        }
-    }
-
-
     SilicaFlickable
     {
         anchors.fill: parent
-        contentHeight: id_Column_Main.height + idRectangleShowError.height
+        contentHeight: id_Column_Main.height
 
         VerticalScrollDecorator {}
 
@@ -224,27 +206,7 @@ Page
             spacing: Theme.paddingLarge
             width: parent.width
 
-            PageHeader { title: qsTr("Welcome to MythFish") }
-
-            Rectangle
-            {
-                id: idRectangleShowError
-                width: parent.width
-                height: Theme.paddingLarge
-                color: Theme.highlightColor
-                visible: false
-                Label
-                {
-                    id: idLabelErrorText
-                    x: Theme.paddingSmall
-                    width: parent.width
-                    wrapMode: Text.WordWrap
-                    color: "red";
-                    font.pixelSize: Theme.fontSizeSmall
-                    anchors.centerIn: parent
-                    text: "Error ..."
-                }
-            }
+            PageHeader { title: qsTr("Welcome to MythFish") }           
 
             SectionHeader
             {
@@ -289,28 +251,24 @@ Page
                 visible: (!bConnected && !bAutoConnecting)
                 onClicked:
                 {
-                    idRectangleShowError.visible = false;
-
                     var sReturn = id_MythRemote.sConnect(sHostname, sPortnumber);
                     if (sReturn == "OK")
                     {
                         bConnected = true;
                         sCoverPageStatusText = qsTr("Connected");
+                        fncViewMessage("info", sCoverPageStatusText);
                         pageStack.pushAttached(Qt.resolvedUrl("NavigationPage.qml"));
                         pageStack.navigateForward();
                     }
                     else
                     {
-                        idRectangleShowError.visible = true;
-
                         //Check for specific error message
                         if (sReturn === "Error: Wrong machine!")
                             sReturn = qsTr("Could not connect, is this really MythTV?")
                         else
                             sReturn = qsTr("Error: ") + sReturn;
 
-                        idLabelErrorText.text = sReturn;
-                        timErrorTimer.start();
+                        fncViewMessage("error", sReturn);
                     }
                 }
                 Image
@@ -351,17 +309,13 @@ Page
                 text: qsTr("Wake up")
                 onClicked:
                 {
-                    idRectangleShowError.visible = false;
-
                     var iReturnByteCount = id_WakeOnLan.iSendMagicPacket(sMACaddress);
 
                     //console.log("iReturnByteCount: " + iReturnByteCount.toString());
 
                     if (iReturnByteCount == -1)
                     {
-                        idRectangleShowError.visible = true;
-                        idLabelErrorText.text = qsTr("Error while sending wake up packet!");
-                        timErrorTimer.start();
+                        fncViewMessage("error", qsTr("Error while sending wake up packet!"));
                     }
                 }
                 Image

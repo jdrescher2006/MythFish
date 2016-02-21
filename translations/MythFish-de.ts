@@ -20,8 +20,8 @@
         <translation>Quellcode:</translation>
     </message>
     <message>
-        <source>Date: 16.02.2016</source>
-        <translation>Datum: 16.02.2016</translation>
+        <source>Date: 20.02.2016</source>
+        <translation type="unfinished">Datum: 20.02.2016</translation>
     </message>
 </context>
 <context>
@@ -184,6 +184,10 @@
         <source>Back</source>
         <translation>Zurück</translation>
     </message>
+    <message>
+        <source>Volume</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>NavigationPage</name>
@@ -198,6 +202,10 @@
     <message>
         <source>Back</source>
         <translation>Zurück</translation>
+    </message>
+    <message>
+        <source>Weather</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>

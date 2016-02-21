@@ -37,7 +37,9 @@ Page
     SilicaFlickable
     {
         anchors.fill: parent
-        contentHeight: id_Column_FirstCol.height + Theme.paddingLarge + id_Column_SecondCol.height + Theme.paddingLarge + id_Column_ThirdCol.height + Theme.paddingLarge
+        contentHeight: id_Column_FirstCol.height + Theme.paddingLarge + id_Column_SecondCol.height +
+                       Theme.paddingLarge + id_Column_ThirdCol.height + Theme.paddingLarge +
+                       id_Column_FourthCol.height + Theme.paddingLarge;
 
         VerticalScrollDecorator {}
 
@@ -400,6 +402,59 @@ Page
                 {
                     width: parent.width/3;
                     visible: false;
+                }
+            }
+        }
+        Item
+        {
+            id: id_Item_Separator3
+            anchors.top: id_Column_ThirdCol.bottom;
+            width: parent.width
+            height: Theme.paddingLarge
+        }
+        Column
+        {
+            id: id_Column_FourthCol
+            anchors.top: id_Item_Separator3.bottom;
+            width: parent.width
+            spacing: Theme.paddingSmall
+            anchors.topMargin: Theme.paddingLarge
+            Row
+            {
+                width: parent.width
+                Image
+                {
+                    source: "../icon-m-quiet.png"
+                }
+                Slider
+                {
+                    id: idSLDVolumeSlider
+                    value: iVolumePercent
+                    minimumValue: 0
+                    maximumValue: 100
+                    enabled: true
+                    width: parent.width/1.5
+                    handleVisible: true
+                    valueText : ""
+                    label: qsTr("Volume")
+                    onValueChanged:
+                    {
+                        idSLDVolumeSlider.valueText = Math.ceil(idSLDVolumeSlider.value) + "%";
+                    }
+                    onPressed:
+                    {
+                        bSoundPressed = true;
+                    }
+                    onReleased:
+                    {
+                        //Set volume to selected value
+                        //id_CppTools.sSendCommand("play volume " + Math.ceil(idSLDVolumeSlider.value) + "%");
+                        //bSoundPressed = false;
+                    }
+                }
+                Image
+                {
+                    source: "image://theme/icon-m-speaker"
                 }
             }
         }

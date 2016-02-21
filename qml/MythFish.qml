@@ -17,6 +17,7 @@
 
 import QtQuick 2.0
 import Sailfish.Silica 1.0
+import org.nemomobile.notifications 1.0
 import "pages"
 import wakeonlan 1.0
 import mythremote 1.0
@@ -34,12 +35,24 @@ ApplicationWindow
     property string sCoverPageStatusText: "";
     property string sCurrentLocation: "";
 
-    //Init C++ classes
+    //Init C++ classes, libraries
     WakeOnLan{ id: id_WakeOnLan }
     MythRemote { id: id_MythRemote }
     ProjectSettings{ id: id_ProjectSettings }
+    Notification { id: mainPageNotification }
 
     //Define global functions
+    function fncViewMessage(sCategory, sMessage)
+    {
+        mainPageNotification.category = (sCategory === "error")
+            ? "x-sailfish.sailfish-utilities.error"
+            : "x-sailfish.sailfish-utilities.info";
+        mainPageNotification.previewBody = "MythFish";
+        mainPageNotification.previewSummary = sMessage;
+        mainPageNotification.close();
+        mainPageNotification.publish();
+    }
+
     function fncSendCommand(sCommand)
     {
         id_MythRemote.sSendCommand(sCommand);
