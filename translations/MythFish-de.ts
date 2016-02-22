@@ -165,6 +165,18 @@
         <source>Play live TV</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Pictures</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Query via Socket</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Query via HTTP</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>MediaPage</name>
@@ -185,7 +197,7 @@
         <translation>Zurück</translation>
     </message>
     <message>
-        <source>Volume</source>
+        <source>Now Playing...</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -207,6 +219,10 @@
         <source>Weather</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Now Playing...</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>NumbersPage</name>
@@ -221,6 +237,21 @@
     <message>
         <source>Enter</source>
         <translation>Eingabe</translation>
+    </message>
+</context>
+<context>
+    <name>PlayingPage</name>
+    <message>
+        <source>Now Playing...</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Drag to change volume</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Volume</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>

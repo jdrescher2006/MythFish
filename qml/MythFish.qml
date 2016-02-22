@@ -34,6 +34,9 @@ ApplicationWindow
     property bool bAutoWakeup: false;
     property string sCoverPageStatusText: "";
     property string sCurrentLocation: "";
+    property int iVolumePercent: 0;
+    property bool bSoundPressed: false;
+    property bool bPlaybackActice: false;
 
     //Init C++ classes, libraries
     WakeOnLan{ id: id_WakeOnLan }
@@ -56,6 +59,31 @@ ApplicationWindow
     function fncSendCommand(sCommand)
     {
         id_MythRemote.sSendCommand(sCommand);
+    }
+
+    function fncGetMythData(callback)
+    {
+        var doc = new XMLHttpRequest();
+        doc.onreadystatechange = function()
+        {
+            if (doc.readyState == XMLHttpRequest.HEADERS_RECEIVED)
+            {
+                var status = doc.status;
+                if(status!=200)
+                {
+                    callback("Error");
+                }
+            }
+            else if (doc.readyState == XMLHttpRequest.DONE && doc.status == 200)
+            {
+                var xmlResult = doc.responseXML;
+
+                callback(xmlResult);
+            }
+        }
+
+        doc.open("GET","http://192.168.0.4:6547/Frontend/GetStatus");
+        doc.send(null);
     }
 
     initialPage: Component { MainPage { } }

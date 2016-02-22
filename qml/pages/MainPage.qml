@@ -39,7 +39,7 @@ Page
             bConnected = false;
             pageStack.popAttached(undefined, PageStackAction.Immediate);
         }
-    }
+    }  
 
     onStatusChanged:
     {
@@ -140,18 +140,46 @@ Page
     }
     Timer
     {
-        id: timQueryMythTVTimer
+        id: timQueryMythTVTimerHTTP
         interval: 2000
-        running: bConnected
+        running: (bConnected && !bSoundPressed && id_TextSwitch_QueryHTTP.checked)
         repeat: true
         onTriggered:
         {
+            fncGetMythData(function(message)
+            {
+                console.log("Message: " + message);
+
+                //if (message != "Error")
+            })
+        }
+    }
+    Timer
+    {
+        id: timQueryMythTVTimer
+        interval: 2000
+        running: (bConnected && !bSoundPressed && id_TextSwitch_QuerySocket.checked)
+        repeat: true
+        onTriggered:
+        {
+            if (!bConnected || bSoundPressed || !id_TextSwitch_QuerySocket.checked)
+                return;
+
             //Read current location of MythTV
             var sLocation = id_MythRemote.sSendCommand("query location");
             var sVolume = id_MythRemote.sSendCommand("query volume");
 
             console.log("Location: " + sLocation);
             console.log("Volume: " + sVolume);
+
+            //parse volume
+            iVolumePercent = parseInt(sVolume);
+
+            //Check if playback is active
+            if (sLocation.indexOf("Playback ") != "-1")
+                bPlaybackActice = true;
+            else
+                bPlaybackActice = false;
 
             //possible locations:
             //mainmenu, guidegrid, StatusBox, mythvideo, playlistview (Music), playbackbox (Recordings), OK
@@ -323,6 +351,17 @@ Page
                     anchors.verticalCenter: parent.verticalCenter
                     source: "../icon-m-tv.png"
                 }
+            }
+
+            TextSwitch
+            {
+                id: id_TextSwitch_QuerySocket
+                text: qsTr("Query via Socket")
+            }
+            TextSwitch
+            {
+                id: id_TextSwitch_QueryHTTP
+                text: qsTr("Query via HTTP")
             }
         }       
     }

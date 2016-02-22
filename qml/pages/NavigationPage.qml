@@ -43,6 +43,17 @@ Page
 
         VerticalScrollDecorator {}
 
+        PullDownMenu
+        {
+            visible: bPlaybackActice
+
+            MenuItem
+            {
+                text: qsTr("Now Playing...")
+                onClicked: {pageStack.push(Qt.resolvedUrl("PlayingPage.qml"))}
+            }
+        }
+
         Column
         {
             id: id_column_jumpcolumn

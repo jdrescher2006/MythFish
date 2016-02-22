@@ -40,5 +40,6 @@ DISTFILES += \
     qml/pages/NavigationPage.qml \
     qml/pages/MediaPage.qml \
     qml/pages/ConnectSettingsPage.qml \
-    qml/icon-m-cloud.png
+    qml/icon-m-cloud.png \
+    qml/pages/PlayingPage.qml
 
