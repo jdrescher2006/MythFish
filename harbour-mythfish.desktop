@@ -1,8 +1,8 @@
 [Desktop Entry]
 Type=Application
 X-Nemo-Application-Type=silica-qt5
-Icon=MythFish
-Exec=MythFish
+Icon=harbour-mythfish
+Exec=harbour-mythfish
 Name=MythFish
 Name[de]=MythFish
-
+Categories=AudioVideo;Network;

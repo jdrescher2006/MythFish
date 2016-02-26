@@ -1,25 +1,26 @@
-TARGET = MythFish
+TARGET = harbour-mythfish
 
 CONFIG += sailfishapp
 
-SOURCES += src/MythFish.cpp \
+SOURCES += \
     src/wakeonlan.cpp \
     src/projectsettings.cpp \
-    src/mythremote.cpp
+    src/mythremote.cpp \
+    src/harbour-mythfish.cpp
 
-OTHER_FILES += qml/MythFish.qml \
+OTHER_FILES += qml/harbour-mythfish.qml \
     qml/cover/CoverPage.qml \
-    rpm/MythFish.changes.in \
-    rpm/MythFish.spec \
-    rpm/MythFish.yaml \
-    translations/*.ts \
-    MythFish.desktop
+    rpm/harbour-mythfish.yaml \
+    rpm/harbour-mythfish.changes.in \
+    rpm/harbour-mythfish.spec \
+    harbour-mythfish.desktop \
+    translations/*.ts
 
 SAILFISHAPP_ICONS = 86x86 108x108 128x128 256x256
 
 CONFIG += sailfishapp_i18n
 
-TRANSLATIONS += translations/MythFish-de.ts
+TRANSLATIONS += translations/harbour-mythfish-de.ts
 
 HEADERS += \
     src/wakeonlan.h \
@@ -27,7 +28,6 @@ HEADERS += \
     src/mythremote.h
 
 DISTFILES += \
-    qml/MythFish.png \
     qml/icon-m-tv.png \
     qml/icon-m-stop.png \
     qml/icon-m-rec.png \
@@ -41,5 +41,6 @@ DISTFILES += \
     qml/pages/MediaPage.qml \
     qml/pages/ConnectSettingsPage.qml \
     qml/icon-m-cloud.png \
-    qml/pages/PlayingPage.qml
+    qml/pages/PlayingPage.qml \    
+    qml/MythFish.png
 
