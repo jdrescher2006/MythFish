@@ -39,6 +39,13 @@ Page
             bConnected = false;
             pageStack.popAttached(undefined, PageStackAction.Immediate);
         }
+        onVOnlineStateChanged:
+        {
+            if (online)
+                fncViewMessage("info", "We are ONLINE!!!");
+            else
+                fncViewMessage("info", "We are OFFLINE!!!");
+        }
     }  
 
     onStatusChanged:

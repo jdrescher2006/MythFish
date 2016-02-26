@@ -22,17 +22,16 @@
 #include <QTcpSocket>
 #include <QRegExp>
 #include <QRegExpValidator>
+#include <QNetworkConfigurationManager>
 
 class MythRemote : public QObject{
     Q_OBJECT
     QTcpSocket *tcpSocket;
+    QNetworkConfigurationManager *networkManager;
     Q_PROPERTY(QString host READ sGetHostname)
     Q_PROPERTY(QString port READ sGetPortnumber)
 public:
-    explicit MythRemote(QObject *parent = 0);
-    bool bConnected;
-    QString strHostname;
-    QString strPortnumber;
+    explicit MythRemote(QObject *parent = 0);    
     Q_INVOKABLE QString sConnect(QString strGetHostname, QString strGetPortnumber);
     Q_INVOKABLE QString sSendCommand(QString strGetCommand);
     Q_INVOKABLE void vDisconnect();
@@ -41,8 +40,15 @@ public:
     Q_INVOKABLE QString sGetPortnumber();
 private slots:
     void slotDisconnected();
+    void slotOnlineStateChanged(bool bGetOnline);
 signals:
     void vDisconnected();
+    void vOnlineStateChanged(bool online);
+private:
+    bool bConnected;
+    bool bOnline;
+    QString strHostname;
+    QString strPortnumber;
 };
 
 #endif // MYTHREMOTE
