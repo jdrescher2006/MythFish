@@ -21,12 +21,8 @@
 MythRemote::MythRemote(QObject *parent) : QObject(parent)
 {
     this->tcpSocket = new QTcpSocket(this);
-    this->networkManager = new QNetworkConfigurationManager(this);
-
     this->bConnected = false;
-    this->bOnline = false;
     connect(this->tcpSocket,SIGNAL(disconnected()),this,SLOT(slotDisconnected()));
-    connect(this->networkManager, SIGNAL(onlineStateChanged(bool)),SLOT(slotOnlineStateChanged(bool)));
 }
 
 QString MythRemote::sConnect(QString strGetHostname, QString strGetPortnumber)
@@ -78,15 +74,6 @@ QString MythRemote::sSendCommand(QString strGetCommand)
     //qDebug() << "Send command returned: " << sReturnValue;
 
     return sReturnValue;
-}
-
-void MythRemote::slotOnlineStateChanged(bool bGetOnline)
-{
-    if (bGetOnline != this->bOnline)
-    {
-        this->bOnline = bGetOnline;
-        emit this->vOnlineStateChanged(bGetOnline);
-    }
 }
 
 void MythRemote::slotDisconnected()

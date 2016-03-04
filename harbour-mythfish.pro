@@ -11,7 +11,6 @@ SOURCES += \
 OTHER_FILES += qml/harbour-mythfish.qml \
     qml/cover/CoverPage.qml \
     rpm/harbour-mythfish.yaml \
-    rpm/harbour-mythfish.changes.in \
     rpm/harbour-mythfish.spec \
     harbour-mythfish.desktop \
     translations/*.ts
@@ -42,5 +41,7 @@ DISTFILES += \
     qml/pages/ConnectSettingsPage.qml \
     qml/icon-m-cloud.png \
     qml/pages/PlayingPage.qml \    
-    qml/MythFish.png
+    qml/MythFish.png \
+    qml/tools/Marquee.qml \
+    rpm/harbour-mythfish.changes
 

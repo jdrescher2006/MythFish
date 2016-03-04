@@ -36,7 +36,13 @@ ApplicationWindow
     property string sCurrentLocation: "";
     property int iVolumePercent: 0;
     property bool bSoundPressed: false;
+    property bool bPlaybackPressed: false;
     property bool bPlaybackActice: false;
+    property string sCurrentPlayPosition: "";
+    property int iCurrentPlayPosition: 0;
+    property int iMaxPlayPosition: 100;
+    property string sPlayingState: "";
+    property string sPlayingTitle: "";
 
     //Init C++ classes, libraries
     WakeOnLan{ id: id_WakeOnLan }
@@ -76,7 +82,9 @@ ApplicationWindow
             }
             else if (doc.readyState == XMLHttpRequest.DONE && doc.status == 200)
             {
-                var xmlResult = doc.responseXML;
+                //var xmlResult = doc.responseXML;
+                var xmlResult = doc.responseText;
+
 
                 callback(xmlResult);
             }
@@ -91,5 +99,3 @@ ApplicationWindow
     allowedOrientations: Orientation.All
     _defaultPageOrientations: Orientation.All
 }
-
-

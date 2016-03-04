@@ -78,171 +78,183 @@ onTriggered:153 - Location: mythgallery
 
 
 
-if (bSoundPressed)
-                return;
 
-            var sLocation = remote.send_command("query location");
-            var sVolume = remote.send_command("query volume");
+Pause:
+<FrontendStatus xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" version="1.0" serializerVersion="1.1">
+<State>
+<String>
+<Key>angleidx</Key>
+<Value/>
+</String>
+<String>
+<Key>audiosyncoffset</Key>
+<Value>0</Value>
+</String>
+<String>
+<Key>behindtime</Key>
+<Value>8:16</Value>
+</String>
+<String>
+<Key>chanid</Key>
+<Value>18501</Value>
+</String>
+<String>
+<Key>chapteridx</Key>
+<Value/>
+</String>
+<String>
+<Key>currentaudiotrack</Key>
+<Value>1: German MP2 2ch</Value>
+</String>
+<String>
+<Key>description</Key>
+<Value>1:00:46 von 1:09:02</Value>
+</String>
+<String>
+<Key>mute</Key>
+<Value>0</Value>
+</String>
+<String>
+<Key>pathname</Key>
+<Value>myth://192.168.0.4:6543/18501_20160302191100.mpg</Value>
+</String>
+<String>
+<Key>playedtime</Key>
+<Value>1:00:46</Value>
+</String>
+<String>
+<Key>playspeed</Key>
+<Value>0</Value>
+</String>
+<String>
+<Key>position</Key>
+<Value>880</Value>
+</String>
+<String>
+<Key>progafter</Key>
+<Value>1</Value>
+</String>
+<String>
+<Key>progbefore</Key>
+<Value>1</Value>
+</String>
+<String>
+<Key>programid</Key>
+<Value/>
+</String>
+<String>
+<Key>relbehindtime</Key>
+<Value>8:16</Value>
+</String>
+<String>
+<Key>reldescription</Key>
+<Value>1:00:46 von 1:09:02</Value>
+</String>
+<String>
+<Key>relplayedtime</Key>
+<Value>1:00:46</Value>
+</String>
+<String>
+<Key>relposition</Key>
+<Value>880</Value>
+</String>
+<String>
+<Key>relremainingtime</Key>
+<Value/>
+</String>
+<String>
+<Key>relsecondsplayed</Key>
+<Value>3646</Value>
+</String>
+<String>
+<Key>reltotalseconds</Key>
+<Value>4142</Value>
+</String>
+<String>
+<Key>reltotaltime</Key>
+<Value>1:09:02</Value>
+</String>
+<String>
+<Key>remainingtime</Key>
+<Value/>
+</String>
+<String>
+<Key>secondsplayed</Key>
+<Value>3646</Value>
+</String>
+<String>
+<Key>starttime</Key>
+<Value>2016-03-02T19:11:00Z</Value>
+</String>
+<String>
+<Key>state</Key>
+<Value>WatchingLiveTV</Value>
+</String>
+<String>
+<Key>subtitle</Key>
+<Value>Erdbeben, Dramedy, USA 2015</Value>
+</String>
+<String>
+<Key>title</Key>
+<Value>Grey's Anatomy - Die jungen Ärzte</Value>
+</String>
+<String>
+<Key>titleidx</Key>
+<Value/>
+</String>
+<String>
+<Key>totalangles</Key>
+<Value/>
+</String>
+<String>
+<Key>totalaudiotracks</Key>
+<Value>2</Value>
+</String>
+<String>
+<Key>totalchapters</Key>
+<Value/>
+</String>
+<String>
+<Key>totalseconds</Key>
+<Value>4142</Value>
+</String>
+<String>
+<Key>totalsubtitletracks</Key>
+<Value>1</Value>
+</String>
+<String>
+<Key>totaltime</Key>
+<Value>1:09:02</Value>
+</String>
+<String>
+<Key>totaltitles</Key>
+<Value/>
+</String>
+<String>
+<Key>volume</Key>
+<Value>19</Value>
+</String>
+</State>
+<ChapterTimes/>
+<SubtitleTracks>
+<Track>
+<Key>SELECTTTC_0</Key>
+<Value>TT CC 1: German</Value>
+</Track>
+</SubtitleTracks>
+<AudioTracks>
+<Track>
+<Key>SELECTAUDIO_0</Key>
+<Value>1: German MP2 2ch</Value>
+</Track>
+<Track>
+<Key>SELECTAUDIO_1</Key>
+<Value>2: German (Nur Effekte)</Value>
+</Track>
+</AudioTracks>
+</FrontendStatus>
 
-            //Analyse answer.
-            //Detect running playback of anything
-            var iIndex = sLocation.indexOf("Playback");
-            //Check if pause
 
-            if (iIndex != -1 )
-            {
-                idSLDPlaySlider.visible = true;
-                idSLDVolumeSlider.visible = true;
-
-                console.log("sVolume", sVolume);
-
-                var iVolume = parseInt(sVolume);
-                if (iVolume != idSLDVolumeSlider.value)
-                    idSLDVolumeSlider.value = iVolume;
-
-                //Get play location in recording
-                var sPlayLocation = sLocation.substring((sLocation.indexOf(":") - 2), (sLocation.indexOf(" ", iIndex + 18)));
-
-
-                console.log("sLocation", sLocation);
-                console.log("sPlayLocation", sPlayLocation);
-
-                //Get max length of recording
-                var sMaxLength = sLocation.substring((sLocation.indexOf("von", iIndex) + 4), (sLocation.indexOf(" ", (sLocation.indexOf("von", iIndex) + 4))));
-
-                console.log("sMaxLength", sMaxLength);
-
-                idSLDPlaySlider.valueText = sPlayLocation;
-
-                var sPlayLocation = sPlayLocation.split(":");
-                var sMaxLength = sMaxLength.split(":");
-
-                var iPlaySeconds = 0;
-                if (sPlayLocation.length == 2)
-                    iPlaySeconds = (parseInt(sPlayLocation[0]) * 60) + parseInt(sPlayLocation[1]);
-                else
-                    iPlaySeconds = (parseInt(sPlayLocation[0]) * 3600) + (parseInt(sPlayLocation[1]) * 60) + parseInt(sPlayLocation[2]);
-
-                var iLengthSeconds = 0;
-                if (sMaxLength.length == 2)
-                    iLengthSeconds = (parseInt(sMaxLength[0]) * 60) + parseInt(sMaxLength[1]);
-                else
-                    iLengthSeconds = (parseInt(sMaxLength[0]) * 3600) + (parseInt(sMaxLength[1]) * 60) + parseInt(sMaxLength[2]);
-
-                idSLDPlaySlider.maximumValue = iLengthSeconds;
-                idSLDPlaySlider.minimumValue = 0;
-                idSLDPlaySlider.value = iPlaySeconds;
-
-                //Paused?
-                if (sLocation.indexOf("pause") == -1)
-                    idSLDPlaySlider.label = "Play"
-                else
-                    idSLDPlaySlider.label = "Pause"
-            }
-            else
-            {
-                idSLDPlaySlider.visible = false;
-                idSLDVolumeSlider.visible = false;
-            }
-
-
-
-
-
-
-
- if (!id_TextSwitch_PollServer.checked)
-                return;
-
-            //Are we connected to frontend?
-            if (!id_MythRemote.bGetConnected())
-                return;
-
-            //First read current location
-            var sLocation = id_MythRemote.sSendCommand("query location");
-
-            //possible locations:
-            //mainmenu, guidegrid, StatusBox, mythvideo, playlistview(Music), playbackbox(Recordings)
-
-            console.log("Location: " + sLocation);
-
-            //Extract what MythTV is currently doing
-            var iIndex = "unknown"
-            iIndex = sLocation.indexOf("Playback");     //playback of any media
-            if (iIndex == -1 )
-                bMythPlayback = false;
-            else
-                bMythPlayback = true;
-
-            if (!bMythPlayback)
-                return;
-
-            var sVolume = id_MythRemote.sSendCommand("query volume");
-
-            console.log("Volume: " + sVolume);
-
-            iVolumePercent = parseInt(sVolume);
-
-
-
-
-
-
-
-
- Slider
-            {
-                id: idSLDPlaySlider
-                value: 50
-                minimumValue: 0
-                maximumValue: 100
-                enabled: true
-                width: parent.width
-                handleVisible: true
-                valueText : "Test Text"
-                label: "Test Label"
-                visible: bMythPlayback
-            }
-            Row
-            {
-                width: parent.width
-                visible: bMythPlayback
-                Image
-                {
-                    source: "../icon-m-quiet.png"
-                }
-                Slider
-                {
-                    id: idSLDVolumeSlider
-                    value: iVolumePercent
-                    minimumValue: 0
-                    maximumValue: 100
-                    enabled: true
-                    width: parent.width/1.5
-                    handleVisible: true
-                    valueText : ""
-                    label: "Volume"
-                    visible: bMythPlayback
-                    onValueChanged:
-                    {
-                        idSLDVolumeSlider.valueText = Math.ceil(idSLDVolumeSlider.value) + "%";
-                    }
-                    onPressed:
-                    {
-                        bSoundPressed = true;
-                    }
-                    onReleased:
-                    {
-                        //Set volume to selected value
-                        id_CppTools.sSendCommand("play volume " + Math.ceil(idSLDVolumeSlider.value) + "%");
-                        bSoundPressed = false;
-                    }
-                }
-                Image
-                {
-                    source: "image://theme/icon-m-speaker"
-                }
-            }
 
 
 <FrontendStatus xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" version="1.0" serializerVersion="1.1">
@@ -428,23 +440,23 @@ Wunderschön! Karibische Träume - Die Dominikanische Republik
 
 
 <FrontendStatus xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" version="1.0" serializerVersion="1.1">
-<State>
-<String>
-<Key>currentlocation</Key>
-<Value>mainmenu</Value>
-</String>
-<String>
-<Key>menutheme</Key>
-<Value>default</Value>
-</String>
-<String>
-<Key>state</Key>
-<Value>idle</Value>
-</String>
-</State>
-<ChapterTimes/>
-<SubtitleTracks/>
-<AudioTracks/>
+	<State>
+		<String>
+			<Key>currentlocation</Key>
+			<Value>mainmenu</Value>
+			</String>
+			<String>
+			<Key>menutheme</Key>
+			<Value>default</Value>
+			</String>
+			<String>
+			<Key>state</Key>
+			<Value>idle</Value>
+		</String>
+	</State>
+	<ChapterTimes/>
+	<SubtitleTracks/>
+	<AudioTracks/>
 </FrontendStatus>
 
 
@@ -626,23 +638,23 @@ Wunderschön! Karibische Träume - Die Dominikanische Republik
 
 
 <FrontendStatus xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" version="1.0" serializerVersion="1.1">
-<State>
-<String>
-<Key>currentlocation</Key>
-<Value>playlistview</Value>
-</String>
-<String>
-<Key>menutheme</Key>
-<Value>default</Value>
-</String>
-<String>
-<Key>state</Key>
-<Value>idle</Value>
-</String>
-</State>
-<ChapterTimes/>
-<SubtitleTracks/>
-<AudioTracks/>
+	<State>
+		<String>
+			<Key>currentlocation</Key>
+			<Value>playlistview</Value>
+		</String>
+		<String>
+			<Key>menutheme</Key>
+			<Value>default</Value>
+		</String>
+		<String>
+			<Key>state</Key>
+			<Value>idle</Value>
+		</String>
+	</State>
+	<ChapterTimes/>
+	<SubtitleTracks/>
+	<AudioTracks/>
 </FrontendStatus>
 
 

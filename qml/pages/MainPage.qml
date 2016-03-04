@@ -27,6 +27,20 @@ Page
     property bool bInitPage: true
     property bool bAutoConnecting: false    
 
+    function fncGetValue(sKey, sMessage)
+    {
+        var sReturn = "";
+        sKey = "<Key>" + sKey + "</Key><Value>";
+
+        sReturn = sMessage.substring((sMessage.indexOf(sKey) + sKey.length));
+
+        sKey = "</Value>";
+        sReturn = sReturn.substring(0, sReturn.indexOf(sKey));
+        sReturn = sReturn.trim();
+
+        return sReturn;
+    }
+
     Connections     //amazing trick...
     {
         target: id_MythRemote
@@ -39,18 +53,11 @@ Page
             bConnected = false;
             pageStack.popAttached(undefined, PageStackAction.Immediate);
         }
-        onVOnlineStateChanged:
-        {
-            if (online)
-                fncViewMessage("info", "We are ONLINE!!!");
-            else
-                fncViewMessage("info", "We are OFFLINE!!!");
-        }
     }  
 
     onStatusChanged:
     {
-        if (status == PageStatus.Active && bStartMainPage)
+        if (status === PageStatus.Active && bStartMainPage)
         {
             bInitPage = true;
             bStartMainPage = false;
@@ -125,7 +132,7 @@ Page
             sCoverPageStatusText = qsTr("Conecting to MythTV...");
 
             var sReturn = id_MythRemote.sConnect(sHostname, sPortnumber);
-            if (sReturn == "OK")
+            if (sReturn === "OK")
             {
                 bAutoConnecting = false;
                 timConnectLoopTimer.stop();
@@ -153,18 +160,109 @@ Page
         repeat: true
         onTriggered:
         {
-            fncGetMythData(function(message)
-            {
-                console.log("Message: " + message);
+            if (!bConnected || bSoundPressed || !id_TextSwitch_QueryHTTP.checked)
+                return;
 
-                //if (message != "Error")
+            fncGetMythData(function(message)
+            {                
+                if (message === "Error")
+                {
+                    return;
+                }
+
+                //First, search for state
+                var sState = fncGetValue("state", message);
+
+                console.log("sState: " + sState);
+
+                if (sState === "idle")
+                {
+                    bPlaybackActice = false;
+
+                    //In idle state, we have to find out what is going on
+                    var sLocationString = fncGetValue("currentlocation", message);
+
+                    console.log("sLocationString: " + sLocationString);
+
+                    if (sLocationString === "mythgallery")
+                        sCurrentLocation = qsTr("Pictures");
+                    else if (sLocationString === "mainmenu")
+                        sCurrentLocation = qsTr("Main menu");
+                    else if (sLocationString === "guidegrid")
+                        sCurrentLocation = qsTr("Guide");
+                    else if (sLocationString === "StatusBox")
+                        sCurrentLocation = qsTr("Status");
+                    else if (sLocationString === "mythvideo")
+                        sCurrentLocation = qsTr("Videos");
+                    else if (sLocationString === "playlistview")
+                        sCurrentLocation = qsTr("Music");
+                    else if (sLocationString === "playbackbox")
+                        sCurrentLocation = qsTr("Recordings");
+                }
+                else if(sState === "WatchingVideo")
+                {
+                    bPlaybackActice = true;
+                    sCurrentLocation = qsTr("Play Video");
+                }
+                else if(sState === "WatchingLiveTV")
+                {
+                    bPlaybackActice = true;
+                    sCurrentLocation = qsTr("Play live TV");
+                }
+                else if(sState === "WatchingPreRecorded")
+                {
+                    bPlaybackActice = true;
+                    sCurrentLocation = qsTr("Play recording");
+                }
+                else
+                {
+                    bPlaybackActice = true;
+                    sCurrentLocation = sState;
+                }
+
+                if (!bPlaybackActice)
+                {
+                    sCurrentPlayPosition = "";
+                    iCurrentPlayPosition = 0;
+                    iMaxPlayPosition = 100;
+                    sPlayingState = "";
+                    sPlayingTitle = "";
+
+                    return;
+                }
+
+                //Get Volume
+                iVolumePercent = parseInt(fncGetValue("volume", message));
+
+                //Get title
+                sPlayingTitle = fncGetValue("title", message);
+
+                console.log("sPlayingTitle: " + sPlayingTitle);
+
+                //Get playback position
+                sCurrentPlayPosition = fncGetValue("relplayedtime", message);
+
+                 console.log("sCurrentPlayPosition: " + sCurrentPlayPosition);
+
+                //Get playback length as seconds, int
+                iMaxPlayPosition = parseInt(fncGetValue("reltotalseconds", message));
+
+                console.log("iMaxPlayPosition: " + iMaxPlayPosition);
+
+                //Get playback position as seconds, int
+                iCurrentPlayPosition = parseInt(fncGetValue("relsecondsplayed", message));
+
+                console.log("iCurrentPlayPosition: " + iCurrentPlayPosition);
+
+                //sPlayingState = "Play";
+                //sPlayingState = "Pause";
             })
         }
     }
     Timer
     {
         id: timQueryMythTVTimer
-        interval: 2000
+        interval: 1000
         running: (bConnected && !bSoundPressed && id_TextSwitch_QuerySocket.checked)
         repeat: true
         onTriggered:
@@ -183,33 +281,77 @@ Page
             iVolumePercent = parseInt(sVolume);
 
             //Check if playback is active
-            if (sLocation.indexOf("Playback ") != "-1")
+            if (sLocation.indexOf("Playback ") !== "-1")
                 bPlaybackActice = true;
             else
                 bPlaybackActice = false;
 
             //possible locations:
             //mainmenu, guidegrid, StatusBox, mythvideo, playlistview (Music), playbackbox (Recordings), OK
-            if (sLocation.indexOf("mainmenu") != "-1")
+            if (sLocation.indexOf("mainmenu") !== "-1")
                 sCurrentLocation = qsTr("Main menu");
-            else if (sLocation.indexOf("guidegrid") != "-1")
+            else if (sLocation.indexOf("guidegrid") !== "-1")
                 sCurrentLocation = qsTr("Guide");
-            else if (sLocation.indexOf("StatusBox") != "-1")
+            else if (sLocation.indexOf("StatusBox") !== "-1")
                 sCurrentLocation = qsTr("Status");
-            else if (sLocation.indexOf("mythvideo") != "-1")
+            else if (sLocation.indexOf("mythvideo") !== "-1")
                 sCurrentLocation = qsTr("Videos");
-            else if (sLocation.indexOf("playlistview") != "-1")
+            else if (sLocation.indexOf("playlistview") !== "-1")
                 sCurrentLocation = qsTr("Music");
-            else if (sLocation.indexOf("playbackbox") != "-1")
+            else if (sLocation.indexOf("playbackbox") !== "-1")
                 sCurrentLocation = qsTr("Recordings");
-            else if (sLocation.indexOf("Playback Recorded") != "-1")
+            else if (sLocation.indexOf("Playback Recorded") !== "-1")
                 sCurrentLocation = qsTr("Play recording");
-            else if (sLocation.indexOf("Playback LiveTV") != "-1")
+            else if (sLocation.indexOf("Playback LiveTV") !== "-1")
                 sCurrentLocation = qsTr("Play live TV");
-            else if (sLocation.indexOf("mythgallery") != "-1")
+            else if (sLocation.indexOf("mythgallery") !== "-1")
                 sCurrentLocation = qsTr("Pictures");
             else
                 sCurrentLocation = "";
+
+            if (!bPlaybackActice)
+            {
+                sCurrentPlayPosition = "";
+                iCurrentPlayPosition = 0;
+                iMaxPlayPosition = 100;
+                sPlayingState = "";
+
+                return;
+            }
+
+            //Get play location in recording
+            //Search first colon in the first block
+            var sFromPosString = sLocation.substring(sLocation.lastIndexOf(" ",sLocation.indexOf(":")), sLocation.indexOf(" ",sLocation.indexOf(":")));
+            sFromPosString = sFromPosString.trim();
+            sCurrentPlayPosition = sFromPosString;
+            console.log("sFromPosString: " + sFromPosString);
+
+            var sToPosString = sLocation.substring((sLocation.indexOf(sFromPosString) + sFromPosString.length));
+            sToPosString = sToPosString.substring(sToPosString.lastIndexOf(" ",sToPosString.indexOf(":")), sToPosString.indexOf(" ",sToPosString.indexOf(":")));            
+            console.log("sToPosString: " + sToPosString);
+
+            var sPlayLocation = sFromPosString.split(":");
+            var sMaxLength = sToPosString.split(":");
+
+            var iPlaySeconds = 0;
+            if (sPlayLocation.length === 2)
+                iPlaySeconds = (parseInt(sPlayLocation[0]) * 60) + parseInt(sPlayLocation[1]);
+            else
+                iPlaySeconds = (parseInt(sPlayLocation[0]) * 3600) + (parseInt(sPlayLocation[1]) * 60) + parseInt(sPlayLocation[2]);
+
+            var iLengthSeconds = 0;
+            if (sMaxLength.length === 2)
+                iLengthSeconds = (parseInt(sMaxLength[0]) * 60) + parseInt(sMaxLength[1]);
+            else
+                iLengthSeconds = (parseInt(sMaxLength[0]) * 3600) + (parseInt(sMaxLength[1]) * 60) + parseInt(sMaxLength[2]);
+
+            iMaxPlayPosition = iLengthSeconds;
+            iCurrentPlayPosition = iPlaySeconds;
+
+            if (sLocation.indexOf("pause") === -1)
+                sPlayingState = "Play";
+            else
+                sPlayingState = "Pause";
         }
     }
 

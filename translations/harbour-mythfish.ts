@@ -177,6 +177,10 @@
         <source>Query via HTTP</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Play Video</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>MediaPage</name>
@@ -246,11 +250,15 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Drag to change volume</source>
+        <source>Volume</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Volume</source>
+        <source>Menu</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Back</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
