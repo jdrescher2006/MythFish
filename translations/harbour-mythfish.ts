@@ -31,15 +31,7 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Connection settings</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Enter hostname or IP address</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Enter port number</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -48,6 +40,18 @@
     </message>
     <message>
         <source>Connect on startup of this app.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Enter port number of control socket</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Enter port number of HTTP service</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Frontend connection settings</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -167,14 +171,6 @@
     </message>
     <message>
         <source>Pictures</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Query via Socket</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Query via HTTP</source>
         <translation type="unfinished"></translation>
     </message>
     <message>

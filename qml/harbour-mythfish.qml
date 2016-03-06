@@ -29,6 +29,7 @@ ApplicationWindow
     property bool bConnected: false;
     property string sHostname: "192.168.0.4";
     property string sPortnumber: "6546";
+    property string sPortnumberHTTP: "6547";
     property bool bAutoConnect: false;
     property string sMACaddress: "00:19:99:3b:15:f7";
     property bool bAutoWakeup: false;
@@ -90,7 +91,7 @@ ApplicationWindow
             }
         }
 
-        doc.open("GET","http://192.168.0.4:6547/Frontend/GetStatus");
+        doc.open("GET","http://" + sHostname + ":" + sPortnumberHTTP + "/Frontend/GetStatus");
         doc.send(null);
     }
 

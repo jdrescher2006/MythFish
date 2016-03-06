@@ -35,6 +35,8 @@ Page
 
             id_TextField_HostName.text = sHostname;
             id_TextField_PortNumber.text = sPortnumber;
+            id_TextField_PortNumberHTTP.text = sPortnumberHTTP;
+
             id_TextSwitch_AutoConnect.checked = bAutoConnect;
 
             bInitPage = false;
@@ -53,6 +55,11 @@ Page
             {
                 sPortnumber = id_TextField_PortNumber.text;
                 id_ProjectSettings.vSaveProjectData("sPortnumber", id_TextField_PortNumber.text);
+            }
+            if (!id_TextField_PortNumberHTTP.errorHighlight && sPortnumberHTTP !== id_TextField_PortNumberHTTP.text)
+            {
+                sPortnumberHTTP = id_TextField_PortNumberHTTP.text;
+                id_ProjectSettings.vSaveProjectData("sPortnumberHTTP", id_TextField_PortNumberHTTP.text);
             }
             if (bAutoConnect != id_TextSwitch_AutoConnect.checked)
             {
@@ -78,7 +85,7 @@ Page
             Label
             {
                 x: Theme.paddingMedium
-                text: qsTr("Connection settings")
+                text: qsTr("Frontend connection settings")
                 color: Theme.secondaryHighlightColor
                 font.pixelSize: Theme.fontSizeMedium
             }
@@ -100,9 +107,20 @@ Page
                 inputMethodHints: Qt.ImhDigitsOnly | Qt.ImhNoPredictiveText
                 validator: RegExpValidator { regExp: /^(6553[0-5])|(655[0-2]\d)|(65[0-4]\d{2})|(6[0-4]\d{3})|([1-5]\d{4})|([1-9]\d{1,3})|(\d)$/ }
                 color: errorHighlight? "red" : Theme.primaryColor
-                placeholderText: qsTr("Enter port number")
-                label: qsTr("Enter port number")
+                placeholderText: qsTr("Enter port number of control socket")
+                label: qsTr("Enter port number of control socket")
                 width: parent.width                
+            }
+            TextField
+            {
+                anchors.margins: Theme.paddingSmall
+                id: id_TextField_PortNumberHTTP
+                inputMethodHints: Qt.ImhDigitsOnly | Qt.ImhNoPredictiveText
+                validator: RegExpValidator { regExp: /^(6553[0-5])|(655[0-2]\d)|(65[0-4]\d{2})|(6[0-4]\d{3})|([1-5]\d{4})|([1-9]\d{1,3})|(\d)$/ }
+                color: errorHighlight? "red" : Theme.primaryColor
+                placeholderText: qsTr("Enter port number of HTTP service")
+                label: qsTr("Enter port number of HTTP service")
+                width: parent.width
             }
             TextSwitch
             {

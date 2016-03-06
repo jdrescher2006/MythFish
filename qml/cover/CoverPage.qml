@@ -44,6 +44,16 @@ CoverBackground
         text: sCurrentLocation===""? sCoverPageStatusText : sCurrentLocation
         font { family: Theme.fontFamily; pixelSize: Theme.fontSizeTiny }
     }
+    Label
+    {
+        id: id_label_Title
+        anchors.horizontalCenter: parent.horizontalCenter
+        width: parent.width - Theme.paddingMedium
+        anchors.top: id_label_AppStatus.bottom
+        text: sPlayingTitle
+        truncationMode: TruncationMode.Elide
+        font { family: Theme.fontFamily; pixelSize: Theme.fontSizeTiny }
+    }
 
     CoverActionList
     {

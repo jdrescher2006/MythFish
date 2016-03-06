@@ -31,14 +31,6 @@
         <translation>Mit MythTV Verbinden</translation>
     </message>
     <message>
-        <source>Connection settings</source>
-        <translation>Verbindungseinstellungen</translation>
-    </message>
-    <message>
-        <source>Enter port number</source>
-        <translation>Port-Nummer eingeben</translation>
-    </message>
-    <message>
         <source>Auto Connect</source>
         <translation>Automatischen Verbinden</translation>
     </message>
@@ -49,6 +41,18 @@
     <message>
         <source>Enter hostname or IP address</source>
         <translation>Hostnamen oder IP-Adresse eingeben</translation>
+    </message>
+    <message>
+        <source>Enter port number of control socket</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Enter port number of HTTP service</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Frontend connection settings</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -167,14 +171,6 @@
     </message>
     <message>
         <source>Pictures</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Query via Socket</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Query via HTTP</source>
         <translation type="unfinished"></translation>
     </message>
     <message>

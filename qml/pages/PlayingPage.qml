@@ -85,6 +85,11 @@ Page
                 handleVisible: true
                 valueText : sCurrentPlayPosition
                 label: sPlayingState
+                onValueChanged:
+                {
+                    //Set current play position
+
+                }
                 onPressed:
                 {
                     bPlaybackPressed = true;
@@ -94,12 +99,13 @@ Page
                     //Set playback seconds to selected value
                     //multiply by 1000 because Date() requires miliseconds
                     var date = new Date(null);
-                    date.setSeconds(idSLDPlaySlider.value);
+                    date.setSeconds(Math.ceil(idSLDPlaySlider.value));
                     var sDateString = date.toISOString().substr(11, 8);
 
+                    console.log("idSLDPlaySlider.value: " + idSLDPlaySlider.value.toString());
                     console.log("sDateString: " + sDateString);
 
-                    //fncSendCommand("play seek HH:MM:SS " + sDateString);
+                    fncSendCommand("play seek " + sDateString);
 
                     bPlaybackPressed = false;
                 }

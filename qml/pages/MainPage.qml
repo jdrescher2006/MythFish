@@ -51,7 +51,7 @@ Page
             sCoverPageStatusText = qsTr("Not connected");
 
             bConnected = false;
-            pageStack.popAttached(undefined, PageStackAction.Immediate);
+            pageStack.popAttached(undefined, PageStackAction.Immediate);            
         }
     }  
 
@@ -102,7 +102,7 @@ Page
 
                 //console.log("iReturnByteCount: " + iReturnByteCount.toString());
 
-                if (iReturnByteCount == -1)
+                if (iReturnByteCount === -1)
                 {
                     fncViewMessage("error", qsTr("Error while sending wake up packet!"));
                 }
@@ -156,11 +156,11 @@ Page
     {
         id: timQueryMythTVTimerHTTP
         interval: 2000
-        running: (bConnected && !bSoundPressed && id_TextSwitch_QueryHTTP.checked)
+        running: (bConnected && !bSoundPressed && !bPlaybackPressed)
         repeat: true
         onTriggered:
         {
-            if (!bConnected || bSoundPressed || !id_TextSwitch_QueryHTTP.checked)
+            if (!bConnected || bSoundPressed || bPlaybackPressed)
                 return;
 
             fncGetMythData(function(message)
@@ -173,7 +173,7 @@ Page
                 //First, search for state
                 var sState = fncGetValue("state", message);
 
-                console.log("sState: " + sState);
+                //console.log("sState: " + sState);
 
                 if (sState === "idle")
                 {
@@ -182,7 +182,7 @@ Page
                     //In idle state, we have to find out what is going on
                     var sLocationString = fncGetValue("currentlocation", message);
 
-                    console.log("sLocationString: " + sLocationString);
+                    //console.log("sLocationString: " + sLocationString);
 
                     if (sLocationString === "mythgallery")
                         sCurrentLocation = qsTr("Pictures");
@@ -209,7 +209,7 @@ Page
                     bPlaybackActice = true;
                     sCurrentLocation = qsTr("Play live TV");
                 }
-                else if(sState === "WatchingPreRecorded")
+                else if(sState === "WatchingPreRecorded" || sState === "WatchingRecording")
                 {
                     bPlaybackActice = true;
                     sCurrentLocation = qsTr("Play recording");
@@ -227,6 +227,8 @@ Page
                     iMaxPlayPosition = 100;
                     sPlayingState = "";
                     sPlayingTitle = "";
+                    //TODO: pop the playing page
+                    //pageStack.pop(undefined);
 
                     return;
                 }
@@ -237,37 +239,48 @@ Page
                 //Get title
                 sPlayingTitle = fncGetValue("title", message);
 
-                console.log("sPlayingTitle: " + sPlayingTitle);
+                //console.log("sPlayingTitle: " + sPlayingTitle);
 
                 //Get playback position
                 sCurrentPlayPosition = fncGetValue("relplayedtime", message);
 
-                 console.log("sCurrentPlayPosition: " + sCurrentPlayPosition);
+                 //console.log("sCurrentPlayPosition: " + sCurrentPlayPosition);
 
                 //Get playback length as seconds, int
                 iMaxPlayPosition = parseInt(fncGetValue("reltotalseconds", message));
 
-                console.log("iMaxPlayPosition: " + iMaxPlayPosition);
+                //console.log("iMaxPlayPosition: " + iMaxPlayPosition);
 
                 //Get playback position as seconds, int
                 iCurrentPlayPosition = parseInt(fncGetValue("relsecondsplayed", message));
 
-                console.log("iCurrentPlayPosition: " + iCurrentPlayPosition);
+                //console.log("iCurrentPlayPosition: " + iCurrentPlayPosition);
 
-                //sPlayingState = "Play";
-                //sPlayingState = "Pause";
+                //Get if pause
+                if (fncGetValue("playspeed", message) === "0")
+                    sPlayingState = "Pause";
+                else
+                    sPlayingState = "Play";
             })
         }
     }
     Timer
     {
+        //ATTENTION: this code (the complete timer) is inactive.
+        //It is not used any more but is conserved for future uses.
+        //There are problems with the control socket of MythTV.
+        //I often have timeouts when querying data. MythTV even gets unstable sometimes.
+        //So I use the other timer, which retrieves the data via the HTTP frontend service.
+        //Other advantage of HTTP is that I get more data from it, such as the title.
+
         id: timQueryMythTVTimer
         interval: 1000
-        running: (bConnected && !bSoundPressed && id_TextSwitch_QuerySocket.checked)
+        //running: (bConnected && !bSoundPressed)
+        running: false;
         repeat: true
         onTriggered:
         {
-            if (!bConnected || bSoundPressed || !id_TextSwitch_QuerySocket.checked)
+            if (!bConnected || bSoundPressed)
                 return;
 
             //Read current location of MythTV
@@ -500,17 +513,6 @@ Page
                     anchors.verticalCenter: parent.verticalCenter
                     source: "../icon-m-tv.png"
                 }
-            }
-
-            TextSwitch
-            {
-                id: id_TextSwitch_QuerySocket
-                text: qsTr("Query via Socket")
-            }
-            TextSwitch
-            {
-                id: id_TextSwitch_QueryHTTP
-                text: qsTr("Query via HTTP")
             }
         }       
     }

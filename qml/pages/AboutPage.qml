@@ -83,7 +83,7 @@ Page
             anchors.horizontalCenter: parent.horizontalCenter
             font.pixelSize: Theme.fontSizeExtraSmall
             color: Theme.secondaryColor
-            text: "Version: 1.30"
+            text: "Version: 1.2.0-3"
         }
         Label
         {
