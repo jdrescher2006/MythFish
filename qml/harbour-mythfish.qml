@@ -95,6 +95,44 @@ ApplicationWindow
         doc.send(null);
     }
 
+    function fncTester()
+    {
+        /*
+          Der ganze Scheiss funktioniert nicht. Ich bekomme immer einen komischen Zeiger zurück vom Find.
+          Das Find ist echt scheisse...
+
+        console.log(pageStack.find(function(page) { return "Name der Seite: " + page.objectName }));
+
+        var bTester123 = false;
+
+        bTester123 = pageStack.find(function(page)
+        {
+            if (page.objectName === "ChannelBrowser")
+                return true;
+            return false;
+        });
+
+        if (bTester123 !== null)
+            console.log("Seite gefunden: " + bTester123.toString());
+
+        bTester123 = pageStack.find(function(page)
+        {
+            if (page.objectName === "PlayingPage")
+                return true;
+            return false;
+        });
+
+        if (bTester123 !== null)
+            console.log("Seite gefunden: " + bTester123.toString());
+
+
+        pageStack.pop(pageStack.find(function(page)
+        {
+            return page.toString() === "Page_QMLTYPE_25(0x497e6300, \"PlayingPage\")";
+        }),PageStackAction.Immediate);
+        */
+    }
+
     initialPage: Component { MainPage { } }
     cover: Qt.resolvedUrl("cover/CoverPage.qml")
     allowedOrientations: Orientation.All

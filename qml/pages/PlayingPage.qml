@@ -21,6 +21,7 @@ import "../tools"
 
 Page
 {
+    objectName: "PlayingPage"
     allowedOrientations: Orientation.All
     id: id_page_playingpage   
 
@@ -336,7 +337,7 @@ Page
                     width: parent.width/3;
                     visible: false;
                 }
-            }
+            }           
         }
     }
 }

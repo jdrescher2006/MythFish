@@ -35,7 +35,7 @@ Rectangle
         id: marqueeText
         text: parent.text
         x: 0        //start position
-        color: Theme.secondaryHighlightColor
+        color: Theme.primaryColor
         onTextChanged:
         {
             x = 0;

@@ -20,8 +20,8 @@
         <translation>Quellcode:</translation>
     </message>
     <message>
-        <source>Date: 20.02.2016</source>
-        <translation type="unfinished">Datum: 20.02.2016</translation>
+        <source>Date: 14.03.2016</source>
+        <translation>Datum: 14.03.2016</translation>
     </message>
 </context>
 <context>
@@ -43,16 +43,16 @@
         <translation>Hostnamen oder IP-Adresse eingeben</translation>
     </message>
     <message>
-        <source>Enter port number of control socket</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Enter port number of HTTP service</source>
-        <translation type="unfinished"></translation>
+        <translation>Portnummer des HTTP-Service eingeben</translation>
     </message>
     <message>
         <source>Frontend connection settings</source>
-        <translation type="unfinished"></translation>
+        <translation>Frontend Verbindungseinstellungen</translation>
+    </message>
+    <message>
+        <source>Enter port number of control socket</source>
+        <translation>Portnummer des Control-Socket eingeben</translation>
     </message>
 </context>
 <context>
@@ -139,7 +139,7 @@
     </message>
     <message>
         <source>Main menu</source>
-        <translation type="unfinished"></translation>
+        <translation>Haupt Menü</translation>
     </message>
     <message>
         <source>Guide</source>
@@ -155,27 +155,27 @@
     </message>
     <message>
         <source>Music</source>
-        <translation type="unfinished">Musik</translation>
+        <translation>Musik</translation>
     </message>
     <message>
         <source>Recordings</source>
-        <translation type="unfinished">Aufnahmen</translation>
+        <translation>Aufnahmen</translation>
     </message>
     <message>
         <source>Play recording</source>
-        <translation type="unfinished"></translation>
+        <translation>Aufnahme abspielen</translation>
     </message>
     <message>
         <source>Play live TV</source>
-        <translation type="unfinished"></translation>
+        <translation>Live TV abspielen</translation>
     </message>
     <message>
         <source>Pictures</source>
-        <translation type="unfinished"></translation>
+        <translation>Bilder</translation>
     </message>
     <message>
         <source>Play Video</source>
-        <translation type="unfinished"></translation>
+        <translation>Video abspielen</translation>
     </message>
 </context>
 <context>
@@ -198,7 +198,7 @@
     </message>
     <message>
         <source>Now Playing...</source>
-        <translation type="unfinished"></translation>
+        <translation>Läuft gerade...</translation>
     </message>
 </context>
 <context>
@@ -217,11 +217,11 @@
     </message>
     <message>
         <source>Weather</source>
-        <translation type="unfinished"></translation>
+        <translation>Wetter</translation>
     </message>
     <message>
         <source>Now Playing...</source>
-        <translation type="unfinished"></translation>
+        <translation>Läuft gerade...</translation>
     </message>
 </context>
 <context>
@@ -243,19 +243,19 @@
     <name>PlayingPage</name>
     <message>
         <source>Now Playing...</source>
-        <translation type="unfinished"></translation>
+        <translation>Läuft gerade...</translation>
     </message>
     <message>
         <source>Volume</source>
-        <translation type="unfinished"></translation>
+        <translation>Lautstärke</translation>
     </message>
     <message>
         <source>Menu</source>
-        <translation type="unfinished">Menü</translation>
+        <translation>Menü</translation>
     </message>
     <message>
         <source>Back</source>
-        <translation type="unfinished">Zurück</translation>
+        <translation>Zurück</translation>
     </message>
 </context>
 <context>

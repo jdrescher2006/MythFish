@@ -1,3 +1,10 @@
+* Mon Mar 14 2016 Jens Drescher <jens.drescher.lippe@web.de> 1.2.0-3
+- third release to openrepos
+- first release to Jolla store
+- added new page to change volume and playing position
+- added a few buttons for navigation page
+- bug fixes
+
 * Tue Feb 16 2016 Jens Drescher <jens.drescher.lippe@web.de> 1.1.0-2
 - second release to openrepos
 - fixed german translation

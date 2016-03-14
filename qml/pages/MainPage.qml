@@ -41,11 +41,18 @@ Page
         return sReturn;
     }
 
-    Connections     //amazing trick...
-    {
+    //These are slots which are called from C++ code.
+    Connections
+    {        
         target: id_MythRemote
         onVDisconnected:
-        {
+        {           
+            //Only do something here if we are connected.
+            if (!bConnected)
+                return;
+
+            console.log("onVDisconnected");
+
             fncViewMessage("info", qsTr("Closed connection to MythTV!"));
 
             sCoverPageStatusText = qsTr("Not connected");
@@ -65,6 +72,7 @@ Page
 
             //Load project data
             var sGetHostname = id_ProjectSettings.sLoadProjectData("HostName");
+            var sGetPortnumberHTTP = id_ProjectSettings.sLoadProjectData("sPortnumberHTTP");
             var sGetPortnumber = id_ProjectSettings.sLoadProjectData("PortNumber");
             var bGetAutoConnect = id_ProjectSettings.sLoadProjectData("AutoConnect");
             var sGetMACaddress = id_ProjectSettings.sLoadProjectData("MACaddress");
@@ -80,6 +88,7 @@ Page
 
             //If there is something in the project data, use it.
             if (sGetHostname.length > 0) sHostname=sGetHostname;
+            if (sGetPortnumberHTTP.length > 0) sPortnumberHTTP=sGetPortnumberHTTP;
             if (sGetPortnumber.length > 0) sPortnumber=sGetPortnumber;
             if (bGetAutoConnect.length > 0) bAutoConnect=(bGetAutoConnect === "true");
             if (sGetMACaddress.length > 0) sMACaddress=sGetMACaddress;
@@ -152,6 +161,7 @@ Page
             }
         }
     }
+
     Timer
     {
         id: timQueryMythTVTimerHTTP
@@ -227,8 +237,12 @@ Page
                     iMaxPlayPosition = 100;
                     sPlayingState = "";
                     sPlayingTitle = "";
+
                     //TODO: pop the playing page
-                    //pageStack.pop(undefined);
+                    pageStack.pop(pageStack.find(function(page)
+                    {
+                        return page.toString() === "Page_QMLTYPE_25(0x497e6300, \"PlayingPage\")";
+                    }),PageStackAction.Immediate);
 
                     return;
                 }
@@ -264,6 +278,7 @@ Page
             })
         }
     }
+
     Timer
     {
         //ATTENTION: this code (the complete timer) is inactive.

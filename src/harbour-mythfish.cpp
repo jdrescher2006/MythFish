@@ -19,6 +19,7 @@
 #include <QtQuick>
 #endif
 
+#include <QtQml>
 #include <sailfishapp.h>
 #include "../src/wakeonlan.h"
 #include "../src/projectsettings.h"
