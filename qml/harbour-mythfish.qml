@@ -19,14 +19,16 @@ import QtQuick 2.0
 import Sailfish.Silica 1.0
 import org.nemomobile.notifications 1.0
 import "pages"
-import wakeonlan 1.0
-import mythremote 1.0
-import projectsettings 1.0
+import harbour.wakeonlan 1.0
+import harbour.mythremote 1.0
+import harbour.projectsettings 1.0
+import harbour.networkmanager 1.0
 
 ApplicationWindow
 {
     //Define global variables
     property bool bConnected: false;
+    property bool bNetworkConnected: false;
     property string sHostname: "192.168.0.4";
     property string sPortnumber: "6546";
     property string sPortnumberHTTP: "6547";
@@ -49,6 +51,7 @@ ApplicationWindow
     WakeOnLan{ id: id_WakeOnLan }
     MythRemote { id: id_MythRemote }
     ProjectSettings{ id: id_ProjectSettings }
+    NetworkManager{ id: id_NetworkManager }
     Notification { id: mainPageNotification }
 
     //Define global functions

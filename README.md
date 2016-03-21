@@ -6,6 +6,8 @@ Features:
 - wake up TV computer via wake on lan
 - navigation page, mediaplayer page, numbers page
 - connect and wakeup on start of application
+- show current volume, title and play position
+- set volume and play position by slider control
 
 Links:
 - MythTV: https://www.mythtv.org
@@ -14,16 +16,7 @@ Links:
 
 
 Future plans:
-- Load into Jolla store
-- New dialog: about page for MythTV
-	- system load
-	- free/used memory
-	- version
-	- time, uptime
-- New dialog: with data from query location from MythTV 
-	- volume bar
-	- play progress bar
-	- now playing 
+- show max play position for playing slider
 
 License:
 GNU General Public License (GNU GPLv3)

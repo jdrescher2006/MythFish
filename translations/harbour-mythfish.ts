@@ -20,7 +20,7 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Date: 14.03.2016</source>
+        <source>Date: 21.03.2016</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -175,6 +175,10 @@
     </message>
     <message>
         <source>Play Video</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>No Network</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

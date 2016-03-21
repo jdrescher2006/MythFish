@@ -51,7 +51,7 @@ Page
             if (!bConnected)
                 return;
 
-            console.log("onVDisconnected");
+            //console.log("onVDisconnected");
 
             fncViewMessage("info", qsTr("Closed connection to MythTV!"));
 
@@ -59,8 +59,38 @@ Page
 
             bConnected = false;
             pageStack.popAttached(undefined, PageStackAction.Immediate);            
+        }       
+    }
+    Connections
+    {
+        target: id_NetworkManager
+        onOnlineChanged:
+        {
+            if (online)
+            {
+                bNetworkConnected = true;
+                sCoverPageStatusText = qsTr("Not connected");
+            }
+            else
+            {
+                bNetworkConnected = false;
+                sCoverPageStatusText = qsTr("No Network");
+
+                //Only do something here if we are connected.
+                if (!bConnected)
+                    return;
+
+                //console.log("onVDisconnected");
+
+                fncViewMessage("info", qsTr("Closed connection to MythTV!"));
+
+                sCoverPageStatusText = qsTr("Not connected");
+
+                bConnected = false;
+                pageStack.popAttached(undefined, PageStackAction.Immediate);
+            }
         }
-    }  
+    }
 
     onStatusChanged:
     {
@@ -101,6 +131,19 @@ Page
             console.log("sMACaddress: " + sMACaddress);
             console.log("bAutoWakeup: " + bAutoWakeup.toString());
             */
+
+            //If the device is not online, don't do anything...
+            if (id_NetworkManager.online === false)
+            {
+                bNetworkConnected = false;
+                sCoverPageStatusText = qsTr("No Network");
+                bInitPage = false;
+                return;
+            }
+            else
+                bNetworkConnected = true;
+
+
 
             //If wake on lan then do it here
             if (bAutoWakeup)
@@ -166,7 +209,7 @@ Page
     {
         id: timQueryMythTVTimerHTTP
         interval: 2000
-        running: (bConnected && !bSoundPressed && !bPlaybackPressed)
+        running: (bConnected && bNetworkConnected && !bSoundPressed && !bPlaybackPressed)
         repeat: true
         onTriggered:
         {
@@ -402,8 +445,7 @@ Page
                 text: qsTr("About")
                 onClicked: {pageStack.push(Qt.resolvedUrl("AboutPage.qml"))}
             }            
-        }        
-
+        }
         Column
         {
             id: id_Column_Main
@@ -447,13 +489,13 @@ Page
             SectionHeader
             {
                 text: qsTr("Connect to MythTV")
-                visible: (!bConnected && !bAutoConnecting)
+                visible: (bNetworkConnected && !bConnected && !bAutoConnecting)
             }
             Button
             {
                 width: parent.width
                 text: qsTr("Connect")
-                visible: (!bConnected && !bAutoConnecting)
+                visible: (bNetworkConnected && !bConnected && !bAutoConnecting)
                 onClicked:
                 {
                     var sReturn = id_MythRemote.sConnect(sHostname, sPortnumber);
@@ -486,13 +528,13 @@ Page
             SectionHeader
             {
                 text: qsTr("Disconnect from MythTV")
-                visible: bConnected
+                visible: bConnected && bNetworkConnected
             }
             Button
             {
                 width: parent.width
                 text: qsTr("Disconnect")
-                visible: bConnected
+                visible: bConnected && bNetworkConnected
                 onClicked:
                 {
                     id_MythRemote.vDisconnect();                   
@@ -507,11 +549,13 @@ Page
             SectionHeader
             {
                 text: qsTr("Wake up TV station")
+                visible: bNetworkConnected
             }
             Button
             {
                 width: parent.width
                 text: qsTr("Wake up")
+                visible: bNetworkConnected
                 onClicked:
                 {
                     var iReturnByteCount = id_WakeOnLan.iSendMagicPacket(sMACaddress);
@@ -528,6 +572,15 @@ Page
                     anchors.verticalCenter: parent.verticalCenter
                     source: "../icon-m-tv.png"
                 }
+            }
+
+            Label
+            {
+                visible: !bNetworkConnected
+                anchors.topMargin: 200;
+                anchors.horizontalCenter: parent.horizontalCenter
+                text: qsTr("No Network");
+                font { family: Theme.fontFamily; pixelSize: Theme.fontSizeLarge }
             }
         }       
     }

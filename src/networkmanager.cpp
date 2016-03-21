@@ -15,25 +15,29 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-#ifdef QT_QML_DEBUG
-#include <QtQuick>
-#endif
+#include "networkmanager.h"
+#include <QtGui>
+#include <QNetworkConfigurationManager>
 
-#include <QtQml>
-#include <sailfishapp.h>
-#include "../src/wakeonlan.h"
-#include "../src/projectsettings.h"
-#include "../src/mythremote.h"
-#include "../src/networkmanager.h"
-
-
-int main(int argc, char *argv[])
-{    
-    qmlRegisterType<WakeOnLan,1>("harbour.wakeonlan", 1, 0, "WakeOnLan");
-    qmlRegisterType<ProjectSettings,1>("harbour.projectsettings", 1, 0, "ProjectSettings");
-    qmlRegisterType<MythRemote,1>("harbour.mythremote", 1, 0, "MythRemote");
-    qmlRegisterType<NetworkManager,1>("harbour.networkmanager", 1, 0, "NetworkManager");
-
-    return SailfishApp::main(argc, argv);
+NetworkManager::NetworkManager(QObject *parent)
+    : QObject(parent)
+    , _manager(new QNetworkConfigurationManager(parent))
+    , _online(_manager->isOnline() && _manager->defaultConfiguration().isValid())
+{
+    connect(_manager, SIGNAL(onlineStateChanged(bool)),
+            this, SLOT(onOnlineStateChanged(bool)));
 }
 
+NetworkManager::~NetworkManager()
+{
+    delete _manager;
+}
+
+void NetworkManager::onOnlineStateChanged(bool isOnline)
+{
+    if (isOnline != _online) {
+        qDebug() << "Network is " << (isOnline ? "online" : "offline");
+        _online = isOnline;
+        emit onlineChanged(_online);
+    }
+}

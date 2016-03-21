@@ -20,8 +20,8 @@
         <translation>Quellcode:</translation>
     </message>
     <message>
-        <source>Date: 14.03.2016</source>
-        <translation>Datum: 14.03.2016</translation>
+        <source>Date: 21.03.2016</source>
+        <translation type="unfinished">Datum: 21.03.2016</translation>
     </message>
 </context>
 <context>
@@ -176,6 +176,10 @@
     <message>
         <source>Play Video</source>
         <translation>Video abspielen</translation>
+    </message>
+    <message>
+        <source>No Network</source>
+        <translation>Kein Netzwerk</translation>
     </message>
 </context>
 <context>

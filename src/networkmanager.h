@@ -15,25 +15,28 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-#ifdef QT_QML_DEBUG
-#include <QtQuick>
-#endif
+#ifndef NETWORKMANAGER
+#define NETWORKMANAGER
 
-#include <QtQml>
-#include <sailfishapp.h>
-#include "../src/wakeonlan.h"
-#include "../src/projectsettings.h"
-#include "../src/mythremote.h"
-#include "../src/networkmanager.h"
+#include <QObject>
+class QNetworkConfigurationManager;
 
+class NetworkManager : public QObject
+{
+    Q_OBJECT
+    Q_PROPERTY(bool online READ online NOTIFY onlineChanged)
+public:
+    explicit NetworkManager(QObject *parent = 0);
+    ~NetworkManager();
+    bool online() const { return _online; }
+signals:
+    void onlineChanged(bool online);
+protected slots:
+    void onOnlineStateChanged(bool isOnline);
+private:
+    QNetworkConfigurationManager *_manager;
+    bool _online;
+};
 
-int main(int argc, char *argv[])
-{    
-    qmlRegisterType<WakeOnLan,1>("harbour.wakeonlan", 1, 0, "WakeOnLan");
-    qmlRegisterType<ProjectSettings,1>("harbour.projectsettings", 1, 0, "ProjectSettings");
-    qmlRegisterType<MythRemote,1>("harbour.mythremote", 1, 0, "MythRemote");
-    qmlRegisterType<NetworkManager,1>("harbour.networkmanager", 1, 0, "NetworkManager");
-
-    return SailfishApp::main(argc, argv);
-}
+#endif // NETWORKMANAGER
 

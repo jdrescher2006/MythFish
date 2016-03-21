@@ -6,7 +6,8 @@ SOURCES += \
     src/wakeonlan.cpp \
     src/projectsettings.cpp \
     src/mythremote.cpp \
-    src/harbour-mythfish.cpp
+    src/harbour-mythfish.cpp \
+    src/networkmanager.cpp
 
 OTHER_FILES += qml/harbour-mythfish.qml \
     qml/cover/CoverPage.qml \
@@ -24,7 +25,8 @@ TRANSLATIONS += translations/harbour-mythfish-de.ts
 HEADERS += \
     src/wakeonlan.h \
     src/projectsettings.h \
-    src/mythremote.h
+    src/mythremote.h \
+    src/networkmanager.h
 
 DISTFILES += \
     qml/icon-m-tv.png \
