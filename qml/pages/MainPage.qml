@@ -282,10 +282,10 @@ Page
                     sPlayingTitle = "";
 
                     //TODO: pop the playing page
-                    pageStack.pop(pageStack.find(function(page)
-                    {
-                        return page.toString() === "Page_QMLTYPE_25(0x497e6300, \"PlayingPage\")";
-                    }),PageStackAction.Immediate);
+                    //pageStack.pop(pageStack.find(function(page)
+                    //{
+                        //return page.toString() === "Page_QMLTYPE_25(0x497e6300, \"PlayingPage\")";
+                    //}),PageStackAction.Immediate);
 
                     return;
                 }

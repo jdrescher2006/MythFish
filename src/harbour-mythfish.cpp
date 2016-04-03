@@ -29,10 +29,10 @@
 
 int main(int argc, char *argv[])
 {    
-    qmlRegisterType<WakeOnLan,1>("harbour.wakeonlan", 1, 0, "WakeOnLan");
-    qmlRegisterType<ProjectSettings,1>("harbour.projectsettings", 1, 0, "ProjectSettings");
-    qmlRegisterType<MythRemote,1>("harbour.mythremote", 1, 0, "MythRemote");
-    qmlRegisterType<NetworkManager,1>("harbour.networkmanager", 1, 0, "NetworkManager");
+    qmlRegisterType<WakeOnLan,1>("harbour.mythfish", 1, 0, "WakeOnLan");
+    qmlRegisterType<ProjectSettings,1>("harbour.mythfish", 1, 0, "ProjectSettings");
+    qmlRegisterType<MythRemote,1>("harbour.mythfish", 1, 0, "MythRemote");
+    qmlRegisterType<NetworkManager,1>("harbour.mythfish", 1, 0, "NetworkManager");
 
     return SailfishApp::main(argc, argv);
 }

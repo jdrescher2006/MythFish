@@ -19,10 +19,10 @@ import QtQuick 2.0
 import Sailfish.Silica 1.0
 import org.nemomobile.notifications 1.0
 import "pages"
-import harbour.wakeonlan 1.0
-import harbour.mythremote 1.0
-import harbour.projectsettings 1.0
-import harbour.networkmanager 1.0
+import harbour.mythfish 1.0
+//import harbour.mythfish.mythremote 1.0
+//import harbour.mythfish.projectsettings 1.0
+//import harbour.mythfish.networkmanager 1.0
 
 ApplicationWindow
 {
