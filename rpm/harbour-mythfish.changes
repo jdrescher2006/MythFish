@@ -1,6 +1,7 @@
 * Mon Mar 21 2016 Jens Drescher <jens.drescher.lippe@web.de> 1.3.0-4
 - changed names of C++ objects to be compatible to Jolla store
 - added a network manager to recognize if there is a network connection at all
+- lowered power consumption (animation was running all the time)
 
 * Mon Mar 14 2016 Jens Drescher <jens.drescher.lippe@web.de> 1.2.0-3
 - third release to openrepos

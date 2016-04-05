@@ -477,7 +477,8 @@ Page
                     anchors.verticalCenter: parent.verticalCenter
                     smooth: true
                     NumberAnimation on rotation
-                    {                     
+                    {
+                      running: bAutoConnecting
                       from: 0
                       to: 360
                       loops: Animation.Infinite
